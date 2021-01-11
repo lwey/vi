@@ -54,7 +54,6 @@
 "45 3 8 * * * https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/weibo/weibotalk.js, tag=微博超话, img-url=https://raw.githubusercontent.com/Orz-3/task/master/weibo.png, enabled=false",
 "1 9 * * * https://raw.githubusercontent.com/dompling/Script/master/birthdayCountDown/index.js, tag=生日倒计时, img-url=https://raw.githubusercontent.com/Orz-3/task/master/birthday.png, enabled=false",
 "0 2,13,25,45,55 0-23 * * ? https://raw.githubusercontent.com/wangdelu2020/hongliyu/master/momosign.js, tag=陌陌极速版签到, img-url=https://raw.githubusercontent.com/Orz-3/task/master/momo.png, enabled=false",
-"0 30 8 * * ? https://raw.githubusercontent.com/wangdelu2020/hongliyu/master/liantongnotice.js, tag=联通流量话费提醒, img-url=https://raw.githubusercontent.com/Orz-3/task/master/10010.png, enabled=false",
 "0 30 0,6 * * ? https://raw.githubusercontent.com/wangdelu2020/hongliyu/master/newsinachaohua.js, tag=新浪微博超话签到, img-url=https://raw.githubusercontent.com/Orz-3/task/master/weibo.png, enabled=false",
 "7 8 * * * https://raw.githubusercontent.com/iisams/Scripts/master/liwo/7days.js,tag=梨涡签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/task/master/liwo.png, enabled=false",
 "5 8 * * * https://raw.githubusercontent.com/iisams/Scripts/master/liwo/jdtqz.js, tag= 京东特权值, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=false",
