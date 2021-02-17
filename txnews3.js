@@ -1,54 +1,14 @@
 
 /*
-更新时间: 2021-1-23 09:50
+更新时间: 2021-02-17 00:50
 
-腾讯新闻签到修改版，可以自动阅读文章获取红包，该活动为瓜分百万现金挑战赛，针对幸运用户参与
-
-获取Cookie方法:
-1.把以下配置复制到响应配置下
-2.打开腾讯新闻app，阅读几篇文章，倒计时结束后即可获取阅读Cookie;
-3.看一次推荐视频获取视频地址
-4.可能腾讯有某些限制，有些号码无法领取红包，手动阅读几篇，能领取红包，一般情况下都是正常的，
-5.此脚本根据阅读篇数开启通知，默认阅读50篇通知一次，此版本和另一版本相同
-版本更新日志:
-1.01 修复无法自动获取视频红包，修改通知为阅读篇数间隔，即阅读篇数除以间隔余0时通知，或者自定义常开或常关，
-1.02 支持boxjs配置，增加通知跳转链接https://news.qq.com/FERD/cjRedDown.htm，需手动领取此红包
----------------------
-Surge 4.0
-[Script]
-腾讯新闻 = type=cron,cronexp=0 8 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js,script-update-interval=0
-
-腾讯新闻 = type=http-request,pattern=https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\?,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, requires-body=true
-
-~~~~~~~~~~~~~~~~~~~~~
-Loon 2.1.0+
-[Script]
-# 本地脚本
-cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, enabled=true, tag=腾讯新闻
-
-http-request https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\? script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, requires-body=true
-
------------------
-
-QX 1.0.7+ :
- [task_local]
-0 9 * * * https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, tag=腾讯新闻
- [rewrite_local]
-https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\? url script-request-body https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js
-
-~~~~~~~~~~~~~~~~~~
- [MITM]
-hostname = api.inews.qq.com
-
----------------------------
-
-Cookie获取后，请注释掉Cookie地址。
+腾讯新闻签到修改版，可以自动阅读文章获取红包，该活动为瓜分百万现金挑战赛，针对幸运用户参与，本脚本已不能自动打开红包，需每天要打开腾讯新闻app一次，请须知
 
 */
 const $ = new Env('腾讯新闻');
 const notify = $.isNode() ? require('./sendNotify') : '';
 let notifyInterval =$.getdata('notifynum')||50; //阅读篇数间隔通知开为1，常关为0;
-const TX_HOST = 'https://api.inews.qq.com/activity/v1/'
+
 let SignArr = [],SignUrl = "";
     cookiesArr = [],CookieTxnews = "";
     VideoArr = [],SignUrl = "",order = "",
@@ -113,14 +73,15 @@ if (isGetCookie) {
       $.index = i + 1;
       console.log(`-------------------------\n\n开始【腾讯新闻账号${$.index}】`)
       ID = signurlVal.match(/devid=[a-zA-Z0-9_-]+/g)[0]
-  
       token = signurlVal.split("mac")[1]
+
       await getsign();
       await activity();
       await getTotal();
+      await $.wait(1000);
       await StepsTotal();
       await showmsg();
-    if ($.isNode()){
+    if ($.isNode()&&process.env.TXNEWS_NOTIFY_CONTROL){
        if (readnum%notifyInterval==0&&cashtotal > 2){
      await notify.sendNotify($.name,subTile+'\n'+detail)
         }
@@ -143,29 +104,46 @@ function GetCookie() {
     $.msg($.name, `获取Cookie: 成功🎉`, ``)
   }
   if ($request &&$request.body.indexOf("video_read")> -1) {
-    const videoVal =  $request.url
+    const videoVal = $request.url
     $.log(`videoVal:${videoVal}`)
     if (videoVal) $.setdata(videoVal,  'video_txnews3')
     $.msg($.name, `获取视频地址: 成功🎉`, ``)
   }
 }
 
+function Host(api, body) {
+  return {
+      url: 'https://api.inews.qq.com/activity/v1/'+api+'&isJailbreak=0&'+ID,
+      headers:{
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9, zh-Hant-CN;q=0.8',
+        'Connection': 'keep-alive',
+        'Cookie': cookieVal,
+        'Host': 'api.inews.qq.com',
+        'Referer': 'http://inews.qq.com/inews/iphone/',
+        'User-Agent': 'QQNews/6.4.10 (iPhone; iOS 14.2; Scale/3.00)'
+      },
+      body: body
+   }
+}
 
 //签到
 function getsign() {
   return new Promise((resolve, reject) => {
     const signUrl = {
-      url: `https://api.inews.qq.com/task/v1/user/signin/add?`,headers:{Cookie: cookieVal}
+      url: `https://api.inews.qq.com/task/v1/user/signin/add?`,headers: Host().headers
     };
-    $.post(signUrl, (error, response, data) => {
+    $.post(signUrl, (error, resp, data) => {
       let obj = JSON.parse(data)
+// $.log(JSON.stringify(obj,null,2))
       if (obj.info=="success"){
         next = obj.data.next_points
         tip =  obj.data.tip_soup||obj.data.share_tip
         imgurl= obj.data.share_img
-        Dictum = tip.replace(/[\<|\.|\>|br]/g,"")+""+obj.data.author.replace(/[\<|\.|\>|br|图|腾讯网友]/g,"")
+        Dictum = tip.replace(/<br>/g,"")+" "+obj.data.author
         signinfo =  '【签到信息】连续签到' + obj.data.signin_days+'天 '+'明日+'+ next +'金币 成功🎉\n'} else {
-        $.msg('签到失败，🉐登录腾讯新闻app获取cookie', "", "")
+        $.msg($.name, '签到失败，🉐登录腾讯新闻app获取cookie', "")
         console.log('签到失败，🉐登录腾讯新闻app获取cookie'+data)
         return
       }
@@ -175,151 +153,177 @@ function getsign() {
 }
 
 function activity() {
-  return new Promise((resolve, reject) => {
-      $.get({url:`${TX_HOST}user/activity/get?isJailbreak=0&${ID}`, headers: {Cookie:cookieVal}}, (error,response, data) =>{
-        try{
-            let obj = JSON.parse(data)
-            actid = obj.data.activity.id
-            console.log(`\n您的活动ID为: `+actid+"\n🍻开始阅读任务\n")
-          } catch(error){
-           $.msg($.name, "获取活动ID失败，详情请看日志","","")
-           console.log("活动ID日志:"+ data)
-           return
+  return new Promise((resolve, reject) =>{
+    $.get(Host('user/task/list?'), async(error, resp, data) =>{
+      try {
+        let taskres = JSON.parse(data);
+        //$.log(JSON.stringify(obj,null,2))
+        if (taskres.ret == 0) {
+          actid = taskres.data.award_notice.activity_id;
+          $.log(`\n您的活动ID为: ` + actid + "\n\n********* 开始阅读任务 ********\n");
+         for (tasks of taskres.data.list) {
+            taskname = tasks.task_title,
+            tasktype = tasks.task_type,
+            taskstatus = tasks.task_status,
+            ratepack = tasks.rate,
+            totalpack = tasks.quota;
+            eventnum = tasks.task_desc
+            $.log("去" + taskname + "\n");
+            if (taskstatus == 3) {
+              $.desc += "【" + taskname + "】✅ 已完成\n";
+              $.log(taskname + "已完成")
+            } else {
+              if (tasktype == "article") {
+                readnum = eventnum.match(/>(\d+)</)[1]
+                $.desc = "【" + taskname + "】 已领" + ratepack + "个红包 已阅"+readnum+"篇资讯\n";
+                await $.wait(3000);
+                await toRead(signurlVal, 'event=article_read')
+              } else if (tasktype == "video") {
+                videonum = eventnum.match(/>(.+)<\/span>分钟/)[1]
+                $.desc += "【" + taskname + "】 已领" + ratepack + "个红包 已看"+videonum+"分钟\n";
+                await $.wait(5000);
+                await toRead(videoVal, 'event=video_read')
+              } else if(tasktype == "cooperation") {
+              await openapp(tasks.task_id)
+              }
+            }
           }
-        resolve()
-      })
+        }
+      } catch(error) {
+        $.msg($.name, "获取活动ID失败，详情请看日志", "", "");
+       console.log("活动ID日志:" + data);
+       return
+      }
+      resolve()
+    })
   })
 }
 
 //阅读阶梯
-function toRead(urlVal,body) {
-  return new Promise((resolve, reject) => {
-    $.post({url: urlVal, headers: {Cookie:cookieVal}, body: body},(error, resp, data)=> {
-        try{
-             let obj = JSON.parse(data)
-              if(obj.ret == 0){
-              console.log("本次阅读成功，获取收益" +obj.data.countdown_timer.countdown_tips+"\n")
-            } else if(body.indexOf("article")>-1){console.log("本次阅读文章失败，" +obj.info+"\n")
-             }else if(body.indexOf("video")>-1){console.log("本次观看视频失败，" +obj.info+"\n")
-             }
-            } catch(error){
-            console.log("本次阅读失败"+data+"\n")
-          }
-        resolve()
-       })
+function toRead(urlVal, body) {
+  return new Promise((resolve, reject) =>{
+    $.post({
+      url: urlVal,
+      headers: Host().headers,
+      body: body
+    },
+    (error, resp, data) =>{
+      try {
+        let obj = JSON.parse(data)
+        //$.log(JSON.stringify(obj,null,2))
+        if (obj.ret == 0) {
+          console.log("本次阅读成功，获取收益" + obj.data.countdown_timer.countdown_tips + "\n");
+        } else if (body.indexOf("article") > -1) {
+          console.log("本次阅读文章失败，" + obj.info + "\n");
+        } else if (body.indexOf("video") > -1) {
+          console.log("本次观看视频失败，" + obj.info + "\n");
+        }
+      } catch(error) {
+        console.log("本次阅读失败" + data + "\n")
+      }
+      resolve()
     })
+  })
 }
 
+function openapp(taskid) {
+  return new Promise((resolve, reject) =>{
+    $.get(Host('activity/do?activity_id='+taskid+'&'+ token), async(error, resp, data) =>{
+      try {
+        let obj = JSON.parse(data)
+        $.log(JSON.stringify(obj,null,2))
+        if (obj.ret == 0) {
+          $.log(taskname+"成功")
+         } else{
+          $.log(taskname+"失败，" + obj.info + "\n");
+        }
+      } catch(error) {
+        console.log("本次任务失败" + data + "\n")
+      }
+      resolve()
+    })
+  })
+}
 
 
 //阅读文章统计
 function StepsTotal() {
-  return new Promise((resolve, reject) => {
-      const StepsUrl = {
-        url: `${TX_HOST}activity/info/get?activity_id=${actid}&${ID}`,
-        headers: {Cookie: cookieVal}
-      }
-      $.get(StepsUrl, async(error, response, data) => {
-        totalred = JSON.parse(data)
-        totalcion = totalred.data.extends.today_total_coin
-        if (totalred.ret == 0){
-        for (awards of totalred.data.award){
-          taskType = awards.type
-          tasktitle = awards.title
-          red_get = awards.can_get
-          redtotal = awards.total
-          red_opened = awards.opened
-          task_num = awards.event_num
-          over_red = Number(redtotal-red_opened)
-       if(taskType=="article"){
-          if(over_red !=0){
-           readnum = task_num
-           await $.wait(3000)
-           await toRead(signurlVal,'event=article_read')
-         } else  if(over_red ==0){
-         read_finish = "今日阅读任务已完成"
-         console.log(read_finish)
-        }
-          read_res = over_red
-          if(awards.openable !== 0){
-           $.log("可以打开"+awards.openable+"个阅读红包，去打开红包")
-            await Redpack(taskType)
-           }
-          $.log("已阅读文章"+task_num+"篇，阅读红包已打开"+red_opened+"个红包\n  "+tasktitle+"\n")
-           read_info = "【阅读文章】已阅"+task_num+"篇，已开"+red_opened+"红包，总计"+redtotal+"个红包"
+  return new Promise((resolve, reject) =>{
+    $.get(Host('activity/info/get?activity_id=' + actid), async(error, resp, data) =>{
+      totalred = JSON.parse(data);
+      //$.log(JSON.stringify(totalred,null,2))
+      totalcion = totalred.data.extends.today_total_coin;
+      if (totalred.ret == 0) {
+        for (awards of totalred.data.award) {
+          taskType = awards.type,
+          red_get = awards.can_get,
+          redtotal = awards.total,
+          red_opened = awards.opened,
+          task_num = awards.event_num,
+          over_red = Number(redtotal - red_opened);
+          if (taskType == "article") {
+            readnum = awards.event_num,
+            read_res = over_red;
+            if (awards.openable !== 0) {
+              $.log("可以打开" + awards.openable + "个阅读红包，去打开红包");
+              await $.wait(1000);
+              await Redpack(taskType)
+            }
           }
-       if(taskType=="video"){
-          if(over_red !=0){
-           await $.wait(5000)
-           await toRead(videoVal,'event=video_read')
-         }else if(over_red ==0){
-         video_finish = "今日视频任务已完成"
-         console.log(video_finish)
-        }
-           video_res = over_red
-          if(awards.openable !== 0){
-           $.log("可以打开"+awards.openable+"个视频红包，去打开红包")
-            await Redpack(taskType)
-           }
-          $.log("已观看视频"+task_num+"分钟，视频红包已打开"+red_opened+"个红包\n  "+tasktitle+"\n")
-          video_info = "【观看视频】已看"+task_num+"分钟，已开"+red_opened+"红包，总计"+redtotal+"个红包"
+          if (taskType == "video") {
+            video_res = over_red;
+            videonum = awards.event_num;
+            if (awards.openable !== 0) {
+              $.log("可以打开" + awards.openable + "个视频红包，去打开红包");
+              await $.wait(1000);
+              await Redpack(taskType)
+            }
           }
         }
       }
-        resolve()
-      })
+      resolve()
+    })
   })
 }
 
 
 //阶梯红包到账
 function Redpack(red_body) {
-  return new Promise((resolve, reject) => {
-      const cashUrl = {
-        url: `${TX_HOST}activity/redpack/get?isJailbreak=0&mac=${token}`,
-        headers: {Cookie:cookieVal,"Content-Type": "application/x-www-form-urlencoded","User-Agent": "QQNews/6.3.91 (iPhone; iOS 14.2; Scale/3.00)","Referer": "http://inews.qq.com/inews/iphone/"},
-        body: `redpack_type=${red_body}&activity_id=${actid}`
-      }
-      $.post(cashUrl, (error, response, data) => {
-        let rcash = JSON.parse(data)
-        $.log(data)
-        try{
-          if(rcash.data.award.length == 1){
-          redpacks = rcash.data.award.num/100
-          if (rcash.ret == 0&&redpacks>0&&red_body=="article"){
-            redpackres = `【阅读红包】到账`+redpacks+`元 🌷\n`
-            $.log("阅读红包到账"+redpacks+"元\n")
+  return new Promise((resolve, reject) =>{
+    $.post(Host('activity/redpack/get?mac' + token, `redpack_type=${red_body}&activity_id=${actid}`), (error, resp, data) =>{
+      let rcash = JSON.parse(data);
+      try {
+        if (rcash.data.award.length == 1) {
+          redpacks = rcash.data.award.num / 100;
+          if (rcash.ret == 0 && redpacks > 0 && red_body == "article") {
+            redpackres = `【阅读红包】到账` + redpacks + `元🌷\n`;
+            $.log("阅读红包到账" + redpacks + "元\n")
+          } else if (rcash.ret == 0 && redpacks > 0 && red_body == "video") {
+            redpackres = `【视频红包】到账` + redpacks + `元🌷\n`;
+            $.log("视频红包到账" + redpacks + "元\n")
           }
-          else if (rcash.ret == 0&& redpacks >0&&red_body=="video"){
-            redpackres = `【视频红包】到账`+redpacks+`元 🌷\n`
-            $.log("视频红包到账"+redpacks+"元\n")
-          }
-         } else {
-            $.log(rcash.data.award.length+"个红包到账\n")
-         }
+        } else {
+          $.log(rcash.data.award.length + "个红包到账\n")
         }
-        catch(error){
-          console.log("打开红包失败,响应数据: "+ data) 
-          $.msg($.name, "开红包失败，详情请看日志 ❌", error)
-          };
-        resolve()
-      })
+      } catch(error) {
+        console.log("打开红包失败,响应数据: " + data);
+        $.msg($.name, "开红包失败，详情请看日志 ❌", error)
+      };
+      resolve()
+    })
   })
 }
 
 //收益总计
 function getTotal() {
   return new Promise((resolve, reject) => {
-    const totalUrl = {
-      url: `${TX_HOST}usercenter/activity/list?isJailbreak=0`,
-      headers: {Cookie: cookieVal}};
-    $.post(totalUrl, function(error,response, data) {
+    $.post(Host('usercenter/activity/list?'), (error, resp, data) =>{
       if (error) {
         $.msg("获取收益信息失败‼️", "", error)
       } else {
         const Total_Earn = JSON.parse(data)
-        cashtotal =Total_Earn.data.wealth[1].title
-        subTile = '【收益总计】'+ Total_Earn.data.wealth[0].title +'金币  '+"钱包: " + cashtotal+'元'
+        cashtotal = Total_Earn.data.wealth[1].title
+        $.sub = '【收益总计】'+ Total_Earn.data.wealth[0].title +'金币  '+"钱包: " + cashtotal+'元'
      // $.log("钱包收益共计"+obj.data.wealth[1].title+"元")
       }
       resolve()
@@ -329,16 +333,14 @@ function getTotal() {
 
 function showmsg() {
   return new Promise((resolve, reject) => {
-    if(read_info||video_info){
-      detail = signinfo +read_info +"\n"+video_info+`\n【每日一句】`+Dictum
-    }
+      $.desc += '【每日一句】'+Dictum
     if (readnum&&readnum%notifyInterval==0){
-      $.msg($.name,subTile,detail,{ 'open-url': "https://news.qq.com/FERD/cjRedDown.htm", 'media-url': imgurl } )
-    } else if (video_finish&&read_finish){
-      $.msg($.name+` 今日任务已完成✅`,subTile,detail,{ 'open-url': "https://news.qq.com/FERD/cjRedDown.htm", 'media-url': imgurl } )
+      $.msg($.name, $.sub, $.desc,{ 'open-url': "https://news.qq.com/FERD/cjRedDown.htm", 'media-url': imgurl } )
+    } else if (read_res==0&&video_res==0){
+      $.msg($.name+` 今日任务已完成✅`,$.sub, $.desc,{ 'open-url': "https://news.qq.com/FERD/cjRedDown.htm", 'media-url': imgurl } )
     } else {
-     console.log($.name+'\n'+subTile+'\n'+ detail)
-}
+     console.log($.sub+'\n'+ $.desc)
+   }
     resolve()
   })
 }
