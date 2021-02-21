@@ -3,7 +3,7 @@
     "description": "这是收集各个圈x脚本作者的Task库，感谢各位大佬的辛勤付出",
     "task": [
 
-"0 */9 7-23 * * * https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/iboxpay.js, tag=笑谱, img-url=https://raw.githubusercontent.com/Orz-3/task/master/iboxpay.png, enabled=false",
+"0 */9 7-23 * * * https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/iboxpay.js, tag=笑谱, img-url= https://raw.githubusercontent.com/58xinian/icon/master/xp.png, enabled=false",
 "0 9 * * * https://raw.githubusercontent.com/whyour/hundun/master/quanx/jdzz.js, tag=京东赚赚, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzz.png, enabled=false",
 "*/15 * * * * https://raw.githubusercontent.com/songyangzz/QuantumultX/master/YOUTH_READ.js, tag=中青阅读, img-url=book.circle.fill.system, enabled=false",
 "*/15 * * * * https://raw.githubusercontent.com/songyangzz/QuantumultX/master/YOUTH_READ2.js, tag=中青阅读2, img-url=book.circle.fill.system, enabled=false",
