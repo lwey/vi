@@ -8,7 +8,7 @@
 "43 */20 * * * * https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/kkd.js, tag=快看点, img-url=https://raw.githubusercontent.com/Orz-3/task/master/kkd.png, enabled=true",        
 "5,35 8-23 * * * https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/jrtt.js, tag=今日头条, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jrtt.png, enabled=true",       
 "3 */5 15-17 * * * https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/flw.js, tag=返利网, img-url=https://raw.githubusercontent.com/Orz-3/task/master/flw.png, enabled=true",        
-"35 0,30 8-23 * * * https://raw.githubusercontent.com/adwktt/adwktt/master/BBB.js, tag=步步宝, img-url=https://raw.githubusercontent.com/Orz-3/task/master/BBB.png, enabled=true",
+"35 0,30 0-23 * * * https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/bububao.js, tag=步步宝, img-url=https://raw.githubusercontent.com/Orz-3/task/master/BBB.png, enabled=true",
 "3 * * * * https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/zhima.js, tag=芝麻, img-url=https://raw.githubusercontent.com/Orz-3/task/master/zhima.png, enabled=true",
 "*/10 * * * * https://raw.githubusercontent.com/age174/-/main/dkdsp.js, tag=多看点, img-url=https://raw.githubusercontent.com/Orz-3/task/master/dkdsp.png, enabled=true",
 "*/9 8-23 * * * https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/ranlv.js, tag=燃旅, img-url= https://raw.githubusercontent.com/Orz-3/task/master/ranlv.png, enabled=false",
