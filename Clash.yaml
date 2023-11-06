@@ -2,7 +2,7 @@ proxy-providers:
   🛫 我的机场:
     type: http
     # 修改为你的 Clash 订阅链接
-    url: "https://example.com/xxx/xxx&flag=clash"
+    url: "https://v1.efshop.cc/api/v1/client/subscribe?token=04ffd9fc0437aea85b86425f41381b78&flag=clash"
     path: ./proxies/airport1.yaml
     interval: 43200
     filter: "香港|台湾|日本|韩国|新加坡|美国"
