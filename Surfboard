@@ -60,7 +60,7 @@ udp-policy-not-supported-behaviour = reject
 
 [Proxy Group]
 # 手动选择
-♥️网速超快 = select, no-alert=0, hidden=0, include-all-proxies=1, update-interval=0, policy-path=👉👉http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c
+♥️网速超快 = select, no-alert=0, hidden=0, include-all-proxies=1, update-interval=0, policy-path=http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c
 # 自动选择
 🟡延迟优选 = url-test, no-alert=0, hidden=0, include-all-proxies=0, update-interval=0, policy-regex-filter=^, include-other-group=♥️网速超快
 # 苹果服务
