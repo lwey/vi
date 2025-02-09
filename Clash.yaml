@@ -1,313 +1,257 @@
-proxy-providers:
-  🛫 我的机场:
-    type: http
-    # 修改为你的 Clash 订阅链接
-    url: "https://v1.efshop.cc/api/v1/client/subscribe?token=04ffd9fc0437aea85b86425f41381b78&flag=clash"
-    path: ./proxies/airport1.yaml
-    interval: 43200
-    filter: "香港|台湾|日本|韩国|新加坡|美国"
-    health-check:
-      enable: true
-      url: "https://www.gstatic.com/generate_204"
-      interval: 600
+pr: &pr
+  proxies: [主要节点, 故障转移, 负载均衡, 自动选择, 手动切换, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 其它地区, 国内直连]
 
-mode: rule
-ipv6: true
-log-level: silent
-allow-lan: true
+p: &p
+  type: http
+  interval: 86400
+  health-check:
+    enable: true
+    url: https://cp.cloudflare.com
+    interval: 300
+    timeout: 1000
+    tolerance: 100
+
+use: &use
+  use: [proxy1]
+
+balance: &balance
+  use: [proxy1]
+
+fallback: &fallback
+  use: [proxy1]
+
+proxy-providers:
+  proxy1:
+    <<: *p
+    path: ./proxy_provider/proxy1.yaml
+    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
+
 mixed-port: 7890
-unified-delay: false
+redir-port: 9797
+tproxy-port: 9898
+mode: rule
+bind-address: '*'
+allow-lan: true
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+keep-alive-interval: 1800
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+unified-delay: true
 tcp-concurrent: true
-external-controller-tls: 127.0.0.1:9090
+enable-process: true
+log-level: error
 find-process-mode: strict
-global-client-fingerprint: chrome
-profile: {store-selected: true, store-fake-ip: true}
+global-client-fingerprint: random
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
 
 tun:
-  enable: true
-  stack: system
-  dns-hijack: ['any:53']
+  enable: false
+  device: mihomo
+  stack: mixed
+  dns-hijack: [any:53, tcp://any:53]
   auto-route: true
+  auto-redirect: true
   auto-detect-interface: true
   strict-route: true
+  include-uid: [0, 10]
+  exclude-package: []
 
 dns:
   enable: true
   prefer-h3: true
   ipv6: true
   listen: 0.0.0.0:1053
-  use-hosts: true
-  fake-ip-range: 198.18.0.1/16
-  enhanced-mode: fake-ip
-  fake-ip-filter:
-    - '*.lan'
-    - '*.localdomain'
-    - '*.example'
-    - '*.invalid'
-    - '*.localhost'
-    - '*.test'
-    - '*.local'
-    - '*.home.arpa'
-    - 'time.*.com'
-    - 'time.*.gov'
-    - 'time.*.edu.cn'
-    - 'time.*.apple.com'
-    - 'time-ios.apple.com'
-    - 'time1.*.com'
-    - 'time2.*.com'
-    - 'time3.*.com'
-    - 'time4.*.com'
-    - 'time5.*.com'
-    - 'time6.*.com'
-    - 'time7.*.com'
-    - 'ntp.*.com'
-    - 'ntp1.*.com'
-    - 'ntp2.*.com'
-    - 'ntp3.*.com'
-    - 'ntp4.*.com'
-    - 'ntp5.*.com'
-    - 'ntp6.*.com'
-    - 'ntp7.*.com'
-    - '*.time.edu.cn'
-    - '*.ntp.org.cn'
-    - '+.pool.ntp.org'
-    - 'time1.cloud.tencent.com'
-    - 'music.163.com'
-    - '*.music.163.com'
-    - '*.126.net'
-    - 'musicapi.taihe.com'
-    - 'music.taihe.com'
-    - 'songsearch.kugou.com'
-    - 'trackercdn.kugou.com'
-    - '*.kuwo.cn'
-    - 'api-jooxtt.sanook.com'
-    - 'api.joox.com'
-    - 'joox.com'
-    - 'y.qq.com'
-    - '*.y.qq.com'
-    - 'streamoc.music.tc.qq.com'
-    - 'mobileoc.music.tc.qq.com'
-    - 'isure.stream.qqmusic.qq.com'
-    - 'dl.stream.qqmusic.qq.com'
-    - 'aqqmusic.tc.qq.com'
-    - 'amobile.music.tc.qq.com'
-    - '*.xiami.com'
-    - '*.music.migu.cn'
-    - 'music.migu.cn'
-    - '+.msftconnecttest.com'
-    - '+.msftncsi.com'
-    - 'localhost.ptlogin2.qq.com'
-    - 'localhost.sec.qq.com'
-    - '+.qq.com'
-    - '+.tencent.com'
-    - '+.srv.nintendo.net'
-    - '*.n.n.srv.nintendo.net'
-    - '+.stun.playstation.net'
-    - 'xbox.*.*.microsoft.com'
-    - '*.*.xboxlive.com'
-    - 'xbox.*.microsoft.com'
-    - 'xnotify.xboxlive.com'
-    - '+.battlenet.com.cn'
-    - '+.wotgame.cn'
-    - '+.wggames.cn'
-    - '+.wowsgame.cn'
-    - '+.wargaming.net'
-    - 'proxy.golang.org'
-    - 'stun.*.*'
-    - 'stun.*.*.*'
-    - '+.stun.*.*'
-    - '+.stun.*.*.*'
-    - '+.stun.*.*.*.*'
-    - '+.stun.*.*.*.*.*'
-    - 'heartbeat.belkin.com'
-    - '*.linksys.com'
-    - '*.linksyssmartwifi.com'
-    - '*.router.asus.com'
-    - 'mesu.apple.com'
-    - 'swscan.apple.com'
-    - 'swquery.apple.com'
-    - 'swdownload.apple.com'
-    - 'swcdn.apple.com'
-    - 'swdist.apple.com'
-    - 'lens.l.google.com'
-    - 'stun.l.google.com'
-    - 'na.b.g-tun.com'
-    - '+.nflxvideo.net'
-    - '*.square-enix.com'
-    - '*.finalfantasyxiv.com'
-    - '*.ffxiv.com'
-    - '*.ff14.sdo.com'
-    - 'ff.dorado.sdo.com'
-    - '*.mcdn.bilivideo.cn'
-    - '+.media.dssott.com'
-    - 'shark007.net'
-    - 'Mijia Cloud'
-    - '+.cmbchina.com'
-    - '+.cmbimg.com'
-    - 'local.adguard.org'
-    - 'static.adtidy.org'
-    - '+.sandai.net'
-    - '+.n0808.com'
-    - '+.3gppnetwork.org'
-    - 'adguardteam.github.io'
-    - 'anti-ad.net'
+  enhanced-mode: redir-host
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter: ['rule-set:fakeip-filter']
   default-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://1.12.12.12/dns-query
+    - 223.5.5.5
+    - 119.29.29.29
+    - 114.114.114.114
+    - '[2402:4e00::]'
+    - '[2400:3200::1]'
   nameserver:
+    - 'tls://8.8.4.4#dns'
+    - 'tls://1.0.0.1#dns'
+    - 'tls://[2001:4860:4860::8844]#dns'
+    - 'tls://[2606:4700:4700::1001]#dns'
+  proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+  nameserver-policy:
+    "geosite:cn,private":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:!cn,!private": 
+      - https://dns.google/dns-query
+      - https://cloudflare-dns.com/dns-query
+
+proxies:
+  - {name: DNS_Hijack, type: dns}
 
 proxy-groups:
-  - {name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点]}
+  - name: 主要节点
+    type: select
+    proxies: [手动切换, 自动选择, 故障转移, 负载均衡, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 其它地区, 国内直连, REJECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Star.png
 
-  - {name: 📈 网络测试, type: select, proxies: [🎯 全球直连, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点]}
+  - name: 手动切换
+    type: select
+    <<: *use
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
 
-  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, 🎯 全球直连], disable-udp: true}
+  - name: 故障转移
+    type: fallback
+    <<: *fallback
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Loop.png
 
-  - {name: ⚡ 直连域名, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 负载均衡
+    type: load-balance
+    <<: *balance
+    strategy: round-robin
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png
 
-  - {name: 🪜 代理域名, type: select, proxies: [🚀 节点选择, 🎯 全球直连], disable-udp: true}
+  - name: 自动选择
+    type: url-test
+    <<: *use
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
 
-  - {name: 🎮 国区游戏, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 香港节点
+    type: select
+    <<: *use
+    filter: "(?i)🇭🇰|港|hk|hongkong|hong kong"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 
-  - {name: Ⓜ️ Microsoft 中国, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 台湾节点
+    type: select
+    <<: *use
+    filter: "(?i)🇹🇼|台|tw|taiwan"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
 
-  - {name: 🗽 Google 中国, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 日本节点
+    type: select
+    <<: *use
+    filter: "(?i)🇯🇵|日本|东京|jp|japan"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 
-  - {name: 🍎 Apple 中国, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 新加坡节点
+    type: select
+    <<: *use
+    filter: "(?i)(🇸🇬|新|sg|singapore)"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 
-  - {name: 🇨🇳 国内 IP, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - name: 美国节点
+    type: select
+    <<: *use
+    filter: "(?i)🇺🇸|美|us|unitedstates|united states"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 
-  - {name: ✈️ Telegram, type: select, proxies: [🚀 节点选择]}
+  - name: 其它地区
+    type: select
+    <<: *use
+    filter: "(?i)^(?!.*(?:🇭🇰|🇹🇼|🇯🇵|🇸🇬|🇺🇸|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Null_Nation.png
 
-  - {name: 🖥️ 直连软件, type: select, proxies: [🎯 全球直连]}
+  - name: 谷歌服务
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
 
-  - {name: 🏠 私有网络, type: select, proxies: [🎯 全球直连]}
+  - name: 微软服务
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 
-  - {name: ⛔️ 广告域名, type: select, proxies: [🛑 全球拦截]}
+  - name: GITHUB
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
 
-  - {name: 🎯 全球直连, type: select, proxies: [DIRECT]}
+  - name: 油管视频
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
-  - {name: 🛑 全球拦截, type: select, proxies: [REJECT]}
+  - name: 奈飞视频
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
 
-  # 采用节点负载均衡策略，优点是更稳定，速度可能有提升；推荐在节点复用比较多的情况下使用
-  - {name: 🇭🇰 香港节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "香港"}
+  - name: 电报消息
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
 
-  - {name: 🇹🇼 台湾节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "台湾"}
+  - name: 国外代理
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
 
-  - {name: 🇯🇵 日本节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "日本"}
+  - name: 国内直连
+    type: select
+    proxies: [DIRECT, REJECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
 
-  - {name: 🇰🇷 韩国节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "韩国"}
+  - name: 广告拦截
+    type: select
+    proxies: [REJECT, 国内直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
 
-  - {name: 🇸🇬 新加坡节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "新加坡"}
-
-  - {name: 🇺🇸 美国节点, type: load-balance, strategy: consistent-hashing, lazy: true, use: [🛫 我的机场], filter: "美国"}
+  - name: 漏网之鱼
+    type: select
+    <<: *pr
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 
 rule-providers:
-  ads:
+  fakeip-filter:
     type: http
     behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/ads.yaml"
-    path: ./ruleset/ads.yaml
-    interval: 86400
-
-  private:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/private.yaml"
-    path: ./ruleset/private.yaml
-    interval: 86400
-
-  microsoft-cn:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/microsoft-cn.yaml"
-    path: ./ruleset/microsoft-cn.yaml
-    interval: 86400
-
-  apple-cn:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/apple-cn.yaml"
-    path: ./ruleset/apple-cn.yaml
-    interval: 86400
-
-  google-cn:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/google-cn.yaml"
-    path: ./ruleset/google-cn.yaml
-    interval: 86400
-
-  games-cn:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/games-cn.yaml"
-    path: ./ruleset/games-cn.yaml
-    interval: 86400
-
-  networktest:
-    type: http
-    behavior: classical
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/networktest.yaml"
-    path: ./ruleset/networktest.yaml
-    interval: 86400
-
-  applications:
-    type: http
-    behavior: classical
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/applications.yaml"
-    path: ./ruleset/applications.yaml
-    interval: 86400
-
-  proxy:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/proxy.yaml"
-    path: ./ruleset/proxy.yaml
-    interval: 86400
-
-  cn:
-    type: http
-    behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/cn.yaml"
-    path: ./ruleset/cn.yaml
-    interval: 86400
-
-  telegramip:
-    type: http
-    behavior: ipcidr
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/telegramip.yaml"
-    path: ./ruleset/telegramip.yaml
-    interval: 86400
-
-  privateip:
-    type: http
-    behavior: ipcidr
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/privateip.yaml"
-    path: ./ruleset/privateip.yaml
-    interval: 86400
-
-  cnip:
-    type: http
-    behavior: ipcidr
-    url: "https://fastly.jsdelivr.net/gh/DustinWin/clash-ruleset@release/cnip.yaml"
-    path: ./ruleset/cnip.yaml
+    format: mrs
+    path: ./rule_provider/fakeip-filter.mrs
+    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/fakeip-filter.mrs"
     interval: 86400
 
 rules:
-  - RULE-SET,ads,⛔️ 广告域名
-  - RULE-SET,private,🏠 私有网络
-  - RULE-SET,microsoft-cn,Ⓜ️ Microsoft 中国
-  - RULE-SET,apple-cn,🍎 Apple 中国
-  - RULE-SET,google-cn,🗽 Google 中国
-  - RULE-SET,games-cn,🎮 国区游戏
-  - RULE-SET,networktest,📈 网络测试
-  - RULE-SET,applications,🖥️ 直连软件
-  - RULE-SET,proxy,🪜 代理域名
-  - RULE-SET,cn,⚡ 直连域名
-  - RULE-SET,telegramip,✈️ Telegram
-  - RULE-SET,privateip,🏠 私有网络,no-resolve
-  - RULE-SET,cnip,🇨🇳 国内 IP
-  - MATCH,🐟 漏网之鱼
+  - DST-PORT,53,DNS_Hijack
+  - AND,((PROCESS-NAME,mihomo),(NOT,((IN-TYPE,inner)))),广告拦截
+  - AND,((PROCESS-NAME,clash),(NOT,((IN-TYPE,inner)))),广告拦截
+  - PROCESS-NAME,http-meta,国内直连
+  - DOMAIN-SUFFIX,omarea.com,国外代理
+  - DOMAIN-SUFFIX,linux.do,国外代理
+  - DOMAIN-KEYWORD,wogg,国内直连
+  - DOMAIN-KEYWORD,hsck484,国内直连
+  - GEOIP,google,谷歌服务,no-resolve
+  - GEOSITE,google,谷歌服务
+  - GEOSITE,microsoft,微软服务
+  - GEOSITE,github,GITHUB
+  - GEOSITE,youtube,油管视频
+  - GEOIP,netflix,奈飞视频,no-resolve
+  - GEOSITE,netflix,奈飞视频
+  - GEOIP,telegram,电报消息,no-resolve
+  - GEOSITE,telegram,电报消息
+  - GEOSITE,category-ads-all,广告拦截
+  - GEOSITE,cn,国内直连
+  - GEOIP,cn,国内直连,no-resolve
+  - GEOIP,private,国内直连,no-resolve
+  - MATCH,漏网之鱼
