@@ -397,7 +397,14 @@ rule-providers:
           path: ./ruleset/LocalAreaNetwork.yaml
           interval: 1800 
 
+BanAD:   
+          type: http
+          behavior: classical
+          url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanAD.yaml"
+          path: ./ruleset/BanAD.yaml
+          interval: 1800
 
+          
    Telegram:   
           type: http
           behavior: classical
