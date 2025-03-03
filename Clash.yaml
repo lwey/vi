@@ -266,7 +266,7 @@ u: &u
 proxy-providers:
   机场1:
     <<: *p
-    url: "订阅地址1"
+    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
     path: ./proxy_providers/sub1.yaml
     #注意！如果您的订阅链接中带有“&”字符，请删掉.
   机场2:
