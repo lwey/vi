@@ -1,48 +1,244 @@
-<pre style="word-wrap: break-word; white-space: pre-wrap;">port: 7890
-socks-port: 7891
-allow-lan: true
-mode: Rule
-log-level: info
-external-controller: 127.0.0.1:9090
+mode: rule            # clash工作模式（rule/global/direct,meta暂不支持script）
+ipv6: false           # ip6开关，当为false时，停止解析hostanmes为ip6地址
+log-level: info       # 日志等级 （info/warning/error/debug/silent）
+allow-lan: false      # 是否允许局域网链接(false/true)
+unified-delay: false  # 統一延遲
+tcp-concurrent: true
+external-controller: 127.0.0.1:9236   # 外部控制器地址
+
+clash-for-android:
+  append-system-dns: false
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+  tracing: true
+  
+hosts:
+  mtalk.google.com: 108.177.97.188
+  
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+  
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  listen: 127.0.0.1:1853
+  
+  default-nameserver:  #默认dns, 用于解析 DNS 器 的域名
+    - "223.5.5.5"
+    - "119.29.29.29"
+    - "8.8.8.8"
+    
+  nameserver:  #默认的域名解析器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+    - "https://doh.pub/dns-query"
+    - "https://dns.alidns.com/dns-query"
+  
+  #proxy-server-nameserver:  #代理域名解析器，仅用于解析代理的域名
+    #- "https://doh.pub/dns-query"
+    #- "https://1.0.0.1/dns-query"
+    
+  fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+    - "tls://8.8.4.4:853"
+    - "https://dns.cloudflare.com/dns-query"
+    - "https://1.1.1.1/dns-query"
+    
+   # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - stun.*.*
+    - stun.*.*.*
+    - swscan.apple.com
+    - mesu.apple.com
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    - localhost.ptlogin2.qq.com
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - "*.xiami.com"
+    - "*.music.migu.cn"
+    - music.migu.cn
+    - +.wotgame.cn
+    - +.wggames.cn
+    - +.wowsgame.cn
+    - +.wargaming.net
+    - "*.*.*.srv.nintendo.net"
+    - "*.*.stun.playstation.net"
+    - "+.playstation.com"
+    - "+.playstation.net"
+    - "+.xboxlive.com"
+    - "+.microsoft.com" 
+    - xbox.*.*.microsoft.com
+    - "*.*.xboxlive.com"
+    - "*.ipv6.microsoft.com"
+    - teredo.*.*.*
+    - teredo.*.*
+    - speedtest.cros.wr.pvp.net
+    - +.jjvip8.com
+    - www.douyu.com
+    - activityapi.huya.com
+    - activityapi.huya.com.w.cdngslb.com
+    - www.bilibili.com
+    - api.bilibili.com
+    - a.w.bilicdn1.com
+    
+  fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+    geoip: true        #为真时，不匹配为geoip规则的使用fallback返回结果
+    geoip-code: CN     #geoip匹配区域设定
+    ipcidr:            #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+      - 127.0.0.1/32
+    domain:            #列表中的域名使用fallback返回解析结果
+      - +.facebook.com
+      - +.twitter.com
+      - +.google.com
+      - +.googleapis.com
+      
+proxy-providers:
+  Sub:
+    type: http
+    path: ./providers/proxy/Sub.yaml
+    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
+    interval: 86400
+    health-check:
+      enable: true
+      url: "https://i.ytimg.com/generate_204"
+      #url: "http://cp.cloudflare.com/generate_204"
+      interval: 1200
+    filter: "(?i)United States|美国|Hong kong|香港|taiwan|台湾|Singapore|新加坡|Japan|日本"  #筛选包含关键字的节点
+    #filter: "^(?!.*?海外).*(香港|台湾|日本|新加坡|美国)" #筛选包含关键字及排队包含“海外”的节点
+    #exclude-filter: "海外"  #排队包含“海外”的节点
+    
+#proxies自建
 proxies:
-  - {name: 🇬🇧 高性价比机场:https://kfyun.uk, server: 127.0.0.1, port: 443, type: ss, cipher: aes-128-gcm, password: 6601fb90e9b3, tfo: false}
-  - {name: 🇭🇰 0|🇭🇰香港 01 | 1x HK, server: free.2apzhfa.xyz, port: 31141, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇭🇰 0|🇭🇰香港 02 | 1x HK, server: free.2apzhfa.xyz, port: 31143, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇭🇰 0|🇭🇰香港家宽 03 | 1x HK, server: free.2apzhfa.xyz, port: 31145, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇨🇳 0|🇹🇼台湾 01 | 1x TW, server: free.2apzhfa.xyz, port: 31241, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇨🇳 0|🇹🇼台湾 02 | 1x TW, server: free.2apzhfa.xyz, port: 31243, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇨🇳 0|🇹🇼台湾 03 | 1x TW, server: free.2apzhfa.xyz, port: 31245, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇯🇵 0|🇯🇵日本 01 | 1x JP, server: free.2apzhfa.xyz, port: 31111, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇯🇵 0|🇯🇵日本 02 | 1x JP, server: free.2apzhfa.xyz, port: 31113, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇯🇵 0|🇯🇵日本 03 | 1x JP, server: free.2apzhfa.xyz, port: 31115, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇸🇬 0|🇸🇬新加坡 01 | 1x SG, server: free.2apzhfa.xyz, port: 31171, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇸🇬 0|🇸🇬新加坡 02 | 1x SG, server: free.2apzhfa.xyz, port: 31173, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇸🇬 0|🇸🇬新加坡 03 | 1x SG, server: free.2apzhfa.xyz, port: 31175, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇰🇷 0|🇰🇷韩国 01 | 1x KR, server: free.2apzhfa.xyz, port: 31311, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇰🇷 0|🇰🇷韩国 02 | 1x KR, server: free.2apzhfa.xyz, port: 31313, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇵🇭 0|🇵🇭菲律宾 01 | 1x PH, server: free.2apzhfa.xyz, port: 31341, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇺🇸 0|🇺🇸美国 01 | 1x US Los Angeles, server: free.2apzhfa.xyz, port: 31211, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇺🇸 0|🇺🇸美国家宽 02 | 1x US Los Angeles, server: free.2apzhfa.xyz, port: 31213, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇺🇸 0|🇺🇸美国 03 | 1x US Washington, server: free.2apzhfa.xyz, port: 31215, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇬🇧 0|🇬🇧英国家宽 01 | 1x UK, server: free.2apzhfa.xyz, port: 31271, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇹🇭 0|🇹🇭泰国01  | 1x TH, server: free.2apzhfa.xyz, port: 31741, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇲🇾 0|🇲🇾马来西亚01 | 1x MY, server: free.2apzhfa.xyz, port: 31721, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇮🇳 0|🇮🇳印度 01 | 1x IN, server: free.2apzhfa.xyz, port: 31371, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇦🇺 0|🇦🇺澳大利亚 01 | 1x AU, server: free.2apzhfa.xyz, port: 31411, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇨🇦 0|🇨🇦加拿大 01 | 1x CA, server: free.2apzhfa.xyz, port: 31441, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇩🇪 0|🇩🇪德国 01 | 1x DE, server: free.2apzhfa.xyz, port: 31471, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇷🇺 0|🇷🇺俄罗斯 01 | 1x RU, server: free.2apzhfa.xyz, port: 31511, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇹🇷 0|🇹🇷土耳其 01 | 1x TR, server: free.2apzhfa.xyz, port: 31571, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇺🇦 0|🇺🇦乌克兰 01 | 1x UA, server: free.2apzhfa.xyz, port: 31611, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇻🇳 0|🇻🇳越南 01 | 1x VN, server: free.2apzhfa.xyz, port: 31641, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 🇧🇷 0|🇧🇷巴西 01 | 1x BR, server: free.2apzhfa.xyz, port: 31671, type: ss, cipher: chacha20-ietf-poly1305, password: 28d1ba55-0941-4e5a-b516-b505f3816fec, tfo: false}
-  - {name: 2|🇺🇸1 |  1.1MB/s, server: 69.50.95.138, port: 7307, type: ss, cipher: aes-256-gcm, password: FoOiGlkAA9yPEGP, tfo: false}
-  - {name: 2|🇺🇸4 |  4.3MB/s, server: 34.217.75.205, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, tfo: false}
-  - {name: 2|🇹🇼1 |  6.2MB/s, server: gy.58n.net, port: 33323, type: trojan, password: 300c3275-95cc-33dd-a88e-f57d744c3421, sni: z261.hongkongnode.top, skip-cert-verify: true, tfo: false}
-  - {name: 2|🇺🇸6 |  3.0MB/s, server: console.03.aliyun.aq.kunlunaqs.com, port: 45917, type: ss, cipher: aes-128-gcm, password: f4cd0a554e9d0558c581, tfo: false}
-  - {name: 2|🇯🇵1 |  5.3MB/s, server: 35.77.96.173, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, tfo: false}
-  - {name: 2|🇯🇵2 |  3.9MB/s, server: 3.112.245.114, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, tfo: false}
-  - {name: 2|🇺🇸7 |  2.1MB/s, server: 35.91.187.73, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, tfo: false}
-  - {name: 2|🇸🇬1 |  5.0MB/s, server: 13.229.59.137, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, tfo: false}
-  - {name: 2|🇷🇺4 |  24.8MB/s, server: 217.30.10.18, port: 9001, type: ss, cipher: aes-256-cfb, password: UkXRsXvR6buDMG2Y, tfo: false}
-  - {name: 2|🇷🇺
+  #- {name: type: ss, server: 111.9.146.195, port: "52173", cipher: chacha20-ietf-poly1305, password: juhwygalmcnbvsenuakypz, udp: true}
+  
+#proxy-groups：策略组
+proxy-groups:
+
+  - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
+  
+  - {name: 📢Google, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  
+  - {name: 🍎Apple, type: select, proxies: [DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  
+  - {name: Ⓜ️MicroSoft, type: select, proxies: [🚀select, DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  
+  - {name: 🌎Global, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  
+  - {name: 💸PayPal, type: select, proxies: [🇺🇸American, 🇹🇼Taiwan]}
+  
+  - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
+  
+  - {name: 🇭🇰HongKong, type: url-test, filter: "(?i)香港|Hongkong|hong kong", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  
+  - {name: 🇹🇼Taiwan, type: url-test, filter: "(?i)台湾|Taiwan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  
+  - {name: 🇸🇬Singapore, type: url-test, filter: "(?i)新加坡|SG|Singapore", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  
+  - {name: 🇯🇵Japan, type: url-test, filter: "(?i)日本|JP|Japan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  
+  - {name: 🇺🇸American, type: url-test, filter: "🇺🇸|United States|美国", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  
+#rule-providers：远程分流规则
+rule-providers:
+
+  Reject: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml", path: ./providers/rule/Reject.yaml, interval: 864000}
+  
+  China: {type: http,behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml", path: ./providers/rule/China.yaml, nterval: 864000}
+  
+  Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Google.yaml", path: ./providers/rule/Google.yaml, interval: 864000}
+    
+  Apple: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Apple.yaml", path: ./providers/rule/Apple.yaml, interval: 864000}
+    
+  Microsoft: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml", path: ./providers/rule/Microsoft.yaml, interval: 864000}
+  
+  PayPal: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/PayPal.yaml", path: ./providers/rule/PayPal.yaml, interval: 864000}
+    
+  Proxy: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Proxylite.yaml", path: ./providers/rule/Proxy.yaml, interval: 864000}
+  
+# rules规则由上往下遍历，如上面规则已经命中，则不再往下处理
+rules:
+  #本地/局域网
+  - DOMAIN-SUFFIX,ip6-localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,ip6-loopback,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,local,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,lan,DIRECT,no-resolve
+  
+  #其它
+  - PROCESS-NAME,BitComet,DIRECT
+  - PROCESS-NAME,qbittorrent,DIRECT
+  - DOMAIN-SUFFIX,yowindow.ru,DIRECT
+  - DOMAIN-SUFFIX,yowindow.com,DIRECT
+  
+  # 策略分流RULE-SET
+  - RULE-SET,Reject,REJECT
+  - RULE-SET,Google,📢Google
+  - RULE-SET,Apple,🍎Apple
+  - RULE-SET,Microsoft,Ⓜ️MicroSoft
+  - RULE-SET,PayPal,💸PayPal
+  - RULE-SET,Proxy,🌎Global
+  - RULE-SET,China,DIRECT
+  
+  # GEOIP ，如你不希望进行 DNS 解析，可在 GEOIP 规则的最后加上 ,no-resolve，如 GEOIP,CN,DIRECT,no-resolve。
+  #GEOIPCN，ChinaIP二选一
+  - GEOIP,CN,DIRECT,no-resolve
+  
+  # 必须，MATCH，前面的规则都没有命中，走MATCH，放在最后。
+  - MATCH,🏁Final
