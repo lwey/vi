@@ -394,7 +394,6 @@ rules:
 #  - RULE-SET,custom_direct,🌎 全球直连
 #  - RULE-SET,custom_proxy,🎯 总模式
   - GEOSITE,private,🌎 全球直连
-  - GEOIP,private,🌎 全球直连,no-resolve
   - RULE-SET,Openai,🤖 AI
   - RULE-SET,Claude,🤖 AI
   - RULE-SET,Copilot,🤖 AI
