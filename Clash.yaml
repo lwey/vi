@@ -277,4 +277,139 @@ proxy-providers:
     #注意！如果您的订阅链接中带有“&”字符，请删掉.
 
 proxy-groups:
-  - {name: 🎯 总模式, type: select, pr
+  - {name: 🎯 总模式, type: select, proxies: [🚀 节点选择,🔃 自动回退,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+  - {name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点,🐼 低倍率节点,🌸 自动切换,🇹🇼 台湾节点,🇸🇬 新加坡节点,🇺🇲 美国节点,🇯🇵 日本节点,备用香港节点,备用美国节点,其他节点,🌎 全球直连]}
+  - {name: 🔃 自动回退, type: fallback, proxies: [🇭🇰 香港节点,🇸🇬 新加坡节点,🇹🇼 台湾节点,备用香港节点,🇯🇵 日本节点,🇺🇲 美国节点,🌎 全球直连]}
+  - {name: 🌸 自动切换, <<: *u, tolerance: 10, type: url-test}
+  - {name: ♻️ 手动切换1, type: select, proxies: [🚀 节点选择,🌎 全球直连], use: [机场1]}
+  - {name: ♻️ 手动切换2, type: select, proxies: [🚀 节点选择,🌎 全球直连], use: [机场2]}
+  - {name: 🇭🇰 香港节点, type: url-test, use: [机场1], filter: "香港"}
+#  - {name: 🇭🇰 香港节点, type: url-test, use: [机场1], filter: "香港",exclude-filter:"V3\d{2}-香港"} #不包含V3 HK节点
+  - {name: 🤖 AI, type: select, proxies: [🎯 总模式,🐼 ChatGPT解锁节点,🇺🇲 美国节点,🇯🇵 日本节点,备用美国节点,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+  - {name: Ⓜ️ 微软服务, type: select, proxies: [🌎 全球直连, 🎯 总模式,🐼 低倍率节点,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2]} 
+  - {name: 🐼 低倍率节点, type: select, use: [机场1], filter: "0.5x|0.6x|0.2x|0.1x"}  
+  - {name: 🐼 ChatGPT解锁节点, type: fallback, use: [机场1], filter: "ChatGPT"}
+  - {name: 📢 谷歌FCM, type: select, proxies: [🌎 全球直连,🎯 总模式,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2]}
+  - {name: 🎮 游戏平台, type: select, proxies: [🌎 全球直连,🎯 总模式,🐼 低倍率节点,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2]}
+  - {name: 🎬 油管视频, type: select, proxies: [🎯 总模式,🐼 低倍率节点,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+  - {name: 📲 电报信息, type: select, proxies: [🎯 总模式,🐼 低倍率节点,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+  - {name: 📢 谷歌服务, type: select, proxies: [🎯 总模式,🐼 低倍率节点,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+  - {name: 🍎 苹果服务, type: select, proxies: [🌎 全球直连, 🎯 总模式,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2]}  
+  - {name: 🇹🇼 台湾节点, type: url-test, use: [机场1], filter: "台湾"}
+  - {name: 🇸🇬 新加坡节点, type: url-test, use: [机场1], filter: "新加坡"}
+  - {name: 🇺🇲 美国节点, type: url-test, use: [机场1], filter: "美国"}
+  - {name: 🇯🇵 日本节点, type: url-test, use: [机场1], filter: "日本"}
+  - {name: 其他节点, type: url-test, use: [机场1], exclude-filter: "香港|台湾|新加坡|韩国|美国|日本"}
+#  - {name: 其他节点, type: url-test, use: [机场1], filter: "^(?!.*(香港|台湾|新加坡|韩国|美国|日本)).*"}  #filter排除写法
+  - {name: 备用香港节点, type: url-test, use: [机场2], filter: "香港"}  
+  - {name: 备用美国节点, type: url-test, use: [机场2], filter: "美国"} 
+#  - {name: 📸 国际抖音, type: select, proxies: [🎯 总模式,🌸 自动切换,♻️ 手动切换1,♻️ 手动切换2,🌎 全球直连]}
+#  - {name: 🛑 广告拦截, type: select, proxies: [REJECT,🌎 全球直连,PASS]}
+  - {name: 🐋 漏网之鱼, type: select, proxies: [🎯 总模式,🌎 全球直连]}
+  - {name: 🌎 全球直连, type: select, proxies: [DIRECT]}
+
+##勿动，引用，规则的重复内容，<<: *r
+r: &r
+  {type: http, behavior: classical, format: yaml, interval: 86400}
+
+rule-providers:
+##下方是两个本地规则的启用，自行选择。注意路径位置，需要手动创建
+#  custom_direct:
+#    type: file
+#    format: text
+#    behavior: classical
+#    path: ./rule/custom_direct.yaml
+#  custom_proxy:
+#    type: file
+#    format: text
+#    behavior: classical
+#    path: ./rule/custom_proxy.yaml
+  GoogleFCM:
+    <<: *r
+    path: ./rule/GoogleFCM.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.yaml"
+  ChinaCompanyIp:
+    <<: *r
+    format: text
+    path: ./rule/ChinaCompanyIp.yaml
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
+  ProxyGFWlist:
+    <<: *r
+    format: text
+    path: ./rule/ProxyGFWlist.yaml
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+  Openai:
+    <<: *r
+    path: ./rule/Openai.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
+  Copilot:
+    <<: *r
+    path: ./rule/Copilot.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml"
+  Claude:
+    <<: *r
+    path: ./rule/Claude.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml"
+  Gemini:
+    <<: *r
+    path: ./rule/Gemini.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml"
+  cnMedia:
+    <<: *r
+    path: ./rule/cnMedia.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml"
+  EPIC:
+    <<: *r
+    path: ./rule/EPIC.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml"
+  Telegram:
+    <<: *r
+    path: ./rule/Telegram.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"
+  Youtube:
+    <<: *r
+    path: ./rule/Youtube.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml"
+  Google:
+    <<: *r
+    path: ./rule/Google.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"
+  Microsoft:
+    <<: *r
+    path: ./rule/Microsoft.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+  Apple:
+    <<: *r
+    path: ./rule/Apple.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml"
+
+rules:
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT-DROP # 禁用quic(不包括国内)
+  - AND,((PROCESS-NAME,clash),(NOT,((IN-TYPE,inner)))),REJECT
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+#  - GEOSITE,category-ads-all,🛑 广告拦截
+#  - GEOSITE,category-httpdns,🛑 广告拦截
+#  - GEOSITE,tiktok,📸 国际抖音
+##下方是两个本地规则的启用，自行选择
+#  - RULE-SET,custom_direct,🌎 全球直连
+#  - RULE-SET,custom_proxy,🎯 总模式
+  - GEOSITE,private,🌎 全球直连
+  - GEOIP,private,🌎 全球直连,no-resolve
+  - RULE-SET,Openai,🤖 AI
+  - RULE-SET,Claude,🤖 AI
+  - RULE-SET,Copilot,🤖 AI
+  - RULE-SET,Gemini,🤖 AI
+  - RULE-SET,GoogleFCM,📢 谷歌FCM
+  - RULE-SET,Youtube,🎬 油管视频
+  - RULE-SET,Google,📢 谷歌服务
+  - RULE-SET,Apple,🍎 苹果服务
+  - RULE-SET,Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,Telegram,📲 电报信息
+  - RULE-SET,EPIC,🎮 游戏平台
+  - RULE-SET,ProxyGFWlist,🎯 总模式
+  - GEOSITE,gfw,🎯 总模式
+  - RULE-SET,ChinaCompanyIp,🌎 全球直连
+  - RULE-SET,cnMedia,🌎 全球直连
+  - GEOSITE,CN,🌎 全球直连
+  - GEOIP,CN,🌎 全球直连,no-resolve
+  - MATCH,🐋 漏网之鱼
