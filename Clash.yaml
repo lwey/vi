@@ -271,7 +271,7 @@ proxy-providers:
     #注意！如果您的订阅链接中带有“&”字符，请删掉.
   机场2:
     <<: *p
-    url: "订阅地址2"
+    url: "https://super.quicklinkapp.top/api/v1/client/subscribe?token=f2e84ea29b09deddafa97f16fe30bc57"
     path: ./proxy_providers/sub2.yaml
     #exclude-filter: "剩余流量|重置|到期"
     #注意！如果您的订阅链接中带有“&”字符，请删掉.
