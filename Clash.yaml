@@ -221,66 +221,66 @@ proxies:
 
 proxy-groups:
 
-  - name: 默认
+  - name: ♥️ 网速超快 
     type: select
-    proxies: [自动选择,直连,香港,台湾,日本,新加坡,美国,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🟡延迟优选,直连,香港,台湾,日本,新加坡,美国,]
     icon: "https://raw.githubusercontent.com/Centralmatrix3/Matrix-io/master/Gallery/Color/Clash.png"
 
-  - name: Telegram
+  - name: 📟 Telegram
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/telegram(1).png"
 
 
-  - name: 广告拦截
+  - name: 🛑 广告拦截
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,REJECT]
+    proxies: [REJECT]
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/ad(5).png"
 
-  - name: 应用净化
+  - name: 🛑 应用净化
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,REJECT]
+    proxies: [REJECT]
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/ad(3).png"
 
-  - name: OpenAi
+  - name: 🤖 AI
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/ChatGPT(1).png"
 
 
-  - name: Twitter
+  - name: 🐦 推特消息
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/fmz200/wool_scripts/master/icons/apps/twitter.png"
 
 
-  - name: YouTube
+  - name: 📽️ YouTube
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/youtube(2).png"
 
 
-  - name: Tiktok
+  - name: 📽️ Tiktok
     type: select
-    proxies: [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies: [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png"
 
 
-  - name: Github
+  - name: 🖥️ Github
     type: select
-    proxies:  [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换,香港自动选择,台湾自动选择,日本自动选择,美国自动选择,新加坡自动选择]
+    proxies:  [🇭🇰 香港节点,🇨🇳 台湾节点,🇯🇵 日本节点,🇺🇸 美国节点,🇸🇬 狮城节点]
     icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png"
 
 
   - name: 国内媒体
     type: select
-    proxies:  [默认,香港,台湾,日本,新加坡,美国,自动选择,直连,手动切换]
+    proxies:  [直连,🐟 兜底分流]
     icon: "https://raw.githubusercontent.com/fmz200/wool_scripts/master/icons/apps/Movist.png"
 
 
   - name: 国内
     type: select
-    proxies:  [直连,默认,香港,台湾,日本,新加坡,美国,自动选择,手动切换]
+    proxies:  [直连,🐟 兜底分流]
     icon: "https://raw.githubusercontent.com/Centralmatrix3/Matrix-io/master/Gallery/Color/CN.png"
 
 
@@ -321,49 +321,49 @@ proxy-groups:
     include-all: true
     icon: "https://raw.githubusercontent.com/Centralmatrix3/Matrix-io/master/Gallery/Color/Global.png"
 
-  - name: 手动切换
+  - name: 🐟 兜底分流
     type: select
     include-all: true
     icon: "https://raw.githubusercontent.com/Centralmatrix3/Matrix-io/master/Gallery/Color/Final.png"
 
 
 
-  - name: 自动选择
+  - name: 🟡延迟优选 
     type: url-test
     include-all: true
     filter: "(?i)^(?!.*(?:直连)).*"
     tolerance: 100
     icon: "https://raw.githubusercontent.com/Centralmatrix3/Matrix-io/master/Gallery/Color/Available.png"
 
-  - name: 香港自动选择
+  - name: 🇭🇰 香港节点
     type: url-test 
     include-all: true
     filter: "(?i) 港|hk|hongkong|hong kong"
     tolerance: 200
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/Hongkong(1).png"
 
-  - name: 台湾自动选择
+  - name: 🇨🇳 台湾节点
     type: url-test 
     include-all: true
     filter: "(?i)台|tw|taiwan"
     tolerance: 100
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/taiwan(3).png"
 
-  - name: 日本自动选择
+  - name: 🇯🇵 日本节点
     type: url-test 
     include-all: true
     filter: "(?i)日|jp|japan"
     tolerance: 100
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/Japan.png"
 
-  - name: 美国自动选择
+  - name: 🇺🇸 美国节点 
     type: url-test 
     include-all: true
     filter: "(?i)美|us|unitedstates|united states"
     tolerance: 100
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/master/icon/US(1).png"
 
-  - name: 新加坡自动选择
+  - name: 🇸🇬 狮城节点
     type: url-test 
     include-all: true
     filter: "(?i)(新|sg|singapore)"
@@ -375,20 +375,19 @@ proxy-groups:
 rules:
   - IP-CIDR,95.161.76.100/31,REJECT,no-resolve
   - RULE-SET,LocalAreaNetwork,全球直连
-  - RULE-SET,UnBan,全球直连
-  - RULE-SET,BanAD,广告拦截
-  - RULE-SET,BanProgramAD,应用净化
-  - RULE-SET,Telegram,Telegram
-  - RULE-SET,OpenAi,OpenAi
-  - RULE-SET,YouTube,YouTube
-  - RULE-SET,Twitter,Twitter
-  - RULE-SET,Github,Github
-  - RULE-SET,ProxyGFWlist,默认
+  - RULE-SET,BanAD,🛑 广告拦截
+  - RULE-SET,BanProgramAD,🛑 应用净化
+  - RULE-SET,📟 Telegram,📟 Telegram
+  - RULE-SET,🤖 AI,🤖 AI
+  - RULE-SET,📽️ YouTube,📽️ YouTube
+  - RULE-SET,🐦 推特消息,🐦 推特消息
+  - RULE-SET,🖥️ Github,🖥️ Github
+  - RULE-SET,ProxyGFWlist,♥️网速超快 
   - RULE-SET,Directlist,国内
   - RULE-SET,Download,全球直连
   - GEOSITE,CN,直连
   - GEOIP,CN,直连
-  - MATCH,默认
+  - MATCH,♥️网速超快 
 
 rule-providers:
    LocalAreaNetwork:   
