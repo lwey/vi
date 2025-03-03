@@ -393,7 +393,6 @@ rules:
 ##下方是两个本地规则的启用，自行选择
 #  - RULE-SET,custom_direct,🌎 全球直连
 #  - RULE-SET,custom_proxy,🎯 总模式
-  - GEOSITE,private,🌎 全球直连
   - RULE-SET,Openai,🤖 AI
   - RULE-SET,Claude,🤖 AI
   - RULE-SET,Copilot,🤖 AI
@@ -410,5 +409,5 @@ rules:
   - RULE-SET,ChinaCompanyIp,🌎 全球直连
   - RULE-SET,cnMedia,🌎 全球直连
   - GEOSITE,CN,🌎 全球直连
-  - GEOIP,CN,🌎 全球直连,no-resolve
+  - GEOIP,CN,🌎 全球直连
   - MATCH,🐋 漏网之鱼
