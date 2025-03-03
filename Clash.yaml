@@ -88,7 +88,7 @@ NodeParam: &NodeParam {type: http, interval: 86400, health-check: {enable: true,
 # 锚点 - 节点订阅
 proxy-providers: 
   我的节点:
-    url: '机场的订阅地址'
+    url: 'http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c'
     <<: *NodeParam
     path: './proxy_provider/Providers.yaml'
 
