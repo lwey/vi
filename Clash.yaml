@@ -129,10 +129,6 @@ proxy-groups:
   - {name: AI, type: select, include-all-providers: true, filter: *FilterAll}
   - {name: TikTok, type: select, include-all-providers: true, filter: *FilterAll}
   - {name: Telegram, type: select, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
-  - {name: App Store, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
-  - {name: Apple账户, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
-  - {name: TestFlight, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
-  - {name: 1Password, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
   - {name: Microsoft, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
   - {name: Netflix, type: select, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
   - {name: Emby, type: select, proxies: [DIRECT, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略]}
@@ -223,10 +219,6 @@ rule-providers:
     path: './rules/Game.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Game.yaml'
 
-  1Password:
-    <<: *RuleProviders
-    path: './rules/1PasswordUS.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
 
   Steam:
     <<: *RuleProviders
@@ -243,35 +235,6 @@ rule-providers:
     path: './rules/Emby.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/EmbyServer.yaml'
 
-  iCloudChina:
-    <<: *RuleProviders
-    path: './rules/iCloudChina.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/iCloudChina.yaml'
-
-  ApplePushNotificationService:
-    <<: *RuleProviders
-    path: './rules/ApplePushNotificationService.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ApplePushNotificationService.yaml'
-
-  AppleSoftwareUpdates:
-    <<: *RuleProviders
-    path: './rules/AppleSoftwareUpdates.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/AppleSoftwareUpdates.yaml'
-
-  AppleID:
-    <<: *RuleProviders
-    path: './rules/AppleID.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/AppleID.yaml'
-
-  AppStore:
-    <<: *RuleProviders
-    path: './rules/AppStore.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/AppStore.yaml'
-
-  TestFlight:
-    <<: *RuleProviders
-    path: './rules/TestFlight.yaml'
-    url: 'https://rule.kelee.one/Clash/TestFlight.yaml'
 
   Microsoft:
     <<: *RuleProviders
@@ -306,13 +269,6 @@ rules:
   - RULE-SET, Game, 游戏选择
   - RULE-SET, Netflix, Netflix
   - RULE-SET, Emby, Emby
-  - RULE-SET, TestFlight, TestFlight
-  - RULE-SET, iCloudChina, DIRECT
-  - RULE-SET, ApplePushNotificationService, DIRECT
-  - RULE-SET, AppleSoftwareUpdates, DIRECT
-  - RULE-SET, AppleID, Apple账户
-  - RULE-SET, AppStore, App Store
-  - RULE-SET, 1Password, 1Password
   - RULE-SET, Microsoft, Microsoft
   - RULE-SET, Google, 兜底策略
   - RULE-SET, Telegram, Telegram
