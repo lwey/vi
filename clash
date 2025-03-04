@@ -173,15 +173,15 @@ proxy-groups:
 
   - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
   
-  - {name: 📢Google, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📟 Telegram, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
-  - {name: 🍎Apple, type: select, proxies: [DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📽️ YouTube, type: select, proxies: [DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
-  - {name: Ⓜ️MicroSoft, type: select, proxies: [🚀select, DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 🖥️ 微软服务, type: select, proxies: [🚀select, DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
   - {name: 🌎Global, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
-  - {name: 💸PayPal, type: select, proxies: [🇺🇸American, 🇹🇼Taiwan]}
+  - {name: 🐦 Twitter, type: select, proxies: [🇺🇸American, 🇹🇼Taiwan]}
   
   - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
   
@@ -202,13 +202,13 @@ rule-providers:
   
   China: {type: http,behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml", path: ./providers/rule/China.yaml, nterval: 864000}
   
-  Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Google.yaml", path: ./providers/rule/Google.yaml, interval: 864000}
-    
-  Apple: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Apple.yaml", path: ./providers/rule/Apple.yaml, interval: 864000}
-    
-  Microsoft: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml", path: ./providers/rule/Microsoft.yaml, interval: 864000}
+  📟 Telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml", path: ./ruleset/Telegram.yaml, interval: 864000}
   
-  PayPal: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/PayPal.yaml", path: ./providers/rule/PayPal.yaml, interval: 864000}
+  📽️ YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml", path: ./ruleset/YouTube.yaml, interval: 864000}
+    
+  🖥️ 微软服务: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml", path: ./providers/rule/Microsoft.yaml, interval: 864000}
+  
+  🐦 Twitter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Twitter.yaml", path: ./ruleset/Twitter.yaml, interval: 864000}
     
   Proxy: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Proxylite.yaml", path: ./providers/rule/Proxy.yaml, interval: 864000}
   
@@ -229,10 +229,10 @@ rules:
   
   # 策略分流RULE-SET
   - RULE-SET,Reject,REJECT
-  - RULE-SET,Google,📢Google
-  - RULE-SET,Apple,🍎Apple
-  - RULE-SET,Microsoft,Ⓜ️MicroSoft
-  - RULE-SET,PayPal,💸PayPal
+  - RULE-SET,📟 Telegram,📟 Telegram
+  - RULE-SET,📽️ YouTube,📽️ YouTube
+  - RULE-SET,🖥️ 微软服务,🖥️ 微软服务
+  - RULE-SET,🐦 Twitter,🐦 Twitter
   - RULE-SET,Proxy,🌎Global
   - RULE-SET,China,DIRECT
   
