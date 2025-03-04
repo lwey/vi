@@ -234,7 +234,7 @@ rules:
   - RULE-SET,📟 Telegram,📟 Telegram
   - RULE-SET,📽️ YouTube,📽️ YouTube
   - RULE-SET,🖥️ 微软服务,🖥️ 微软服务
-  - RULE-SET,🌌 Google,🌌Google
+  - RULE-SET,🌌 Google,🌌 Google
   - RULE-SET,🐦 Twitter,🐦 Twitter
   - RULE-SET,Proxy,🏁Final
   - RULE-SET,China,DIRECT
