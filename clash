@@ -224,6 +224,7 @@ rules:
   - DOMAIN-SUFFIX,lan,DIRECT,no-resolve
   
   #其它
+
   - PROCESS-NAME,BitComet,DIRECT
   - PROCESS-NAME,qbittorrent,DIRECT
   - DOMAIN-SUFFIX,yowindow.ru,DIRECT
