@@ -173,15 +173,15 @@ proxy-groups:
 
   - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
   
-  - {name: 📟 Telegram, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📟 Telegram, type: select, proxies: [ 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+
+  - {name: 🐦 Twitter, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
-  - {name: 📽️ YouTube, type: select, proxies: [DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📽️ YouTube, type: select, proxies: [ 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
-  - {name: 🖥️ 微软服务, type: select, proxies: [🚀select, DIRECT, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
-  
-  - {name: 🌎Global, type: select, proxies: [🚀select, 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
-  
-  - {name: 🐦 Twitter, type: select, proxies: [🇺🇸American, 🇹🇼Taiwan]}
+  - {name: 🖥️ 微软服务, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+ 
+  - {name: 🐦 Twitter, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
   - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
   
@@ -233,7 +233,7 @@ rules:
   - RULE-SET,📽️ YouTube,📽️ YouTube
   - RULE-SET,🖥️ 微软服务,🖥️ 微软服务
   - RULE-SET,🐦 Twitter,🐦 Twitter
-  - RULE-SET,Proxy,🌎Global
+  - RULE-SET,Proxy,🏁Final
   - RULE-SET,China,DIRECT
   
   # GEOIP ，如你不希望进行 DNS 解析，可在 GEOIP 规则的最后加上 ,no-resolve，如 GEOIP,CN,DIRECT,no-resolve。
