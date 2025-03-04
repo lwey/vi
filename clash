@@ -189,7 +189,7 @@ proxy-groups:
   
   - {name: 🇹🇼Taiwan, type: url-test, filter: "(?i)台湾|Taiwan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
   
-  - {name: 🇸🇬Singapore, type: url-test, filter: "(?i)新加坡|SG|Singapore", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
+  - {name: 🇸🇬Singapore, type: url-test, filter: "(?i)新加坡|狮城|SG|Singapore", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
   
   - {name: 🇯🇵Japan, type: url-test, filter: "(?i)日本|JP|Japan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
   
