@@ -180,8 +180,6 @@ proxy-groups:
   - {name: 📽️ YouTube, type: select, proxies: [ 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
   - {name: 🖥️ 微软服务, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
- 
-  - {name: 🐦 Twitter, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
   
   - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
   
