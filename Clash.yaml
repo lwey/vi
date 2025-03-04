@@ -92,7 +92,7 @@ proxy-providers:
     override:
       additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
   机场名称2:
-    url: 'https://super.jumplinkapp.top/api/v1/client/subscribe?token=f2e84ea29b09deddafa97f16fe30bc57'
+    url: ''
     <<: *NodeParam
     path: './proxy_providers/机场名称2.yaml'
     override:
