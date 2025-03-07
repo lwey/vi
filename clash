@@ -1,4 +1,4 @@
-mode: rule            # clash工作模式（rule/global/direct,meta暂不支持script）
+mode: debug            # clash工作模式（rule/global/direct,meta暂不支持script）
 ipv6: false           # ip6开关，当为false时，停止解析hostanmes为ip6地址
 log-level: info       # 日志等级 （info/warning/error/debug/silent）
 allow-lan: false      # 是否允许局域网链接(false/true)
