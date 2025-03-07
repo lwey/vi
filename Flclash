@@ -115,7 +115,7 @@ proxy-groups:
   - { name: Domestic, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png", <<: *Selector }  
   - { name: Final, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png", <<: *Selector }
   # 手动＆自动
-  - { name: 漫游, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cellular.png", <<: *Freec }  
+  - { name: 漫游, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cellular.png", <<: *Selector }  
   - { name: 自选, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/MY.png", <<: *Uses }
 #  - { name: 自动, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png", <<: *auto }
   # 分隔,下面是地区分组
