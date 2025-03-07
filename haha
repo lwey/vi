@@ -2,23 +2,21 @@
 mixed-port: 7890
 redir-port: 7891
 tproxy-port: 1536
-mode: rule
-allow-lan: true
-ipv6: false
-unified-delay: true
+log-level: silent                # 日志等级 （info/warning/error/debug/silent）
+mode: rule                       # clash工作模式（rule/global/direct,meta暂不支持script）
+allow-lan: true                  # 是否允许局域网链接(false/true)
+ipv6: false                      # ip6开关，当为false时，停止解析hostanmes为ip6地址
+unified-delay: true              # 統一延遲
 tcp-concurrent: true
 enable-process: true
-log-level: silent
+
+clash-for-android:
+  append-system-dns: false
 
 geodata-mode: true     #true时geoip.文件为dat格式，false时为mmdb格式
 geodata-loader: standard
 geo-auto-update: true
 geo-update-interval: 168
-geox-url:
-  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
-  asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
 
 #匹配进程
 find-process-mode: strict
@@ -33,10 +31,13 @@ external-ui: /data/adb/box_bll/panel/Zash/ #/Meta #/Yacd
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 secret: ""
 
+hosts:
+  mtalk.google.com: 108.177.97.188
+
 profile:
   store-selected: true
   store-fake-ip: true
-
+  tracing: true
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -74,18 +75,45 @@ dns:
   enable: true
   prefer-h3: true
   ipv6: true
-  listen: 0.0.0.0:1053
+  listen: 127.0.0.1:1853
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.0/15
+  fake-ip-range: 198.18.0.0/16
   fake-ip-filter:
     - "*"
     - "+.lan"
     - "connect.rom.miui.com"
     - "localhost.ptlogin2.qq.com"
-  default-nameserver:
+  default-nameserver:     #默认dns, 用于解析 DNS 器 的域名
     - 223.5.5.5
     - 223.6.6.6
     - 119.29.29.29
+
+nameserver:    #默认的域名解析器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+
+  proxy-server-nameserver:       #代理域名解析器，仅用于解析代理的域名
+    - https://doh.pub/dns-query
+    - https://1.0.0.1/dns-query  
+
+  fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+    - tls://8.8.4.4:853
+    - https://dns.cloudflare.com/dns-query
+    - https://1.1.1.1/dns-query
+
+fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+    geoip: true        #为真时，不匹配为geoip规则的使用fallback返回结果
+    geoip-code: CN     #geoip匹配区域设定
+    ipcidr:            #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+      - 127.0.0.1/32
+    domain:            #列表中的域名使用fallback返回解析结果
+      - +.facebook.com
+      - +.twitter.com
+      - +.google.com
+      - +.googleapis.com
+
   nameserver-policy:
     'geosite:category-ads-all': rcode://success
     'geosite:jd,tencent,meituan,zhihu,huya,douyu,bilibili,pinduoduo':
@@ -98,12 +126,7 @@ dns:
     'geosite:private,cn':
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-  nameserver:
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query  
+
  
 proxy-providers:
   Sub:
