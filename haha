@@ -87,16 +87,13 @@ dns:
 nameserver:    #默认的域名解析器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-
-  proxy-server-nameserver:       #代理域名解析器，仅用于解析代理的域名
+proxy-server-nameserver:       #代理域名解析器，仅用于解析代理的域名
     - https://doh.pub/dns-query
     - https://1.0.0.1/dns-query  
-
-  fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
     - tls://8.8.4.4:853
     - https://dns.cloudflare.com/dns-query
     - https://1.1.1.1/dns-query
-
 fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true        #为真时，不匹配为geoip规则的使用fallback返回结果
     geoip-code: CN     #geoip匹配区域设定
