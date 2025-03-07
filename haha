@@ -1,7 +1,4 @@
 #通用配置
-mixed-port: 7890
-redir-port: 7891
-tproxy-port: 1536
 log-level: silent                # 日志等级 （info/warning/error/debug/silent）
 mode: rule                       # clash工作模式（rule/global/direct,meta暂不支持script）
 allow-lan: true                  # 是否允许局域网链接(false/true)
