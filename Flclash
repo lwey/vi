@@ -1,7 +1,7 @@
 # ===================================
 #锚点开始
 #订阅名和订阅链接、图标
-Provider1: &Provider1 "Eless"
+Provider1: &Provider1 "http://106.75.141.168:3389/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
 Provider1Icon: &Provider1Icon "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/Linkeless.png"
 Provider2: &Provider2 "sntp"
 Provider2Icon: &Provider2Icon "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/shouhou(4).png"
