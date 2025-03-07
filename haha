@@ -1,5 +1,5 @@
-log-level: silent                # 日志等级 （info/warning/error/debug/silent）
 mode: rule                       # clash工作模式（rule/global/direct,meta暂不支持script）
+log-level: silent                # 日志等级 （info/warning/error/debug/silent）
 allow-lan: true                  # 是否允许局域网链接(false/true)
 ipv6: false                      # ip6开关，当为false时，停止解析hostanmes为ip6地址
 unified-delay: true              # 統一延遲
