@@ -106,7 +106,6 @@ fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fal
       - +.twitter.com
       - +.google.com
       - +.googleapis.com
-
   nameserver-policy:
     'geosite:category-ads-all': rcode://success
     'geosite:jd,tencent,meituan,zhihu,huya,douyu,bilibili,pinduoduo':
