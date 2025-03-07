@@ -104,7 +104,23 @@ dns:
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query  
-    
+ 
+proxy-providers:
+  Sub:
+    type: http
+    path: ./providers/proxy/Sub.yaml
+    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
+    interval: 86400
+    health-check:
+      enable: true
+      url: "https://i.ytimg.com/generate_204"
+      #url: "http://cp.cloudflare.com/generate_204"
+      interval: 1200
+    filter: "(?i)United States|美国|Hong kong|香港|taiwan|台湾|Singapore|新加坡|Japan|日本"  #筛选包含关键字的节点
+    #filter: "^(?!.*?海外).*(香港|台湾|日本|新加坡|美国)" #筛选包含关键字及排队包含“海外”的节点
+    #exclude-filter: "海外"  #排队包含“海外”的节点
+
+
 #proxies自建
 proxies:
   #- {name: type: ss, server: 111.9.146.195, port: "52173", cipher: chacha20-ietf-poly1305, password: juhwygalmcnbvsenuakypz, udp: true}
