@@ -106,18 +106,7 @@ fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fal
       - +.twitter.com
       - +.google.com
       - +.googleapis.com
-nameserver-policy:
-    'geosite:category-ads-all': rcode://success
-    'geosite:jd,tencent,meituan,zhihu,huya,douyu,bilibili,pinduoduo':
-      - https://doh.pub/dns-query
-    'geosite:aliyun,alibaba,alibabacloud,netease,eleme,sina':
-      - https://dns.alidns.com/dns-query
-    'geosite:bytedance,tiktok':
-      - 180.184.1.1
-      - 180.184.2.2
-    'geosite:private,cn':
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
+
 
  
 proxy-providers:
