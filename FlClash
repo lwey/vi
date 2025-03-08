@@ -126,7 +126,7 @@ proxy-groups:
   - {name: TikTok, type: select, include-all-providers: true, filter: *FilterAll}
   - {name: YouTube, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: Microsoft, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
-  - {name: 兜底策略, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT]}
+  - {name: Final, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT]}
 
   - {name: HongKong, type: select, proxies: [⏱香港时延优选, 🚥香港故障转移, 🎛香港负载均衡]}
   - {name: Taiwan, type: select, proxies: [⏱台湾时延优选, 🚥台湾故障转移, 🎛台湾负载均衡]}
@@ -245,7 +245,7 @@ rule-providers:
 rules:
   - RULE-SET, LAN, DIRECT
   - RULE-SET, Direct, DIRECT
-  - RULE-SET, Proxy, 兜底策略
+  - RULE-SET, Proxy, Final
   - RULE-SET, ChinaDownloadCDN, DIRECT
   - RULE-SET, AI, AI
   - RULE-SET, TikTok, TikTok
@@ -253,8 +253,8 @@ rules:
   - RULE-SET, Twitter, Twitter
   - RULE-SET, YouTube, YouTube
   - RULE-SET, Microsoft, Microsoft
-  - RULE-SET, Google, 兜底策略
+  - RULE-SET, Google, Final
   - RULE-SET, Telegram, Telegram
   - RULE-SET, ESET_China, DIRECT
   - GEOIP, CN, DIRECT
-  - MATCH, 兜底策略
+  - MATCH, Final
