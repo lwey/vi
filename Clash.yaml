@@ -138,8 +138,6 @@ proxy-groups:
   - {name: Singapore, type: select, proxies: [⏱新国时延优选, 🚥新国故障转移, 🎛新国负载均衡]}
   - {name: American, type: select, proxies: [⏱美国时延优选, 🚥美国故障转移, 🎛美国负载均衡]}
   - {name: United, type: select, proxies: [⏱英国时延优选, 🚥英国故障转移, 🎛英国负载均衡]}
-  - {name: France, type: select, proxies: [⏱法国时延优选, 🚥法国故障转移, 🎛法国负载均衡]}
-  - {name: Germany, type: select, proxies: [⏱德国时延优选, 🚥德国故障转移, 🎛德国负载均衡]}
 
 # 时延优选策略组
   - {name: ⏱香港时延优选, <<: *UrlTest, filter: *FilterHK}
