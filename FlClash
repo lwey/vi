@@ -85,11 +85,11 @@ proxy-providers:
   机场名称1:
     url: 'http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c'
     <<: *NodeParam
-    path: './proxy_providers/机场名称1.yaml'
+    path: './proxy_providers/机场1.yaml'
     override:
       additional-prefix: "[机场1] " # 为订阅节点添加机场名称前缀
   机场名称2:
-    url: '机场2的订阅URL'
+    url: 'https://super.jumplinkapp.top/api/v1/client/subscribe?token=f2e84ea29b09deddafa97f16fe30bc57'
     <<: *NodeParam
     path: './proxy_providers/机场2.yaml'
     override:
