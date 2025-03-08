@@ -173,7 +173,7 @@ proxy-groups:
   - {name: 🎛德国负载均衡, <<: *LoadBalance, filter: *FilterDE}
 
 rule-providers:
- Reject:
+Reject:
     <<: *RuleProviders
     path: './providers/rule/Reject.yaml'
     url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml'
