@@ -174,28 +174,62 @@ proxy-groups:
 
 #rule-providers：远程分流规则
 rule-providers:
+ Reject:
+    <<: *RuleProviders
+    path: './providers/rule/Reject.yaml'
+    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml'
+    
+  LAN:
+    <<: *RuleProviders
+    path: './rules/Lan.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml'
 
-  Reject: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml", path: ./providers/rule/Reject.yaml, interval: 864000}
+  Direct:
+    <<: *RuleProviders
+    path: './rules/Direct.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
 
-  Direct: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/Direct.yaml", path: ./rules/Direct.yaml, nterval: 864000}
-
-     LAN: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml", path: ./rules/Lan.yaml, nterval: 864000}
-
-      AI: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/AI.yaml", path: ./rules/AI.yaml, nterval: 864000}
+  AI:
+    <<: *RuleProviders
+    path: './rules/AI.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
   
-  China: {type: http,behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml", path: ./providers/rule/China.yaml, nterval: 864000}
-  
-  📟 Telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml", path: ./ruleset/Telegram.yaml, interval: 864000}
-  
+  China:
+    <<: *RuleProviders
+    path: './providers/rule/China.yaml'
+    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml'
+
+  📟 Telegram:
+    <<: *RuleProviders
+    path: './ruleset/Telegram.yaml'
+    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml'
+
+  📽️ YouTube:
+    <<: *RuleProviders
+    path: './ruleset/YouTube.yaml'
+    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml'
+    
   📽️ YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml", path: ./ruleset/YouTube.yaml, interval: 864000}
     
-  🖥️ 微软服务: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml", path: ./providers/rule/Microsoft.yaml, interval: 864000}
-  
-  🌌 Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Google.yaml", path: ./ruleset/Google.yaml, interval: 864000}
-
-  🐦 Twitter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Twitter.yaml", path: ./ruleset/Twitter.yaml, interval: 864000}
+  🖥️ 微软服务:
+    <<: *RuleProviders
+    path: './providers/rule/Microsoft.yaml'
+    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml'
     
-  Proxy: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Proxylite.yaml", path: ./providers/rule/Proxy.yaml, interval: 864000}
+  🌌 Google:
+    <<: *RuleProviders
+    path: './ruleset/Google.yaml'
+    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Google.yaml'
+  
+  🐦 Twitter:
+    <<: *RuleProviders
+    path: './ruleset/Twitter.yaml'
+    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Twitter.yaml'    
+    
+   Proxy:
+    <<: *RuleProviders
+    path: './providers/rule/Proxy.yaml'
+    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Proxylite.yaml'    
   
 # rules规则由上往下遍历，如上面规则已经命中，则不再往下处理
 rules:
