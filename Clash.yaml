@@ -209,8 +209,6 @@ rule-providers:
     path: './ruleset/YouTube.yaml'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml'
     
-  📽️ YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml", path: ./ruleset/YouTube.yaml, interval: 864000}
-    
   🖥️ 微软服务:
     <<: *RuleProviders
     path: './providers/rule/Microsoft.yaml'
