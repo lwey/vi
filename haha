@@ -1,18 +1,22 @@
 mode: rule                       # clash工作模式（rule/global/direct,meta暂不支持script）
-log-level: silent                # 日志等级 （info/warning/error/debug/silent）
+log-level: debug                # 日志等级 （info/warning/error/debug/silent）
 allow-lan: true                  # 是否允许局域网链接(false/true)
-ipv6: false                      # ip6开关，当为false时，停止解析hostanmes为ip6地址
+ipv6: true                      # ip6开关，当为false时，停止解析hostanmes为ip6地址
 unified-delay: true              # 統一延遲
 tcp-concurrent: true
 enable-process: true
 
-clash-for-android:
-  append-system-dns: false
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+redir-port: 7893
+tproxy-port: 7894
+
 
 geodata-mode: true     #true时geoip.文件为dat格式，false时为mmdb格式
 geodata-loader: standard
 geo-auto-update: true
-geo-update-interval: 168
+geo-update-interval: 24
 
 #匹配进程
 find-process-mode: strict
@@ -52,28 +56,20 @@ sniffer:
     - "Mijia Cloud"
 
 tun:
-  enable: true 
-  device: Mihomo
-  stack: mixed
+  enable: true
+  stack: system
   dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+    - any:53
   auto-route: true
-  strict-route: true
-  auto-redirect: false
   auto-detect-interface: true
-  route-exclude-address:
-    - 192.168.0.0/16
-    - fc00::/7
-  exclude-package: #
 
 dns:
   enable: true
   prefer-h3: true
   ipv6: true
-  listen: 127.0.0.1:1853
+  listen: 0.0.0.0:1053
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.0/16
+  fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
     - "*"
     - "+.lan"
