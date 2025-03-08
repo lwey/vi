@@ -123,13 +123,13 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 
 #proxy-groups：策略组
 proxy-groups:
-  - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
   - {name: 📟 Telegram, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
   - {name: 🐦 Twitter, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
   - {name: 📽️ YouTube, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
   - {name: 🖥️ 微软服务, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
   - {name: 🌌 Google, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
-  - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
+  - {name: AI, type: select, include-all-providers: true, filter: *FilterAll}
+  - {name: 🏁Final, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan, DIRECT]}
   
   - {name: HongKong, type: select, proxies: [⏱香港时延优选, 🚥香港故障转移, 🎛香港负载均衡]}
   - {name: Taiwan, type: select, proxies: [⏱台湾时延优选, 🚥台湾故障转移, 🎛台湾负载均衡]}
@@ -178,6 +178,12 @@ proxy-groups:
 rule-providers:
 
   Reject: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml", path: ./providers/rule/Reject.yaml, interval: 864000}
+
+  Direct: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/Direct.yaml", path: ./rules/Direct.yaml, nterval: 864000}
+
+     LAN: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml", path: ./rules/Lan.yaml, nterval: 864000}
+
+      AI: {type: http,behavior: classical, url: "https://kelee.one/Tool/Clash/Rule/AI.yaml", path: ./rules/AI.yaml, nterval: 864000}
   
   China: {type: http,behavior: classical, url: "https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml", path: ./providers/rule/China.yaml, nterval: 864000}
   
@@ -211,6 +217,9 @@ rules:
   
   # 策略分流RULE-SET
   - RULE-SET,Reject,REJECT
+  - RULE-SET, LAN, DIRECT
+  - RULE-SET, Direct, DIRECT
+  - RULE-SET, AI, AI
   - RULE-SET,📟 Telegram,📟 Telegram
   - RULE-SET,📽️ YouTube,📽️ YouTube
   - RULE-SET,🖥️ 微软服务,🖥️ 微软服务
