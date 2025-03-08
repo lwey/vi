@@ -79,7 +79,7 @@ dns:
 
 
  
-p
+
 # 锚点 - 节点订阅
 proxy-providers: 
   机场名称1:
