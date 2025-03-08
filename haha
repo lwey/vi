@@ -15,7 +15,7 @@ global-client-fingerprint: chrome
 
 allow-lan: true
 mode: rule
-log-level: info
+log-level: debug
 ipv6: true
 udp: true
 
@@ -79,21 +79,21 @@ dns:
 
 
  
-proxy-providers:
-  Sub:
-    type: http
-    path: ./providers/proxy/Sub.yaml
-    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
-    interval: 86400
-    health-check:
-      enable: true
-      url: "https://i.ytimg.com/generate_204"
-      #url: "http://cp.cloudflare.com/generate_204"
-      interval: 1200
-    filter: "(?i)United States|美国|Hong kong|香港|taiwan|台湾|Singapore|新加坡|Japan|日本"  #筛选包含关键字的节点
-    #filter: "^(?!.*?海外).*(香港|台湾|日本|新加坡|美国)" #筛选包含关键字及排队包含“海外”的节点
-    #exclude-filter: "海外"  #排队包含“海外”的节点
-
+p
+# 锚点 - 节点订阅
+proxy-providers: 
+  机场名称1:
+    url: 'http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c'
+    <<: *NodeParam
+    path: './proxy_providers/机场名称1.yaml'
+    override:
+      additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
+  机场名称2:
+    url: ''
+    <<: *NodeParam
+    path: './proxy_providers/机场名称2.yaml'
+    override:
+      additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
 #proxies自建
 proxies:
@@ -104,28 +104,85 @@ proxy-groups:
 
   - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
   
-  - {name: 📟 Telegram, type: select, proxies: [ 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📟 Telegram, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
 
-  - {name: 🐦 Twitter, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 🐦 Twitter, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
   
-  - {name: 📽️ YouTube, type: select, proxies: [ 🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 📽️ YouTube, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
   
-  - {name: 🖥️ 微软服务, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 🖥️ 微软服务, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
 
-  - {name: 🌌 Google, type: select, proxies: [🇭🇰HongKong, 🇹🇼Taiwan, 🇺🇸American, 🇸🇬Singapore, 🇯🇵Japan]}
+  - {name: 🌌 Google, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
   
   - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
   
-  - {name: 🇭🇰HongKong, type: url-test, filter: "(?i)香港|Hongkong|hong kong", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
-  
-  - {name: 🇹🇼Taiwan, type: url-test, filter: "(?i)台湾|Taiwan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
-  
-  - {name: 🇸🇬Singapore, type: url-test, filter: "(?i)新加坡|狮城|SG|Singapore", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
-  
-  - {name: 🇯🇵Japan, type: url-test, filter: "(?i)日本|JP|Japan", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
-  
-  - {name: 🇺🇸American, type: url-test, filter: "🇺🇸|United States|美国", use: [Sub], health-check: {enable: true, url: "https://i.ytimg.com/generate_204", interval: 1200, tolerance: 50}}
-  
+ 
+# 锚点 - 节点筛选组
+FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|France)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|Germany)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterGame: &FilterGame '^(?=.*((?i)游戏|🎮|(\b(GAME)(\d+)?\b)))(?!.*((?i)回国|校园)).*$'
+FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+
+# 策略组参数锚点
+# 锚点 - 时延优选参数 [每 6 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
+
+  - {name: HongKong, type: select, proxies: [⏱香港时延优选, 🚥香港故障转移, 🎛香港负载均衡]}
+  - {name: Taiwan, type: select, proxies: [⏱台湾时延优选, 🚥台湾故障转移, 🎛台湾负载均衡]}
+  - {name: Japan, type: select, proxies: [⏱日本时延优选, 🚥日本故障转移, 🎛日本负载均衡]}
+  - {name: Korea, type: select, proxies: [⏱韩国时延优选, 🚥韩国故障转移, 🎛韩国负载均衡]}
+  - {name: Singapore, type: select, proxies: [⏱新国时延优选, 🚥新国故障转移, 🎛新国负载均衡]}
+  - {name: American, type: select, proxies: [⏱美国时延优选, 🚥美国故障转移, 🎛美国负载均衡]}
+  - {name: United, type: select, proxies: [⏱英国时延优选, 🚥英国故障转移, 🎛英国负载均衡]}
+  - {name: V, type: select, proxies: [⏱法国时延优选, 🚥法国故障转移, 🎛法国负载均衡]}
+  - {name: Germany, type: select, proxies: [⏱德国时延优选, 🚥德国故障转移, 🎛德国负载均衡]}
+
+# 时延优选策略组
+  - {name: ⏱香港时延优选, <<: *UrlTest, filter: *FilterHK}
+  - {name: ⏱台湾时延优选, <<: *UrlTest, filter: *FilterTW}
+  - {name: ⏱日本时延优选, <<: *UrlTest, filter: *FilterJP}
+  - {name: ⏱韩国时延优选, <<: *UrlTest, filter: *FilterKR}
+  - {name: ⏱新国时延优选, <<: *UrlTest, filter: *FilterSG}
+  - {name: ⏱美国时延优选, <<: *UrlTest, filter: *FilterUS}
+  - {name: ⏱英国时延优选, <<: *UrlTest, filter: *FilterUK}
+  - {name: ⏱法国时延优选, <<: *UrlTest, filter: *FilterFR}
+  - {name: ⏱德国时延优选, <<: *UrlTest, filter: *FilterDE}
+
+# 故障转移策略组
+  - {name: 🚥香港故障转移, <<: *FallBack, filter: *FilterHK}
+  - {name: 🚥台湾故障转移, <<: *FallBack, filter: *FilterTW}
+  - {name: 🚥日本故障转移, <<: *FallBack, filter: *FilterJP}
+  - {name: 🚥韩国故障转移, <<: *FallBack, filter: *FilterKR}
+  - {name: 🚥新国故障转移, <<: *FallBack, filter: *FilterSG}
+  - {name: 🚥美国故障转移, <<: *FallBack, filter: *FilterUS}
+  - {name: 🚥英国故障转移, <<: *FallBack, filter: *FilterUK}
+  - {name: 🚥法国故障转移, <<: *FallBack, filter: *FilterFR}
+  - {name: 🚥德国故障转移, <<: *FallBack, filter: *FilterDE}
+
+# 负载均衡策略组
+  - {name: 🎛香港负载均衡, <<: *LoadBalance, filter: *FilterHK}
+  - {name: 🎛台湾负载均衡, <<: *LoadBalance, filter: *FilterTW}
+  - {name: 🎛日本负载均衡, <<: *LoadBalance, filter: *FilterJP}
+  - {name: 🎛韩国负载均衡, <<: *LoadBalance, filter: *FilterKR}
+  - {name: 🎛新国负载均衡, <<: *LoadBalance, filter: *FilterSG}
+  - {name: 🎛美国负载均衡, <<: *LoadBalance, filter: *FilterUS}
+  - {name: 🎛英国负载均衡, <<: *LoadBalance, filter: *FilterUK}
+  - {name: 🎛法国负载均衡, <<: *LoadBalance, filter: *FilterFR}
+  - {name: 🎛德国负载均衡, <<: *LoadBalance, filter: *FilterDE}
+
 #rule-providers：远程分流规则
 rule-providers:
 
