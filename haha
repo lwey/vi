@@ -13,26 +13,26 @@ redir-port: 7893
 tproxy-port: 7894
 
 
-geodata-mode: true     #true时geoip.文件为dat格式，false时为mmdb格式
+geodata-mode: false     #true时geoip.文件为dat格式，false时为mmdb格式
 geodata-loader: standard
 geo-auto-update: true
 geo-update-interval: 24
 
 #匹配进程
 find-process-mode: strict
-keep-alive-idle: 15
-keep-alive-internal: 30
 global-client-fingerprint: chrome
+tcp-concurrent: true
 
 #控制面板
 external-controller: 0.0.0.0:9090
 #面板默认Meta 可选Yacd 清除浏览器缓存即可重新加载
 external-ui: /data/adb/box_bll/panel/Zash/ #/Meta #/Yacd
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
-secret: ""
-
-hosts:
-  mtalk.google.com: 108.177.97.188
+geox-url:
+  # geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
+  # geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
+  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
+  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
 
 profile:
   store-selected: true
