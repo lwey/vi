@@ -16,7 +16,7 @@ global-client-fingerprint: chrome
 
 allow-lan: true
 mode: rule
-log-level: info
+log-level: debug
 ipv6: true
 udp: true
 
