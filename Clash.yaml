@@ -98,23 +98,6 @@ proxy-providers:
 proxies:
   #- {name: type: ss, server: 111.9.146.195, port: "52173", cipher: chacha20-ietf-poly1305, password: juhwygalmcnbvsenuakypz, udp: true}
   
-#proxy-groups：策略组
-proxy-groups:
-
-  - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
-  
-  - {name: 📟 Telegram, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
-
-  - {name: 🐦 Twitter, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
-  
-  - {name: 📽️ YouTube, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
-  
-  - {name: 🖥️ 微软服务, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
-
-  - {name: 🌌 Google, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
-  
-  - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
-
 # 锚点 - 节点筛选组
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
@@ -138,6 +121,16 @@ LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'ht
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
 
+#proxy-groups：策略组
+proxy-groups:
+  - {name: 🚀select, type: select, use: [Sub], proxies: [DIRECT]}
+  - {name: 📟 Telegram, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
+  - {name: 🐦 Twitter, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
+  - {name: 📽️ YouTube, type: select, proxies: [ HongKong, Taiwan, American, Singapore, Japan]}
+  - {name: 🖥️ 微软服务, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
+  - {name: 🌌 Google, type: select, proxies: [HongKong, Taiwan, American, Singapore, Japan]}
+  - {name: 🏁Final, type: select, proxies: [🚀select, DIRECT]}
+  
   - {name: HongKong, type: select, proxies: [⏱香港时延优选, 🚥香港故障转移, 🎛香港负载均衡]}
   - {name: Taiwan, type: select, proxies: [⏱台湾时延优选, 🚥台湾故障转移, 🎛台湾负载均衡]}
   - {name: Japan, type: select, proxies: [⏱日本时延优选, 🚥日本故障转移, 🎛日本负载均衡]}
