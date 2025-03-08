@@ -172,7 +172,6 @@ proxy-groups:
   - {name: 🎛法国负载均衡, <<: *LoadBalance, filter: *FilterFR}
   - {name: 🎛德国负载均衡, <<: *LoadBalance, filter: *FilterDE}
 
-#rule-providers：远程分流规则
 rule-providers:
  Reject:
     <<: *RuleProviders
