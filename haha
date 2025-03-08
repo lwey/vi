@@ -21,7 +21,6 @@ geo-update-interval: 24
 #匹配进程
 find-process-mode: strict
 global-client-fingerprint: chrome
-tcp-concurrent: true
 
 #控制面板
 external-controller: 0.0.0.0:9090
