@@ -193,123 +193,152 @@ rules:
   - MATCH,Final
 
 #####################
-#通用配置
-mixed-port: 7890
-redir-port: 7891
-tproxy-port: 7893
-mode: rule
-allow-lan: true
-ipv6: false
-unified-delay: true
+ipv6: false           # ip6开关，当为false时，停止解析hostanmes为ip6地址
+log-level: info       # 日志等级 （info/warning/error/debug/silent）
+allow-lan: false      # 是否允许局域网链接(false/true)
+unified-delay: false  # 統一延遲
 tcp-concurrent: true
-enable-process: true
-log-level: silent
+external-controller: 127.0.0.1:9236   # 外部控制器地址
 
-geodata-mode: true     #true时geoip.文件为dat格式，false时为mmdb格式
-geodata-loader: standard
-geo-auto-update: true
-geo-update-interval: 168
-geox-url:
-  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
-  asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+clash-for-android:
+  append-system-dns: false
 
-#匹配进程
-find-process-mode: strict
-keep-alive-idle: 15
-keep-alive-internal: 15
-global-client-fingerprint: chrome
-
-#控制面板
-external-controller: 0.0.0.0:9090
-#面板默认Meta 可选Yacd 清除浏览器缓存即可重新加载
-external-ui: /data/adb/box_bll/panel/Zash/ #/Meta #/Yacd
-external-ui-name: zashboard
-external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
-secret: ""
-
-#策略组选择和fake-ip缓存
 profile:
   store-selected: true
   store-fake-ip: true
+  tracing: true
   
-# 自动同步时间以防止时间不准导致无法正常联网
-ntp:
-  enable: false
-  # 是否同步至系统时间，需要 root/管理员权限
-  write-to-system: false
-  server: time.apple.com
-  port: 123
-  interval: 30
-
+hosts:
+  mtalk.google.com: 108.177.97.188
+  
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
-  override-destination: true
   sniff:
-    HTTP:
-      ports: [80, 8080-8880]
     TLS:
       ports: [443, 8443]
-    QUIC:
-      ports: [443, 8443]
-  force-domain:
-    - "+.v2ex.com"
-  skip-domain:
-    - "Mijia Cloud"
-    - "dlg.io.mi.com"
-
-tun:
-  enable: true
-  device: Mihomo
-  stack: mixed
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
-  auto-route: true
-  strict-route: true
-  auto-redirect: false
-  auto-detect-interface: true
-  route-exclude-address:
-    - 192.168.0.0/16
-    - fc00::/7
-  exclude-package: #
-
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+  
 dns:
   enable: true
-  prefer-h3: true
   ipv6: false
-  listen: 0.0.0.0:1053
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.0/15
+  fake-ip-range: 198.18.0.1/16
+  listen: 127.0.0.1:1853
+  
+  default-nameserver:  #默认dns, 用于解析 DNS 器 的域名
+    - "223.5.5.5"
+    - "119.29.29.29"
+    - "8.8.8.8"
+    
+  nameserver:  #默认的域名解析器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+    - "https://doh.pub/dns-query"
+    - "https://dns.alidns.com/dns-query"
+  
+  #proxy-server-nameserver:  #代理域名解析器，仅用于解析代理的域名
+    #- "https://doh.pub/dns-query"
+    #- "https://1.0.0.1/dns-query"
+    
+  fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+    - "tls://8.8.4.4:853"
+    - "https://dns.cloudflare.com/dns-query"
+    - "https://1.1.1.1/dns-query"
+    
+   # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
   fake-ip-filter:
-    - "*"
-    - "+.lan"
-    - "connect.rom.miui.com"
-    - "localhost.ptlogin2.qq.com"
-    - "time.*.com"
-  default-nameserver:
-    - 223.5.5.5
-    - 223.6.6.6
-    - 119.29.29.29
-    - 8.8.8.8
-    - 1.1.1.1
-  nameserver-policy:
-    'geosite:category-ads-all': rcode://success
-    'geosite:jd,tencent,meituan,zhihu,huya,douyu,bilibili,pinduoduo':
-      - https://doh.pub/dns-query
-    'geosite:aliyun,alibaba,alibabacloud,netease,eleme,sina':
-      - https://dns.alidns.com/dns-query
-    'geosite:bytedance,tiktok':
-      - 180.184.1.1
-      - 180.184.2.2
-    'geosite:private,cn':
-      - https://dns.alidns.com/dns-query
-  nameserver:
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - stun.*.*
+    - stun.*.*.*
+    - swscan.apple.com
+    - mesu.apple.com
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    - localhost.ptlogin2.qq.com
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - "*.xiami.com"
+    - "*.music.migu.cn"
+    - music.migu.cn
+    - +.wotgame.cn
+    - +.wggames.cn
+    - +.wowsgame.cn
+    - +.wargaming.net
+    - "*.*.*.srv.nintendo.net"
+    - "*.*.stun.playstation.net"
+    - "+.playstation.com"
+    - "+.playstation.net"
+    - "+.xboxlive.com"
+    - "+.microsoft.com" 
+    - xbox.*.*.microsoft.com
+    - "*.*.xboxlive.com"
+    - "*.ipv6.microsoft.com"
+    - teredo.*.*.*
+    - teredo.*.*
+    - speedtest.cros.wr.pvp.net
+    - +.jjvip8.com
+    - www.douyu.com
+    - activityapi.huya.com
+    - activityapi.huya.com.w.cdngslb.com
+    - www.bilibili.com
+    - api.bilibili.com
+    - a.w.bilicdn1.com
+    
+  fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+    geoip: true        #为真时，不匹配为geoip规则的使用fallback返回结果
+    geoip-code: CN     #geoip匹配区域设定
+    ipcidr:            #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+      - 127.0.0.1/32
+    domain:            #列表中的域名使用fallback返回解析结果
+      - +.facebook.com
+      - +.twitter.com
+      - +.google.com
+      - +.googleapis.com
