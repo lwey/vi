@@ -149,7 +149,7 @@ dns:
       - +.googleapis.com
     
 # 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
-NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
+NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'https://www.apple.com/library/test/success.html', interval: 6}}
 
 # 锚点 - 节点订阅
 proxy-providers: 
