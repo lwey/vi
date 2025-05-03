@@ -175,13 +175,13 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   机场名称1:
-    url: 'http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c'
+    url: 'https://sub.xfltd.bond/api/v1/client/subscribe?token=eb12a3e82e14a816698b1d358f06da22'
     <<: *NodeParam
     path: './proxy_providers/机场名称1.yaml'
     override:
       additional-prefix: "[机场1] " # 为订阅节点添加机场名称前缀
   机场名称2:
-    url: 'https://super.jumplinkapp.top/api/v1/client/subscribe?token=421d5e467ed3d48e06cec78a18d6b899'
+    url: ''
     <<: *NodeParam
     path: './proxy_providers/机场2.yaml'
     override:
