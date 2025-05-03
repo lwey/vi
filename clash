@@ -153,7 +153,7 @@ proxy-providers:
   Sub:
     type: http
     path: ./providers/proxy/Sub.yaml
-    url: "http://106.75.143.245:3390/api/v1/client/subscribe?token=4b83c9b85ffb9cf06d86fe5bf1a05d1c"
+    url: "https://sub.xfltd.bond/api/v1/client/subscribe?token=eb12a3e82e14a816698b1d358f06da22"
     interval: 86400
     health-check:
       enable: true
