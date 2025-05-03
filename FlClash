@@ -89,7 +89,7 @@ proxy-providers:
   Sub-Store:
     <<: *Proxyer
     path: ./proxies/Sub-Store.yaml
-    url: 'https://sub.xfltd.click/api/v1/client/subscribe?token=eb12a3e82e14a816698b1d358f06da22'
+    url: "https://sub.xfltd.click/api/v1/client/subscribe?token=eb12a3e82e14a816698b1d358f06da22"
 #    exclude-filter: *ExcludeFilter
     override:
       udp: true
