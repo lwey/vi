@@ -1,19 +1,8 @@
-mode: rule            # clash工作模式（rule/global/direct,meta暂不支持script）
-ipv6: true           # ip6开关，当为false时，停止解析hostanmes为ip6地址
+ipv6: false           # ip6开关，当为false时，停止解析hostanmes为ip6地址
 log-level: info       # 日志等级 （info/warning/error/debug/silent）
-port: 7890 # http(s) 代理端口
-socks-port: 7891 # socks4/4a/5 代理端口
-mixed-port: 7892 # 混合端口 同时支持 HTTP(S) 和 SOCKS5 协议
-redir-port: 7893 # redirect 透明代理端口,仅能代理 TCP 流量
-tproxy-port: 7894 # tproxy 透明代理端口,可代理 TCP 与 UDP 流量
-allow-lan: true # 允许局域网连接 false / true
-bind-address: "*" # 绑定地址
-lan-allowed-ips: # 允许连接的 IP 地址段,仅作用于 allow-lan 为 true, 默认值为0.0.0.0/0和::/0
-  - "0.0.0.0/0"
-  - "::/0"
-unified-delay: true  # 統一延遲
-tcp-concurrent: true # TCP 并发 如果域名解析结果对应多个IP,并发请求所有IP,选择握手最快的IP进行通讯
-keep-alive-interval: 30 # TCP Keep Alive 间隔,单位分钟 | 控制 Clash 发出 TCP Keep Alive 包的间隔,减少移动设备耗电问题的临时措施
+allow-lan: false      # 是否允许局域网链接(false/true)
+unified-delay: false  # 統一延遲
+tcp-concurrent: true
 external-controller: 127.0.0.1:9236   # 外部控制器地址
 
 clash-for-android:
@@ -29,29 +18,19 @@ hosts:
   
 sniffer:
   enable: true
-  force-dns-mapping: true # 对 redir-host 类型识别的流量进行强制嗅探
-  parse-pure-ip: true # 对所有未获取到域名的流量进行强制嗅探
-  override-destination: true # 是否使用嗅探结果作为实际访问,默认为 true
   sniff:
     TLS:
       ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
-      override-destination: true # 可覆盖 sniffer.override-destination
-  force-domain:
-    - "+.v2ex.com"
-  skip-domain: # 需要跳过嗅探的域名,主要解决部分站点sni字段非域名,导致嗅探结果异常的问题,如米家设备
-    - "Mijia Cloud"
+      override-destination: true
   
 dns:
-  enable: true # 关闭将使用系统 DNS
-  cache-algorithm: arc # 缓存算法 lru / lfu / arc, 一般不设置使用默认
-  prefer-h3: true # 开启 DoH 支持 HTTP/3,将并发尝试，提前确认DNS服务商可用h3
-  listen: 0.0.0.0:1053 # 开启 DNS 服务器监听
-  ipv6: true # false 将返回 AAAA 的空结果
-  ipv6-timeout: 300 # 单位：ms,内部双栈并发时,向上游查询 AAAA 时,等待 AAAA 的时间,默认 100ms
-  enhanced-mode: redir-host # mihomo 的 DNS 处理模式 redir-host / fake-ip
-  fake-ip-range: 28.0.0.1/8 # fakeip 下的 IP 段设置 198.18.0.1/16 28.0.0.1/8
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  listen: 127.0.0.1:1853
   
   default-nameserver:  #默认dns, 用于解析 DNS 器 的域名
     - "223.5.5.5"
