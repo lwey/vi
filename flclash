@@ -250,24 +250,25 @@ rule-providers:
     path: './providers/rule/Reject.yaml'
     url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Reject.yaml'    
     
-  #LAN:
-    #<<: *RuleProviders
-    #path: './rules/Lan.yaml'
-    #url: 'https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml'
-  #Direct:
-    #<<: *RuleProviders
-    #path: './rules/Direct.yaml'
-    #url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
+  LAN:
+    <<: *RuleProviders
+    path: './rules/Lan.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml'
+
+  Direct:
+    <<: *RuleProviders
+    path: './rules/Direct.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
 
   Proxy:
     <<: *RuleProviders
-    path: './providers/rule/Proxy.yaml'
-    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Proxylite.yaml'
+    path: './rules/Proxy.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Proxy.yaml'
 
-  #ChinaDownloadCDN:
-    #<<: *RuleProviders
-    #path: './rules/ChinaDownloadCDN.yaml'
-    #url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
+  ChinaDownloadCDN:
+    <<: *RuleProviders
+    path: './rules/ChinaDownloadCDN.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
 
   #InternationalDownloadCDN:
     #<<: *RuleProviders
@@ -296,23 +297,23 @@ rule-providers:
 
   Microsoft:
     <<: *RuleProviders
-    path: './providers/rule/Microsoft.yaml'
-    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/Microsoft.yaml'
+    path: './rules/Microsoft.yaml'
+    url: 'https://rule.kelee.one/Clash/Microsoft.yaml'
 
   Google:
     <<: *RuleProviders
-    path: './ruleset/Google.yaml'
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Google.yaml'
+    path: './rules/Google.yaml'
+    url: 'https://rule.kelee.one/Clash/Google.yaml'
 
   Telegram:
     <<: *RuleProviders
-    path: './ruleset/Telegram.yaml'
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml'
+    path: './rules/Telegram.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
 
-  China:
+  ESET_China:
     <<: *RuleProviders
-    path: './providers/rule/China.yaml'
-    url: 'https://raw.githubusercontent.com/yifai/Clash/main/Rules/China.yaml'
+    path: './rules/ESET_China.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
 # 规则指向
 rules:
@@ -337,10 +338,10 @@ rules:
   - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
   - IP-CIDR,28.0.0.1/8,REJECT,no-resolve
   - IP-CIDR6,::1/128,REJECT,no-resolve
-  #- RULE-SET, LAN, DIRECT
-  #- RULE-SET, Direct, DIRECT
+  - RULE-SET, LAN, DIRECT
+  - RULE-SET, Direct, DIRECT
   - RULE-SET, Proxy, Final
-  #- RULE-SET, ChinaDownloadCDN, DIRECT
+  - RULE-SET, ChinaDownloadCDN, DIRECT
   - RULE-SET, AI, AI
   - RULE-SET, TikTok, TikTok
   - RULE-SET, Reject, REJECT
@@ -349,7 +350,6 @@ rules:
   - RULE-SET, Microsoft, Microsoft
   - RULE-SET, Google, Google
   - RULE-SET, Telegram, Telegram
-  - RULE-SET, China, DIRECT
-  #- GEOSITE,CN, DIRECT
-  - GEOIP, CN, DIRECT,no-resolve
+  - RULE-SET, ESET_China, DIRECT
+  - GEOIP, CN, DIRECT
   - MATCH, Final
