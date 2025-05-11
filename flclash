@@ -114,7 +114,7 @@ proxy-providers:
     override:
       additional-prefix: "[机场1] " # 为订阅节点添加机场名称前缀
   机场名称2:
-    url: ''
+    url: 'https://subneko.v1999.sbs/study/xuexi/v999/hneko?token=460dc514852b0481422ec729e2c7c263'
     <<: *NodeParam
     path: './proxy_providers/机场2.yaml'
     override:
