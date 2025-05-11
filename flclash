@@ -140,8 +140,8 @@ proxy-groups:
   - {name: YouTube, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: Google, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: Microsoft, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
-  - {name: TikTok, type: select, include-all-providers: true, filter: *FilterAll}
-  - {name: AI, type: select, include-all-providers: true, filter: *FilterAll}
+  - {name: TikTok, type: select, include-all-providers: true, filter: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
+  - {name: AI, type: select, include-all-providers: true, filter: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: Final, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT]}
 
   
