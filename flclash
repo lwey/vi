@@ -1,155 +1,117 @@
-ipv6: false           # ip6开关，当为false时，停止解析hostanmes为ip6地址
-log-level: info       # 日志等级 （info/warning/error/debug/silent）
-allow-lan: false      # 是否允许局域网链接(false/true)
-unified-delay: false  # 統一延遲
-tcp-concurrent: true
-external-controller: 127.0.0.1:9236   # 外部控制器地址
+# mihomo 配置
+# 日期：2025-05-04 22:44:38
+# 配置作者：https://t.me/iKeLee
+# 适用版本：所有使用 mihomo 核心的程序
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+redir-port: 7893
+tproxy-port: 7894
 
-clash-for-android:
-  append-system-dns: false
+unified-delay: true
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
+
+external-controller: 0.0.0.0:9090
+# external-ui: ui
+# external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+
+geox-url:
+  geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
+  geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
+  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
+  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
 
 profile:
   store-selected: true
   store-fake-ip: true
-  tracing: true
-  
-hosts:
-  mtalk.google.com: 108.177.97.188
-  
+
 sniffer:
   enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
   sniff:
-    TLS:
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
       override-destination: true
-  
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+
+  skip-domain:
+    - Mijia Cloud
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+
+# P2P下载端口
+listeners:
+- name: socks5-in-1
+  type: socks
+  port: 10808
+  listen: 0.0.0.0
+  udp: true
+  users: []
+  proxy: DIRECT
+
 dns:
   enable: true
+  prefer-h3: true
+  listen: 0.0.0.0:1053
   ipv6: false
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  listen: 127.0.0.1:1853
-  
-  default-nameserver:  #默认dns, 用于解析 DNS 器 的域名
-    - "223.5.5.5"
-    - "119.29.29.29"
-    - "8.8.8.8"
-    
-  nameserver:  #默认的域名解析器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
-    - "https://doh.pub/dns-query"
-    - "https://dns.alidns.com/dns-query"
-  
-  #proxy-server-nameserver:  #代理域名解析器，仅用于解析代理的域名
-    #- "https://doh.pub/dns-query"
-    #- "https://1.0.0.1/dns-query"
-    
-  fallback:  #后备域名解析器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback后默认启用 fallback-filter,geoip-code为 cn
-    - "tls://8.8.4.4:853"
-    - "https://dns.cloudflare.com/dns-query"
-    - "https://1.1.1.1/dns-query"
-    
-   # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
+  fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.example"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
-    - time.*.com
-    - time.*.gov
-    - time.*.edu.cn
-    - time.*.apple.com
-    - time1.*.com
-    - time2.*.com
-    - time3.*.com
-    - time4.*.com
-    - time5.*.com
-    - time6.*.com
-    - time7.*.com
-    - ntp.*.com
-    - ntp1.*.com
-    - ntp2.*.com
-    - ntp3.*.com
-    - ntp4.*.com
-    - ntp5.*.com
-    - ntp6.*.com
-    - ntp7.*.com
-    - "*.time.edu.cn"
-    - "*.ntp.org.cn"
-    - +.pool.ntp.org
-    - time1.cloud.tencent.com
-    - stun.*.*
-    - stun.*.*.*
-    - swscan.apple.com
-    - mesu.apple.com
-    - music.163.com
-    - "*.music.163.com"
-    - "*.126.net"
-    - musicapi.taihe.com
-    - music.taihe.com
-    - songsearch.kugou.com
-    - trackercdn.kugou.com
-    - "*.kuwo.cn"
-    - api-jooxtt.sanook.com
-    - api.joox.com
-    - y.qq.com
-    - "*.y.qq.com"
-    - streamoc.music.tc.qq.com
-    - mobileoc.music.tc.qq.com
-    - isure.stream.qqmusic.qq.com
-    - dl.stream.qqmusic.qq.com
-    - aqqmusic.tc.qq.com
-    - amobile.music.tc.qq.com
-    - localhost.ptlogin2.qq.com
-    - "*.msftconnecttest.com"
-    - "*.msftncsi.com"
-    - "*.xiami.com"
-    - "*.music.migu.cn"
-    - music.migu.cn
-    - +.wotgame.cn
-    - +.wggames.cn
-    - +.wowsgame.cn
-    - +.wargaming.net
-    - "*.*.*.srv.nintendo.net"
-    - "*.*.stun.playstation.net"
-    - "+.playstation.com"
-    - "+.playstation.net"
-    - "+.xboxlive.com"
-    - "+.microsoft.com" 
-    - xbox.*.*.microsoft.com
-    - "*.*.xboxlive.com"
-    - "*.ipv6.microsoft.com"
-    - teredo.*.*.*
-    - teredo.*.*
-    - speedtest.cros.wr.pvp.net
-    - +.jjvip8.com
-    - www.douyu.com
-    - activityapi.huya.com
-    - activityapi.huya.com.w.cdngslb.com
-    - www.bilibili.com
-    - api.bilibili.com
-    - a.w.bilicdn1.com
-    
-  fallback-filter:     #后备域名解析器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
-    geoip: true        #为真时，不匹配为geoip规则的使用fallback返回结果
-    geoip-code: CN     #geoip匹配区域设定
-    ipcidr:            #列表中的ip使用fallback返回解析结果
-      - 240.0.0.0/4
-      - 0.0.0.0/32
-      - 127.0.0.1/32
-    domain:            #列表中的域名使用fallback返回解析结果
-      - +.facebook.com
-      - +.twitter.com
-      - +.google.com
-      - +.googleapis.com
+    - "*"
+    - +.lan
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+  fallback: # 备用 DNS 服务器 (nameserver 失败或 fallback-filter 匹配时使用)
+    # 通常用于境内或不易被污染的DNS，配合geoip和geosite使用
+    - tls://dns11.quad9.net
+  proxy-server-nameserver: # Clash 自身用于解析 DoH/DoT 服务器地址的 DNS
+    # 通常放一些你信任的国内 DNS，确保 Clash 能连接到远程 DoH/DoT 服务器
+    - https://dns.alidns.com/dns-query
+  fallback-filter: # 触发 fallback DNS 的过滤规则
+    geoip: true       # 解析结果为国内 IP 触发 fallback
+    geoip-code: CN    # 指定国内国家代码
+    geosite:          # 匹配 GeoSite 规则集触发 fallback
+      - gfw           # gfw 列表内的域名使用 fallback
+    ipcidr:           # 解析结果 IP 在指定 IP 段内触发 fallback
+      - 240.0.0.0/4  # 标准测试网段，用于过滤 fake-ip 查询
+    domain:           # 指定域名列表触发 fallback
+      - '+.google.com'
+      - '+.facebook.com'
+      # 已移除不规范的域名条目
     
 # 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
-NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'https://www.apple.com/library/test/success.html', interval: 6}}
+NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
 
 # 锚点 - 节点订阅
 proxy-providers: 
@@ -181,11 +143,11 @@ FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客�
 
 # 策略组参数锚点
 # 锚点 - 时延优选参数 [每 6 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
 
@@ -351,5 +313,6 @@ rules:
   - RULE-SET, Google, Google
   - RULE-SET, Telegram, Telegram
   - RULE-SET, ESET_China, DIRECT
+  - GEOSITE,CN,DIRECT
   - GEOIP, CN, DIRECT
   - MATCH, Final
