@@ -305,6 +305,5 @@ rules:
   - RULE-SET, Google, Google
   - RULE-SET, Telegram, Telegram
   - RULE-SET, ESET_China, DIRECT
-  - GEOSITE,CN,DIRECT
   - GEOIP, CN, DIRECT
   - MATCH, Final
