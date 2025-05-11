@@ -87,20 +87,7 @@ dns:
   nameserver:
     - https://223.5.5.5/dns-query
     - https://223.6.6.6/dns-query
-  fallback: # 备用 DNS 服务器 (nameserver 失败或 fallback-filter 匹配时使用)
-    # 通常用于境内或不易被污染的DNS，配合geoip和geosite使用
-    - https://1.0.0.1/dns-query
-    - tls://dns.google
-  proxy-server-nameserver: # Clash 自身用于解析 DoH/DoT 服务器地址的 DNS
-    # 通常放一些你信任的国内 DNS，确保 Clash 能连接到远程 DoH/DoT 服务器
-    - https://dns.alidns.com/dns-query
-  fallback-filter: # 触发 fallback DNS 的过滤规则
-    geoip: true       # 解析结果为国内 IP 触发 fallback
-    geoip-code: CN    # 指定国内国家代码
-    geosite:          # 匹配 GeoSite 规则集触发 fallback
-      - gfw           # gfw 列表内的域名使用 fallback
-    ipcidr:           # 解析结果 IP 在指定 IP 段内触发 fallback
-      - 240.0.0.0/4  # 标准测试网段，用于过滤 fake-ip 查询
+
     
 # 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
 NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
