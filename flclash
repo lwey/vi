@@ -2,9 +2,7 @@
 # 日期：2025-05-04 22:44:38
 # 配置作者：https://t.me/iKeLee
 # 适用版本：所有使用 mihomo 核心的程序
-port: 7890
-redir-port: 7893
-tproxy-port: 7894
+
 unified-delay: true
 geodata-mode: false
 geodata-loader: standard
