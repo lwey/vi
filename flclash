@@ -133,7 +133,7 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 
 # 策略组
 proxy-groups: 
-  - {name: Final, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT]}
+  
   - {name: Telegram, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: Twitter, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: YouTube, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
@@ -141,7 +141,7 @@ proxy-groups:
   - {name: Microsoft, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: TikTok, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
   - {name: AI, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United]}
- 
+  - {name: Final, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT]} 
 
   
   - {name: HongKong, type: select, proxies: [⏱香港时延优选, 🚥香港故障转移, 🎛香港负载均衡]}
