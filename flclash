@@ -188,7 +188,7 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 proxy-groups: 
   
   - {name: Telegram, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"}
-  - {name: Twitter, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png"}
+  - {name: Twitter, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png"}
   - {name: YouTube, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png"}
   - {name: Google, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"}
   - {name: Microsoft, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"}
