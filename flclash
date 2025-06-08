@@ -256,15 +256,15 @@ rule-providers:
     path: './rules/Direct.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
 
-  Proxy:
-    <<: *RuleProviders
-    path: './rules/Proxy.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/Proxy.yaml'
-
   ChinaDownloadCDN:
     <<: *RuleProviders
     path: './rules/ChinaDownloadCDN.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
+
+  ESET_China:
+    <<: *RuleProviders
+    path: './rules/ESET_China.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
   #InternationalDownloadCDN:
     #<<: *RuleProviders
@@ -306,10 +306,11 @@ rule-providers:
     path: './rules/Telegram.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
 
-  ESET_China:
+
+  Proxy:
     <<: *RuleProviders
-    path: './rules/ESET_China.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
+    path: './rules/Proxy.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Proxy.yaml'
 
 # 规则指向
 rules:
