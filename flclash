@@ -192,8 +192,8 @@ proxy-groups:
   - {name: YouTube, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png"}
   - {name: Google, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"}
   - {name: Microsoft, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"}
-  #- {name: TikTok, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png"}
-  #- {name: AI, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bot.png"}
+  - {name: TikTok, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png"}
+  - {name: AI, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bot.png"}
   - {name: Final, type: select, proxies: [HongKong, Taiwan, Japan, Korea, Singapore, American, United, DIRECT], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"} 
 
   
@@ -271,12 +271,12 @@ rule-providers:
     #path: './rules/InternationalDownloadCDN.yaml'
     #url: 'https://kelee.one/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
 
-  #AI:
+  AI:
     <<: *RuleProviders
     path: './rules/AI.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
-  #TikTok:
+  TikTok:
     <<: *RuleProviders
     path: './rules/TikTok.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
@@ -338,8 +338,8 @@ rules:
   - RULE-SET, Direct, DIRECT
   - RULE-SET, Proxy, Final
   - RULE-SET, ChinaDownloadCDN, DIRECT
-  #- RULE-SET, AI, AI
-  #- RULE-SET, TikTok, TikTok
+  - RULE-SET, AI, AI
+  - RULE-SET, TikTok, TikTok
   - RULE-SET, Reject, REJECT
   - RULE-SET, Twitter, Twitter
   - RULE-SET, YouTube, YouTube
