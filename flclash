@@ -165,7 +165,7 @@ proxy-groups:
 # - {name: NetEaseMusic, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png, <<: *Select, proxies: [DIRECT]}
 
 # 国际流媒体
- - {name: Streaming, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png, <<: *Select}
+# - {name: Streaming, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png, <<: *Select}
 
 # Telegram
  - {name: Telegram, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png, <<: *Select}
@@ -324,7 +324,7 @@ rules:
 #  - RULE-SET,emby-classical,Emby
   - RULE-SET,tiktok-domain,TikTok
   - RULE-SET,bahamut-domain,TaiWan
-  - RULE-SET,biliintl-domain,Streaming
+#  - RULE-SET,biliintl-domain,Streaming
   - RULE-SET,bilibili-domain,bilibili
 #  - RULE-SET,spotify-domain,Spotify
 #  - RULE-SET,neteasemusic-classical,NetEaseMusic
