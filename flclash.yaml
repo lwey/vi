@@ -136,7 +136,7 @@ proxy-groups:
  - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [Proxy,DIRECT]}
 
 # 节点切换
- - {name: Proxy, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Singapore,America,AllServer,DIRECT]}
+ - {name: Proxy, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
 
 # AI平台
  - {name: AI, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png, <<: *Select}
