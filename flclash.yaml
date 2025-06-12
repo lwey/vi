@@ -270,7 +270,7 @@ rule-providers:
 # neteasemusic-classical: {<<: *c, path: ./ruleset/neteasemusic-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/NetEaseMusic.list}
 
 # 国际流媒体
- proxymedia-classical: {<<: *c, path: ./ruleset/streamingmedia-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/ProxyMedia.list}
+# proxymedia-classical: {<<: *c, path: ./ruleset/streamingmedia-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/ProxyMedia.list}
 
 # WeChat
  wechat-classical: {<<: *c, path: ./ruleset/wechat-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/WeChat.list}
@@ -333,7 +333,7 @@ rules:
   - RULE-SET,bilibili-domain,bilibili
 #  - RULE-SET,spotify-domain,Spotify
 #  - RULE-SET,neteasemusic-classical,NetEaseMusic
-  - RULE-SET,proxymedia-classical,Streaming
+#  - RULE-SET,proxymedia-classical,Streaming
   - RULE-SET,wechat-classical,DIRECT
   - RULE-SET,telegram-domain,Telegram
   - RULE-SET,github-domain,Proxy
