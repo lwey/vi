@@ -113,12 +113,13 @@ i: &i {type: http, behavior: ipcidr, interval: 86400, format: mrs}
 HK: &HK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 TW: &TW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 JP: &JP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+KR: &KR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 SG: &SG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 US: &US '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 All: &All '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
 
 # 代理组相关
-Select: &Select {type: select, proxies: [Proxy, HongKong, TaiWan, Japan, Singapore, America, AllServer, DIRECT]}
+Select: &Select {type: select, proxies: [Proxy, HongKong, TaiWan, Japan, Korea, Singapore, America, AllServer, DIRECT]}
 
 UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url: 'http://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 
@@ -189,6 +190,7 @@ proxy-groups:
  - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance], include-all-providers: true, filter: *HK}
  - {name: TaiWan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png, type: select, proxies: [TW-Auto, TW-FallBack, TW-LoadBalance], include-all-providers: true, filter: *TW}
  - {name: Japan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png, type: select, proxies: [JP-Auto, JP-FallBack, JP-LoadBalance], include-all-providers: true, filter: *JP}
+ - {name: Korea, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *KR}
  - {name: Singapore, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png, type: select, proxies: [SG-Auto, SG-FallBack, SG-LoadBalance], include-all-providers: true, filter: *SG}
  - {name: America, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, type: select, proxies: [US-Auto, US-FallBack, US-LoadBalance], include-all-providers: true, filter: *US}
 
@@ -199,6 +201,7 @@ proxy-groups:
  - {name: HK-Auto, <<: *UrlTest, filter: *HK}
  - {name: TW-Auto, <<: *UrlTest, filter: *TW}
  - {name: JP-Auto, <<: *UrlTest, filter: *JP}
+ - {name: KR-Auto, <<: *UrlTest, filter: *KR}
  - {name: SG-Auto, <<: *UrlTest, filter: *SG}
  - {name: US-Auto, <<: *UrlTest, filter: *US}
 
@@ -206,6 +209,7 @@ proxy-groups:
  - {name: HK-FallBack, <<: *FallBack, filter: *HK}
  - {name: TW-FallBack, <<: *FallBack, filter: *TW}
  - {name: JP-FallBack, <<: *FallBack, filter: *JP}
+ - {name: KR-FallBack, <<: *FallBack, filter: *KR}
  - {name: SG-FallBack, <<: *FallBack, filter: *SG}
  - {name: US-FallBack, <<: *FallBack, filter: *US}
 
@@ -213,6 +217,7 @@ proxy-groups:
  - {name: HK-LoadBalance, <<: *LoadBalance, filter: *HK}
  - {name: TW-LoadBalance, <<: *LoadBalance, filter: *TW}
  - {name: JP-LoadBalance, <<: *LoadBalance, filter: *JP}
+ - {name: KR-LoadBalance, <<: *LoadBalance, filter: *KR}
  - {name: SG-LoadBalance, <<: *LoadBalance, filter: *SG}
  - {name: US-LoadBalance, <<: *LoadBalance, filter: *US}
 
