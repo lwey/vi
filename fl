@@ -198,8 +198,8 @@ proxy-groups:
  - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance], include-all-providers: true, filter: *HK}
  - {name: TaiWan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png, type: select, proxies: [TW-Auto, TW-FallBack, TW-LoadBalance], include-all-providers: true, filter: *TW}
  - {name: Japan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png, type: select, proxies: [JP-Auto, JP-FallBack, JP-LoadBalance], include-all-providers: true, filter: *JP}
- - {name: Korea, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *KR}
  - {name: Singapore, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png, type: select, proxies: [SG-Auto, SG-FallBack, SG-LoadBalance], include-all-providers: true, filter: *SG}
+ - {name: Korea, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *KR}
  - {name: America, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, type: select, proxies: [US-Auto, US-FallBack, US-LoadBalance], include-all-providers: true, filter: *US}
 
 # 全部节点
@@ -209,24 +209,24 @@ proxy-groups:
  - {name: HK-Auto, <<: *UrlTest, filter: *HK}
  - {name: TW-Auto, <<: *UrlTest, filter: *TW}
  - {name: JP-Auto, <<: *UrlTest, filter: *JP}
- - {name: KR-Auto, <<: *UrlTest, filter: *KR}
  - {name: SG-Auto, <<: *UrlTest, filter: *SG}
+ - {name: KR-Auto, <<: *UrlTest, filter: *KR}
  - {name: US-Auto, <<: *UrlTest, filter: *US}
 
 # 故障转移代理组
  - {name: HK-FallBack, <<: *FallBack, filter: *HK}
  - {name: TW-FallBack, <<: *FallBack, filter: *TW}
  - {name: JP-FallBack, <<: *FallBack, filter: *JP}
- - {name: KR-FallBack, <<: *FallBack, filter: *KR}
  - {name: SG-FallBack, <<: *FallBack, filter: *SG}
+ - {name: KR-FallBack, <<: *FallBack, filter: *KR}
  - {name: US-FallBack, <<: *FallBack, filter: *US}
 
 # 负载均衡代理组
  - {name: HK-LoadBalance, <<: *LoadBalance, filter: *HK}
  - {name: TW-LoadBalance, <<: *LoadBalance, filter: *TW}
  - {name: JP-LoadBalance, <<: *LoadBalance, filter: *JP}
- - {name: KR-LoadBalance, <<: *LoadBalance, filter: *KR}
  - {name: SG-LoadBalance, <<: *LoadBalance, filter: *SG}
+ - {name: KR-LoadBalance, <<: *LoadBalance, filter: *KR}
  - {name: US-LoadBalance, <<: *LoadBalance, filter: *US}
 
 # 全部节点延时优选
