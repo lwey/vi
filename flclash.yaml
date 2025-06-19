@@ -6,8 +6,16 @@
 
 # 远程订阅
 proxy-providers:
-  1:
+  Hneko云:
     url: "https://subneko.v1999.sbs/study/xuexi/v999/hneko?token=460dc514852b0481422ec729e2c7c263"
+    type: http
+    interval: 86400
+    health-check: {enable: true,url: "https://www.gstatic.com/generate_204",interval: 300}
+    override:
+      additional-prefix: ""
+
+CF优选:
+    url: "https://vl66.wxgqlfx.cn/wxgqlfx"
     type: http
     interval: 86400
     health-check: {enable: true,url: "https://www.gstatic.com/generate_204",interval: 300}
