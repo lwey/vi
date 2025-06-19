@@ -14,7 +14,7 @@ proxy-providers:
     override:
       additional-prefix: ""
 
-CF优选:
+    CF优选:
     url: "https://vl66.wxgqlfx.cn/wxgqlfx"
     type: http
     interval: 86400
