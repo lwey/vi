@@ -15,7 +15,7 @@ proxy-providers:
   Airport_01:
     <<: *PProviders
     proxy: "🟢 直连"
-    url: "https://subneko.v1999.sbs/study/xuexi/v999/hneko?token=460dc514852b0481422ec729e2c7c263"
+    url: ""
     override:
       additional-prefix: '[机场名称1]'
       skip-cert-verify: true
