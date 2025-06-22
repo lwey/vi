@@ -14,8 +14,8 @@ proxy-providers:
     override:
       additional-prefix: "Hneko云"
 
-  CF优选:
-    url: "https://vl66.wxgqlfx.cn/wxgqlfx"
+  ikuuu:
+    url: "https://vnc06.no-mad-world.club/link/H3dxVk2f4jskxMQW?clash=3&extend=1"
     type: http
     interval: 86400
     health-check: {enable: true,url: "https://www.gstatic.com/generate_204",interval: 300}
