@@ -209,12 +209,12 @@ rule-providers:
     url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
 
   bilibili-domain:
-    <<: *RuleProviders
+    <<: *d
     path: './ruleset/bilibili-domain.mrs'
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs'
 
   bilibili-ip:
-    <<: *RuleProviders
+    <<: *i
     path: './ruleset/bilibili-ip.mrs'
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/bilibili.mrs'
 
@@ -259,12 +259,12 @@ rule-providers:
     url: 'https://kelee.one/Tool/Clash/Rule/AppStore.yaml' 
     
   twitter-domain: 
-    <<: *RuleProviders 
+    <<: *d 
     path: './ruleset/twitter-domain.mrs' 
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs' 
  
   twitter-ip: 
-    <<: *RuleProviders 
+    <<: *i
     path: './ruleset/twitter-ip.mrs' 
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs'
 
@@ -279,17 +279,17 @@ rule-providers:
     url: 'https://rule.kelee.one/Clash/Google.yaml' 
 
   youtube-domain: 
-    <<: *RuleProviders 
+    <<: *d 
     path: './ruleset/youtube-domain.mrs' 
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs' 
     
   telegram-domain: 
-    <<: *RuleProviders 
+    <<: *d
     path: './ruleset/telegram-domain.mrs' 
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs' 
 
   telegram-ip: 
-    <<: *RuleProviders 
+    <<: *i
     path: './ruleset/telegram-domain.mrs'
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs' 
     
