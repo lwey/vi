@@ -134,19 +134,15 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 
 # 策略组
 proxy-groups: 
-  #- {name: 游戏选择, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 全球选择]}
-  #- {name: 全球选择, type: select, include-all-providers: true, filter: *FilterAll}
-  #- {name: 境外下载, type: select, include-all-providers: true, filter: *FilterAll, proxies: [DIRECT]}
-  - {name: AI, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png, type: select, include-all-providers: true, filter: *FilterAll}
-  - {name: TikTok, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png, type: select, include-all-providers: true, filter: *FilterAll}
+  - {name: bilibili, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
+  - {name: TikTok, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Telegram, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: App Store, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: Apple账户, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: TestFlight, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: 1Password, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
+  - {name: X, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
+  - {name: YouTube, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
+  - {name: Apple, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Microsoft, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Netflix, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: Emby, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
+  - {name: Google, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, type: fallback, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   
   
@@ -156,10 +152,7 @@ proxy-groups:
   - {name: Korea, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance]} 
   - {name: Singapore, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png, type: select, proxies: [SG-Auto, SG-FallBack, SG-LoadBalance]} 
   - {name: America, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, type: select, proxies: [US-Auto, US-FallBack, US-LoadBalance]} 
-  #- {name: 英国自动策略, type: select, proxies: [⏱英国时延优选策略组, 🚥英国故障转移策略组, 🎛英国负载均衡策略组]} 
-  #- {name: 法国自动策略, type: select, proxies: [⏱法国时延优选策略组, 🚥法国故障转移策略组, 🎛法国负载均衡策略组]} 
-  #- {name: 德国自动策略, type: select, proxies: [⏱德国时延优选策略组, 🚥德国故障转移策略组, 🎛德国负载均衡策略组]}
-  
+    
 # 时延优选策略组
   - {name: HK-Auto, <<: *UrlTest, filter: *FilterHK}
   - {name: TW-Auto, <<: *UrlTest, filter: *FilterTW}
@@ -167,9 +160,6 @@ proxy-groups:
   - {name: KR-Auto, <<: *UrlTest, filter: *FilterKR}
   - {name: SG-Auto, <<: *UrlTest, filter: *FilterSG}
   - {name: US-Auto, <<: *UrlTest, filter: *FilterUS}
-  #- {name: ⏱英国时延优选策略组, <<: *UrlTest, filter: *FilterUK}
-  #- {name: ⏱法国时延优选策略组, <<: *UrlTest, filter: *FilterFR}
-  #- {name: ⏱德国时延优选策略组, <<: *UrlTest, filter: *FilterDE}
 
 # 故障转移策略组
   - {name: HK-FallBack, <<: *FallBack, filter: *FilterHK}
@@ -178,9 +168,6 @@ proxy-groups:
   - {name: SG-FallBack, <<: *FallBack, filter: *FilterKR}
   - {name: KR-FallBack, <<: *FallBack, filter: *FilterSG}
   - {name: US-FallBack, <<: *FallBack, filter: *FilterUS}
-  #- {name: 🚥英国故障转移策略组, <<: *FallBack, filter: *FilterUK}
-  #- {name: 🚥法国故障转移策略组, <<: *FallBack, filter: *FilterFR}
-  #- {name: 🚥德国故障转移策略组, <<: *FallBack, filter: *FilterDE}
 
 # 负载均衡策略组
   - {name: HK-LoadBalance, <<: *LoadBalance, filter: *FilterHK}
@@ -189,9 +176,6 @@ proxy-groups:
   - {name: SG-LoadBalance, <<: *LoadBalance, filter: *FilterKR}
   - {name: KR-LoadBalance, <<: *LoadBalance, filter: *FilterSG}
   - {name: US-LoadBalance, <<: *LoadBalance, filter: *FilterUS}
-  #- {name: 🎛英国负载均衡策略组, <<: *LoadBalance, filter: *FilterUK}
-  #- {name: 🎛法国负载均衡策略组, <<: *LoadBalance, filter: *FilterFR}
-  #- {name: 🎛德国负载均衡策略组, <<: *LoadBalance, filter: *FilterDE}
   
 # 订阅规则
 rule-providers:
@@ -220,25 +204,20 @@ rule-providers:
     path: './rules/InternationalDownloadCDN.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
 
-  AI:
-    <<: *RuleProviders
-    path: './rules/AI.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
-
   TikTok:
     <<: *RuleProviders
     path: './rules/TikTok.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
 
-  Game:
+  bilibili-domain:
     <<: *RuleProviders
-    path: './rules/Game.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/Game.yaml'
+    path: './ruleset/bilibili-domain.mrs'
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs'
 
-  1Password:
+  bilibili-ip:
     <<: *RuleProviders
-    path: './rules/1PasswordUS.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
+    path: './ruleset/bilibili-ip.mrs'
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/bilibili.mrs'
 
   Steam:
     <<: *RuleProviders
@@ -280,11 +259,16 @@ rule-providers:
     path: './rules/AppStore.yaml' 
     url: 'https://kelee.one/Tool/Clash/Rule/AppStore.yaml' 
     
-  TestFlight: 
+  twitter-domain: 
     <<: *RuleProviders 
-    path: './rules/TestFlight.yaml' 
-    url: 'https://rule.kelee.one/Clash/TestFlight.yaml' 
-    
+    path: './ruleset/twitter-domain.mrs' 
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs' 
+ 
+  twitter-ip: 
+    <<: *RuleProviders 
+    path: './ruleset/twitter-ip.mrs' 
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs'
+
   Microsoft: 
     <<: *RuleProviders 
     path: './rules/Microsoft.yaml' 
@@ -295,10 +279,15 @@ rule-providers:
     path: './rules/Google.yaml' 
     url: 'https://rule.kelee.one/Clash/Google.yaml' 
     
-  Telegram: 
+  telegram-domain: 
     <<: *RuleProviders 
-    path: './rules/Telegram.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml' 
+    path: './ruleset/telegram-domain.mrs' 
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs' 
+
+  telegram-ip: 
+    <<: *RuleProviders 
+    path: './ruleset/telegram-domain.mrs' ' 
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs' 
     
   ESET_China: 
     <<: *RuleProviders 
@@ -311,20 +300,16 @@ rules:
   - RULE-SET, Direct, DIRECT 
   - RULE-SET, Proxy, Final 
   - RULE-SET, ChinaDownloadCDN, DIRECT 
-  #- RULE-SET, InternationalDownloadCDN, 境外下载 
-  - RULE-SET, AI, AI 
+  - RULE-SET, twitter-domain,X
+  - RULE-SET, bilibili-domain,bilibili
   - RULE-SET, TikTok, TikTok 
   - RULE-SET, Steam, Final 
-  #- RULE-SET, Game, 游戏选择 
+  - RULE-SET, twitter-ip,X 
   - RULE-SET, Netflix, Netflix 
-  - RULE-SET, Emby, Emby 
-  - RULE-SET, TestFlight, TestFlight 
+  - RULE-SET, telegram-domain,Telegram 
   - RULE-SET, iCloudChina, DIRECT 
-  - RULE-SET, ApplePushNotificationService, DIRECT 
-  - RULE-SET, AppleSoftwareUpdates, DIRECT 
-  - RULE-SET, AppleID, Apple账户 
-  - RULE-SET, AppStore, App Store 
-  - RULE-SET, 1Password, 1Password 
+  - RULE-SET, bilibili-ip,bilibili 
+  - RULE-SET, telegram-ip,Telegram 
   - RULE-SET, Microsoft, Final 
   - RULE-SET, Google, Final 
   - RULE-SET, Telegram, Final 
