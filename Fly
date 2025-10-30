@@ -139,7 +139,6 @@ proxy-groups:
   - {name: Telegram, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: X, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: YouTube, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: Apple, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Microsoft, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Netflix, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Google, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
@@ -278,6 +277,11 @@ rule-providers:
     <<: *RuleProviders 
     path: './rules/Google.yaml' 
     url: 'https://rule.kelee.one/Clash/Google.yaml' 
+
+  youtube-domain: 
+    <<: *RuleProviders 
+    path: './ruleset/youtube-domain.mrs' 
+    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs' 
     
   telegram-domain: 
     <<: *RuleProviders 
@@ -286,7 +290,7 @@ rule-providers:
 
   telegram-ip: 
     <<: *RuleProviders 
-    path: './ruleset/telegram-domain.mrs' ' 
+    path: './ruleset/telegram-domain.mrs'
     url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs' 
     
   ESET_China: 
@@ -310,9 +314,9 @@ rules:
   - RULE-SET, iCloudChina, DIRECT 
   - RULE-SET, bilibili-ip,bilibili 
   - RULE-SET, telegram-ip,Telegram 
-  - RULE-SET, Microsoft, Final 
-  - RULE-SET, Google, Final 
-  - RULE-SET, Telegram, Final 
+  - RULE-SET, Microsoft, Microsoft 
+  - RULE-SET, Google, Google 
+  - RULE-SET, youtube-domain, YouTube 
   - RULE-SET, ESET_China, DIRECT 
   - GEOIP, CN, DIRECT 
   - MATCH, Final
