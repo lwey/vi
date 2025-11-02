@@ -127,7 +127,7 @@ US: &US '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费�
 All: &All '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
 
 # 代理组相关
-Select: &Select {type: select, proxies: [Proxy, HongKong, TaiWan, Japan, Korea, Singapore, America, AllServer, DIRECT]}
+Select: &Select {type: select, proxies: [HongKong, TaiWan, Japan, Korea, Singapore, America, AllServer, DIRECT]}
 
 UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url: 'http://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 
@@ -141,10 +141,10 @@ LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: '
 proxy-groups: 
 
 # 漏网之鱼
- - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [Proxy,DIRECT]}
+ - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
 
 # 节点切换
- - {name: Proxy, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
+# - {name: Proxy, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
 
 # AI平台
  - {name: AI, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png, <<: *Select}
@@ -344,14 +344,14 @@ rules:
 #  - RULE-SET,proxymedia-classical,Streaming
   - RULE-SET,wechat-classical,DIRECT
   - RULE-SET,telegram-domain,Telegram
-  - RULE-SET,github-domain,Proxy
+  - RULE-SET,github-domain,Final
   - RULE-SET,twitter-domain,X
   - RULE-SET,apple-classical,America
   - RULE-SET,apple-domain,Apple
   - RULE-SET,google-domain,Google
   - RULE-SET,microsoft-domain,Microsoft
   - RULE-SET,games-domain,Games
-  - RULE-SET,proxy-domain,Proxy
+  - RULE-SET,proxy-domain,Final
 
   - RULE-SET,google-ip,Google
 #  - RULE-SET,netflix-ip,NETFLIX
