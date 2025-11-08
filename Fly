@@ -134,7 +134,6 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 
 # 策略组
 proxy-groups: 
-  - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, type: fallback, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: bilibili, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: TikTok, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Telegram, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
@@ -142,7 +141,7 @@ proxy-groups:
   - {name: YouTube, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Microsoft, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Google, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-
+  - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, type: fallback, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   
   
   - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance]} 
