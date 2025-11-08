@@ -245,9 +245,6 @@ rule-providers:
     interval: 86400
     behavior: classical
 
-# 网易云音乐
-# neteasemusic-classical: {<<: *c, path: ./ruleset/neteasemusic-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/NetEaseMusic.list}
-
   Telegram:
     type: http
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml"
@@ -277,7 +274,7 @@ rule-providers:
     interval: 86400
     behavior: classical
 
-  cn:
+  China:
     type: http
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/China.yaml"
     path: ./ruleset/China.yaml
@@ -298,14 +295,13 @@ rules:
   - RULE-SET,AdBlock,REJECT
   - RULE-SET,Lan,DIRECT
   - RULE-SET,YouTube,YouTube
-  - RULE-SET,Tiktok,TikTok
-  - RULE-SET,Bilibili,bilibili
-  - RULE-SET,neteasemusic-classical,NetEaseMusic
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,BiliBili,bilibili
   - RULE-SET,Telegram,Telegram
   - RULE-SET,Twitter,X
   - RULE-SET,Google,Google
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,Proxy,Final
-  - RULE-SET,cn,DIRECT
+  - RULE-SET,China,DIRECT
   - GEOIP,cn,DIRECT
   - MATCH,Final
