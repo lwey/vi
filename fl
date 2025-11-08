@@ -216,19 +216,19 @@ rule-providers:
 
 
 # Lan
- Lan-classical: {<<: *c, path: ./ruleset/Lan-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml}
+ Lan-classical: {<<: *c, path: ./ruleset/Lan-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml}
 
 
 # YouTube
- youtube-classical: {<<: *c, path: ./ruleset/youtube-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml}
+ youtube-classical: {<<: *c, path: ./ruleset/youtube-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml}
 
 
 # TikTok
- tiktok-classical: {<<: *c, path: ./ruleset/tiktok-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml}
+ tiktok-classical: {<<: *c, path: ./ruleset/tiktok-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml}
 
 
 # 哔哩哔哩
- bilibili-classical: {<<: *c, path: ./ruleset/bilibili-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml}
+ bilibili-classical: {<<: *c, path: ./ruleset/bilibili-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml}
  
 
 # 网易云音乐
@@ -236,25 +236,25 @@ rule-providers:
 
 
 # Telegram
- telegram-classical: {<<: *c, path: ./ruleset/telegram-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml}
+ telegram-classical: {<<: *c, path: ./ruleset/telegram-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml}
 
 
 # X(Twitter)
- twitter-classical: {<<: *c, path: ./ruleset/twitter-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml}
+ twitter-classical: {<<: *c, path: ./ruleset/twitter-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml}
  
 
 # 谷歌服务
- google-classical: {<<: *c, path: ./ruleset/google-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml}
+ google-classical: {<<: *c, path: ./ruleset/google-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml}
 
 
 # 微软服务
- microsoft-classical: {<<: *c, path: ./ruleset/microsoft-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.yaml}
+ microsoft-classical: {<<: *c, path: ./ruleset/microsoft-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.yaml}
 
 # 国内网站
- cn-classical: {<<: *c, path: ./ruleset/cn-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China.list}
+ cn-classical: {<<: *c, path: ./ruleset/cn-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China.list}
 
 # 国外网站
- proxy-classical: {<<: *c, path: ./ruleset/proxy-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml}
+ proxy-classical: {<<: *c, path: ./ruleset/proxy-classical.yaml, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml}
 
 
 
