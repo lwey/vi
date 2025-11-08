@@ -297,7 +297,7 @@ rule-providers:
 rules:  
   - RULE-SET,AdBlock,REJECT
   - RULE-SET,Lan,DIRECT
-  - RULE-SET,Youtube,YouTube
+  - RULE-SET,YouTube,YouTube
   - RULE-SET,Tiktok,TikTok
   - RULE-SET,Bilibili,bilibili
   - RULE-SET,neteasemusic-classical,NetEaseMusic
