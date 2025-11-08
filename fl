@@ -140,9 +140,6 @@ LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: '
 # 代理组
 proxy-groups: 
 
-# 漏网之鱼
- - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
-
 # YouTube
  - {name: YouTube, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png, <<: *Select}
 
@@ -167,6 +164,9 @@ proxy-groups:
 
 # 微软服务
  - {name: Microsoft, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Windows_11.png, <<: *Select}
+
+# 漏网之鱼
+ - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America,AllServer,DIRECT]}
 
 # 地区节点代理组
  - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance], include-all-providers: true, filter: *HK}
