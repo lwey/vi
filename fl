@@ -284,18 +284,14 @@ rule-providers:
  wechat-classical: {<<: *c, path: ./ruleset/wechat-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/WeChat.list}
 
 # Telegram
- telegram-domain: {<<: *d, path: ./ruleset/telegram-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs}
-
- telegram-ip: {<<: *i, path: ./ruleset/telegram-ip.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs}
+ telegram-classical: {<<: *c, path: ./ruleset/telegram-classical.mrs, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml}
 
 # GitHub
  github-domain: {<<: *d, path: ./ruleset/github-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs}
 
 # X(Twitter)
- twitter-domain: {<<: *d, path: ./ruleset/twitter-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs}
+ twitter-classical: {<<: *c, path: ./ruleset/twitter-classical.mrs, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml}
  
- twitter-ip: {<<: *i, path: ./ruleset/twitter-ip.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs}
-
 # 苹果代理服务
  apple-classical: {<<: *c, path: ./ruleset/apple-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/AppleProxyService.list}
 
@@ -343,9 +339,9 @@ rules:
 #  - RULE-SET,neteasemusic-classical,NetEaseMusic
 #  - RULE-SET,proxymedia-classical,Streaming
   - RULE-SET,wechat-classical,DIRECT
-  - RULE-SET,telegram-domain,Telegram
+  - RULE-SET,telegram-classical,Telegram
   - RULE-SET,github-domain,Final
-  - RULE-SET,twitter-domain,X
+  - RULE-SET,twitter-classical,X
   - RULE-SET,apple-classical,America
   - RULE-SET,apple-domain,Apple
   - RULE-SET,google-domain,Google
@@ -355,8 +351,6 @@ rules:
 
   - RULE-SET,google-ip,Google
 #  - RULE-SET,netflix-ip,NETFLIX
-  - RULE-SET,telegram-ip,Telegram
-  - RULE-SET,twitter-ip,X
   - RULE-SET,cn-domain,DIRECT
   - RULE-SET,bilibili-ip,bilibili
   - RULE-SET,apple-ip,Apple
