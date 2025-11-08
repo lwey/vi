@@ -134,15 +134,15 @@ RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, 
 
 # 策略组
 proxy-groups: 
+  - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, type: fallback, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: bilibili, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: TikTok, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Telegram, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: X, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: YouTube, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Microsoft, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: Netflix, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png, type: select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
   - {name: Google, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png, type: select, proxies: [DIRECT, HongKong,TaiWan,Japan,Korea,Singapore,America]}
-  - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, type: fallback, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
+
   
   
   - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance]} 
@@ -178,145 +178,75 @@ proxy-groups:
   
 # 订阅规则
 rule-providers:
-  LAN:
-    <<: *RuleProviders
-    path: './rules/Lan.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml'
 
-  Direct:
-    <<: *RuleProviders
-    path: './rules/Direct.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
 
   Proxy:
     <<: *RuleProviders
     path: './rules/Proxy.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/Proxy.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml'
 
-  ChinaDownloadCDN:
-    <<: *RuleProviders
-    path: './rules/ChinaDownloadCDN.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
-
-  InternationalDownloadCDN:
-    <<: *RuleProviders
-    path: './rules/InternationalDownloadCDN.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
 
   TikTok:
     <<: *RuleProviders
     path: './rules/TikTok.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml'
 
-  bilibili-domain:
+  bilibili:
     <<: *RuleProviders
-    path: './ruleset/bilibili-domain.mrs'
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs'
+    path: './ruleset/BiliBili.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml'
 
-  bilibili-ip:
-    <<: *RuleProviders
-    path: './ruleset/bilibili-ip.mrs'
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/bilibili.mrs'
+
 
   Steam:
     <<: *RuleProviders
     path: './rules/Steam.yaml'
-    url: 'https://rule.kelee.one/Clash/Steam.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml'
     
-  Netflix: 
-    <<: *RuleProviders 
-    path: './rules/Netflix.yaml' 
-    url: 'https://rule.kelee.one/Clash/Netflix.yaml' 
-    
-  Emby: 
-    <<: *RuleProviders 
-    path: './rules/Emby.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/EmbyServer.yaml' 
-    
-  iCloudChina: 
-    <<: *RuleProviders 
-    path: './rules/iCloudChina.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/iCloudChina.yaml'
-    
-  ApplePushNotificationService: 
-    <<: *RuleProviders 
-    path: './rules/ApplePushNotificationService.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/ApplePushNotificationService.yaml' 
-    
-  AppleSoftwareUpdates: 
-    <<: *RuleProviders 
-    path: './rules/AppleSoftwareUpdates.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/AppleSoftwareUpdates.yaml' 
-  
-  AppleID: 
-    <<: *RuleProviders 
-    path: './rules/AppleID.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/AppleID.yaml' 
-    
-  AppStore: 
-    <<: *RuleProviders 
-    path: './rules/AppStore.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/AppStore.yaml' 
-    
-  twitter-domain: 
-    <<: *RuleProviders 
-    path: './ruleset/twitter-domain.mrs' 
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs' 
- 
-  twitter-ip: 
+  telegram: 
     <<: *RuleProviders
-    path: './ruleset/twitter-ip.mrs' 
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs'
+    path: './ruleset/Telegram.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml' 
+
+  twitter: 
+    <<: *RuleProviders 
+    path: './ruleset/Twitter.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml' 
+ 
 
   Microsoft: 
     <<: *RuleProviders 
     path: './rules/Microsoft.yaml' 
-    url: 'https://rule.kelee.one/Clash/Microsoft.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.yaml' 
     
   Google: 
     <<: *RuleProviders 
     path: './rules/Google.yaml' 
-    url: 'https://rule.kelee.one/Clash/Google.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml' 
 
-  youtube-domain: 
+  youtube: 
     <<: *RuleProviders 
-    path: './ruleset/youtube-domain.mrs' 
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs' 
+    path: './ruleset/YouTube.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml' 
     
-  telegram-domain: 
-    <<: *RuleProviders
-    path: './ruleset/telegram-domain.mrs' 
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs' 
-
-  telegram-ip: 
-    <<: *RuleProviders
-    path: './ruleset/telegram-domain.mrs'
-    url: 'https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs' 
     
   ESET_China: 
     <<: *RuleProviders 
     path: './rules/ESET_China.yaml' 
-    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml' 
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China.list' 
     
 # 规则指向 
 rules: 
-  - RULE-SET, LAN, DIRECT 
-  - RULE-SET, Direct, DIRECT 
   - RULE-SET, Proxy, Final 
-  - RULE-SET, ChinaDownloadCDN, DIRECT 
-  - RULE-SET, twitter-domain,X
-  - RULE-SET, bilibili-domain,bilibili
+  - RULE-SET, twitter, X
+  - RULE-SET, bilibili,bilibili
   - RULE-SET, TikTok, TikTok 
   - RULE-SET, Steam, Final 
-  - RULE-SET, twitter-ip,X 
-  - RULE-SET, Netflix, Netflix 
-  - RULE-SET, telegram-domain,Telegram 
-  - RULE-SET, iCloudChina, DIRECT 
-  - RULE-SET, bilibili-ip,bilibili 
-  - RULE-SET, telegram-ip,Telegram 
+  - RULE-SET, telegram, Telegram 
+  - RULE-SET, bilibili,bilibili 
   - RULE-SET, Microsoft, Microsoft 
   - RULE-SET, Google, Google 
-  - RULE-SET, youtube-domain, YouTube 
+  - RULE-SET, youtube, YouTube 
   - RULE-SET, ESET_China, DIRECT 
   - GEOIP, CN, DIRECT 
   - MATCH, Final
