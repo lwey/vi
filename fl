@@ -209,7 +209,7 @@ proxy-groups:
 # 远程规则集
 rule-providers:
   YouTube:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/blackmatrix7/YouTube.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml'
 
@@ -217,7 +217,7 @@ rule-providers:
 
 # TikTok
   TikTok:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/TikTok.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml'
 
@@ -225,7 +225,7 @@ rule-providers:
 
 # 哔哩哔哩
   BiliBili:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/BiliBili.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml'
 
@@ -236,7 +236,7 @@ rule-providers:
 
 # Telegram
   Telegram:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/Telegram.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml'
 
@@ -244,34 +244,34 @@ rule-providers:
 
 # X(Twitter)
   Twitter:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/Twitter.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml'
 
 
 # 谷歌服务
   Google:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/Google.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml'
 
 
 # 微软服务
   Microsoft:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/Microsoft.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml'
 
 
 # 国内网站
   cn:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/China.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/China.yaml'
 
     
   Proxy:
-    behavior: 'classical'
+    <<: *classical
     path: './ruleset/Proxy.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml'
 
