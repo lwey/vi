@@ -284,13 +284,13 @@ rule-providers:
  wechat-classical: {<<: *c, path: ./ruleset/wechat-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/WeChat.list}
 
 # Telegram
- telegram-classical: {<<: *c, path: ./ruleset/telegram-classical.mrs, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml}
+ telegram-classical: {<<: *c, path: ./ruleset/telegram-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml}
 
 # GitHub
  github-domain: {<<: *d, path: ./ruleset/github-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs}
 
 # X(Twitter)
- twitter-classical: {<<: *c, path: ./ruleset/twitter-classical.mrs, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml}
+ twitter-classical: {<<: *c, path: ./ruleset/twitter-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Twitter/Twitter.yaml}
  
 # 苹果代理服务
  apple-classical: {<<: *c, path: ./ruleset/apple-classical.list, url: https://gh-proxy.com/https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Clash/Rules/AppleProxyService.list}
@@ -312,7 +312,7 @@ rule-providers:
  games-domain: {<<: *d, path: ./ruleset/games-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs}
 
 # 国内网站
- cn-domain: {<<: *d, path: ./ruleset/cn-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs}
+ cn-classical: {<<: *c, path: ./ruleset/cn-classical.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China.list}
 
 # 国外网站
  proxy-domain: {<<: *d, path: ./ruleset/proxy-domain.mrs, url: https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs}
@@ -351,7 +351,7 @@ rules:
 
   - RULE-SET,google-ip,Google
 #  - RULE-SET,netflix-ip,NETFLIX
-  - RULE-SET,cn-domain,DIRECT
+  - RULE-SET,cn-classical,DIRECT
   - RULE-SET,bilibili-ip,bilibili
   - RULE-SET,apple-ip,Apple
   - RULE-SET,private-ip,DIRECT
