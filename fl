@@ -285,7 +285,7 @@ rules:
   - RULE-SET,Tiktok,TikTok
   - RULE-SET,Bilibili,bilibili
 #  - RULE-SET,neteasemusic-classical,NetEaseMusic
-  - RULE-SET,telegram,Telegram
+  - RULE-SET,Telegram,Telegram
   - RULE-SET,Twitter,X
   - RULE-SET,Google,Google
   - RULE-SET,Microsoft,Microsoft
