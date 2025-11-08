@@ -212,7 +212,7 @@ rule-providers:
   AdBlock:
     type: http
     url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml"
-    path: ./rules/adblock.txt
+    path: ./rules/adblock.yaml
     interval: 86400
     behavior: classical
 
