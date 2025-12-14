@@ -1,0 +1,243 @@
+ # Clash Config Make by Coldvvater
+# TG Channel: https://t.me/Coldvvater_Channel
+# GitHub: https://github.com/Coldvvater
+# Update Date: 2025.05.16
+
+
+# 远程订阅
+proxy-providers:
+  Hneko云:
+    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=b0edd33f74e27e18052af00cbe3943f1"
+    type: http
+    interval: 86400
+    health-check: {enable: true,url: "https://cp.cloudflare.com/generate_204",interval: 300}
+    override:
+      additional-prefix: "Hneko云"
+
+  ikuuu:
+    url: "https://cu.qy1357.top/api/v1/client/subscribe?token=67a51d3d88e7fcedbbc120ca9cc86df4"
+    type: http
+    interval: 86400
+    health-check: {enable: true,url: "https://cp.cloudflare.com/generate_204",interval: 300}
+    override:
+      additional-prefix: "CF优选"
+# 1. 请把订阅链接填入到provider1或provider2下面的url后的引号""内使用,订阅名称可自行重命名，不能重复。
+# 2. 或可通过Sub-Store进行订阅转换(或需自建Sub-Store服务)。
+
+# 本地服务器
+proxies: 
+  - {name: 直连, type: direct}
+
+
+allow-lan: true
+mode: rule
+bind-address: "0.0.0.0"
+mixed-port: 7890
+ipv6: false
+unified-delay: true
+log-level: warning
+find-process-mode: strict
+global-client-fingerprint: chrome
+tcp-concurrent: true
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+lan-allowed-ips:
+  - 0.0.0.0/0
+  - ::/0
+  - 127.0.0.1/8
+
+ 
+secret: 123456 
+external-controller: 127.0.0.1:9090  
+external-ui: ui 
+external-ui-name: zashboard                     
+external-ui-url: 'https://gh-proxy.com/https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip'
+
+                   
+#geodata-mode: true                   
+#geodata-loader: memconservative      
+#geo-auto-update: true                
+#geo-update-interval: 24              
+#geox-url:
+#  geoip: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat'
+#  geosite: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
+                       
+            
+
+sniffer:
+  enable: true                       
+  force-dns-mapping: true            
+  parse-pure-ip: true               
+  override-destination: true         
+
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]         
+      override-destination: true     
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:                      
+    - +.v2ex.com
+  skip-domain:                       
+    - Mijia Cloud
+  skip-src-address:
+    - 192.168.1.1/24
+  skip-dst-address:
+    - 91.105.192.0/23
+    - 91.108.4.0/22
+    - 91.108.8.0/21
+    - 91.108.16.0/21
+    - 91.108.56.0/22
+    - 95.161.64.0/20
+    - 149.154.160.0/20
+    - 185.76.151.0/24
+    - 169.254.169.254/32
+    - 2001:67c:4e8::/48
+    - 2001:b28:f23c::/47
+    - 2001:b28:f23f::/48
+    - 2a0a:f280:203::/48
+
+tun:
+  enable: true
+  # system/gvisor/mixed
+  stack: system
+  dns-hijack: ["any:53", "tcp://any:53"]
+  mtu: 1500
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  use-hosts: true
+  use-system-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "*"
+    - +.lan
+  # 用于解析「DNS 服务器自身域名」，以及 Mihomo 启动初期的基础解析。
+  default-nameserver:
+    - 223.5.5.5                         # 阿里 UDP
+    - 119.29.29.29                      # 腾讯 Pod 备用
+  # 解析「代理服务器域名」，防止 nameserver 无法访问导致连不上代理
+  proxy-server-nameserver:
+    - 223.5.5.5                         # 阿里 UDP
+    - 119.29.29.29                      # 腾讯 Pod 备用
+  # 「直连」域名的解析
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query # 阿里 DoH
+    - https://doh.pub/dns-query        # 腾讯 DNSPod DoH
+  # 用来解析没有匹配到任何「域名规则」的域名，通常是国外域名，建议使用国外 DoH 防止污染。
+  # 但这个解析结果并不会用来发起连接，所以为了追求速度不使用 DoH 或直接使用国内 DNS 也行。
+  # 所以保持国内 DoQ/DoH 作为主解析最可靠
+  nameserver:
+    - https://dns.alidns.com/dns-query # 阿里 DoH
+    - https://doh.pub/dns-query        # 腾讯 DNSPod DoH
+
+######### 锚点 start #########
+
+# 规则类型相关
+RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical, interval: 43200, format: text}
+RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 43200, format: mrs}
+RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 43200, format: text}
+RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 43200, format: mrs}
+
+# 节点筛选相关
+HK: &HK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+TW: &TW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+JP: &JP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+KR: &KR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+SG: &SG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+US: &US '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+All: &All '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
+
+# 代理组相关
+Select: &Select {type: select, proxies: [HongKong, TaiWan, Japan, Singapore, Korea, America]}
+
+UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+
+FallBack: &FallBack {type: fallback, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+
+LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+
+
+
+######### 锚点 end #########
+
+# 代理组
+proxy-groups: 
+
+# 漏网之鱼
+ - {name: Final, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, <<: *Select, proxies: [HongKong,TaiWan,Japan,Korea,Singapore,America]}
+
+
+# 地区节点代理组
+ - {name: HongKong, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, type: select, proxies: [HK-Auto, HK-FallBack, HK-LoadBalance]}
+ - {name: TaiWan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png, type: select, proxies: [TW-Auto, TW-FallBack, TW-LoadBalance]}
+ - {name: Japan, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png, type: select, proxies: [JP-Auto, JP-FallBack, JP-LoadBalance]}
+ - {name: Singapore, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png, type: select, proxies: [SG-Auto, SG-FallBack, SG-LoadBalance]}
+ - {name: Korea, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance]}
+ - {name: America, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, type: select, proxies: [US-Auto, US-FallBack, US-LoadBalance]}
+
+# 全部节点
+ - {name: AllServer, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png, type: select, proxies: [All-Auto], include-all-providers: true, filter: *All}
+
+# 延时优选代理组
+ - {name: HK-Auto, <<: *UrlTest, filter: *HK}
+ - {name: TW-Auto, <<: *UrlTest, filter: *TW}
+ - {name: JP-Auto, <<: *UrlTest, filter: *JP}
+ - {name: SG-Auto, <<: *UrlTest, filter: *SG}
+ - {name: KR-Auto, <<: *UrlTest, filter: *KR}
+ - {name: US-Auto, <<: *UrlTest, filter: *US}
+
+# 故障转移代理组
+ - {name: HK-FallBack, <<: *FallBack, filter: *HK}
+ - {name: TW-FallBack, <<: *FallBack, filter: *TW}
+ - {name: JP-FallBack, <<: *FallBack, filter: *JP}
+ - {name: SG-FallBack, <<: *FallBack, filter: *SG}
+ - {name: KR-FallBack, <<: *FallBack, filter: *KR}
+ - {name: US-FallBack, <<: *FallBack, filter: *US}
+
+# 负载均衡代理组
+ - {name: HK-LoadBalance, <<: *LoadBalance, filter: *HK}
+ - {name: TW-LoadBalance, <<: *LoadBalance, filter: *TW}
+ - {name: JP-LoadBalance, <<: *LoadBalance, filter: *JP}
+ - {name: SG-LoadBalance, <<: *LoadBalance, filter: *SG}
+ - {name: KR-LoadBalance, <<: *LoadBalance, filter: *KR}
+ - {name: US-LoadBalance, <<: *LoadBalance, filter: *US}
+
+# 全部节点延时优选
+ - {name: All-Auto, <<: *UrlTest, filter: *All}
+
+
+
+# 分流规则引用
+rules:  
+#本地/局域网
+  - DOMAIN-SUFFIX,ip6-localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,ip6-loopback,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,local,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,lan,DIRECT,no-resolve
+  
+  #其它
+
+  - PROCESS-NAME,BitComet,DIRECT
+  - PROCESS-NAME,qbittorrent,DIRECT
+  - DOMAIN-SUFFIX,yowindow.ru,DIRECT
+  - DOMAIN-SUFFIX,yowindow.com,DIRECT
+  - GEOIP,cn,DIRECT
+  - MATCH,Final
+
+# 远程规则集
