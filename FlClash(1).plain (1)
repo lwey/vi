@@ -7,7 +7,7 @@
 # 远程订阅
 proxy-providers:
   Hneko云:
-    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=b0edd33f74e27e18052af00cbe3943f1"
+    url: ""
     type: http
     interval: 86400
     health-check: {enable: true,url: "https://cp.cloudflare.com/generate_204",interval: 300}
