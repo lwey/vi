@@ -161,7 +161,7 @@ proxy-groups:
   - {name: America, type: select, proxies: [US-Auto, US-FallBack], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
 
 # 全部节点
-  - {name: AllServer, type: select, proxies: [All-Auto], include-all-providers: true, filter: *All, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
+  - {name: AllServer, type: select, proxies: [All-Auto], include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
 
 # 延时优选代理组
   - {name: HK-Auto, <<: *UrlTest, filter: *FilterHK}
