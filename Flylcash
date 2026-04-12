@@ -191,8 +191,8 @@ rule-providers:
 
   No-ads-all:
     <<: *RuleProviders
-    path: './rules/AWAvenue-Ads-Rule-Clash.yaml'
-    url: 'https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.yaml'
+    path: './rules/AdGuardChinese.list'
+    url: 'https://raw.githubusercontent.com/Coldvvater/Mononoke/refs/heads/master/mihomo/Rules/AdGuardChinese.list'
 
   LAN:
     <<: *RuleProviders
