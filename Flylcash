@@ -18,6 +18,11 @@ proxy-providers:
     override:
       additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
+proxies:
+  - { name: '🇨🇳 直连（IPv4优先）', type: direct, ip-version: ipv4-prefer }
+  - { name: '🇨🇳 直连（IPv6优先）', type: direct, ip-version: ipv6-prefer }
+  - { name: '🇨🇳 直连（双栈）', type: direct }
+
 port: 7890
 socks-port: 7891
 mixed-port: 7892
@@ -77,6 +82,12 @@ sniffer:
     # 向日葵服务
     - "*.oray.com"
     - "*.sunlogin.net"
+
+ntp:
+  enable: true
+  write-to-system: false
+  server: cn.ntp.org.cn
+
 tun:
   enable: true
   stack: system
@@ -141,6 +152,11 @@ RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical
 RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 3600, format: mrs}
 RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 3600, format: text}
 RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 3600, format: mrs}
+rule_providers_common:
+  rp_domain: &rp_domain { type: http, interval: 86400, behavior: domain }
+  rp_ip: &rp_ip { type: http, interval: 86400, behavior: ipcidr }
+  rp_classical:
+    &rp_classical { type: http, interval: 86400, behavior: classical }
 
 # 策略组
 proxy-groups: 
@@ -148,6 +164,7 @@ proxy-groups:
   - {name: 游戏选择, type: select, include-all-providers: true, filter: *FilterAll, proxies: [PASS, DIRECT], icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
   - {name: Speedtest国际, type: select, include-all-providers: true, filter: *FilterAll, proxies: [PASS, DIRECT], icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
   - {name: ChatGPT, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
+  - {name: 直连, type: select, proxies: ['🇨🇳 直连（IPv4优先）', '🇨🇳 直连（IPv6优先）', '🇨🇳 直连（双栈）'], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China_Map.png}
   - {name: 广告拦截, type: select, include-all-providers: true, filter: *FilterAll, proxies: [PASS, REJECT, REJECT-DROP], icon: https://v6.gh-proxy.com/https://github.com/musiyun124/mihomo/raw/refs/heads/main/icon2/GGLJ.png}
   - {name: HongKong, type: select, proxies: [HK-Auto, HK-FallBack], include-all-providers: true, filter: *FilterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: TaiWan, type: select, proxies: [TW-Auto, TW-FallBack], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
@@ -189,20 +206,10 @@ proxy-groups:
 # 订阅规则
 rule-providers:
 
-  No-ads-all:
-    <<: *RuleProviders
-    path: './rules/AdGuardChinese.list'
-    url: 'https://raw.githubusercontent.com/Coldvvater/Mononoke/refs/heads/master/mihomo/Rules/AdGuardChinese.list'
-
-  LAN:
-    <<: *RuleProviders
-    path: './rules/Lan.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/LAN_SPLITTER.yaml'
-
-  Direct:
-    <<: *RuleProviders
-    path: './rules/Direct.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/Direct.yaml'
+  adblock:
+    <<: *rp_domain
+    format: mrs
+    url: 'https://fastly.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockmihomolite.mrs'
 
   Proxy:
     <<: *RuleProviders
@@ -224,25 +231,36 @@ rule-providers:
     path: './rules/Game.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Game.yaml'
 
-  ESET_China:
-    <<: *RuleProviders
-    path: './rules/ESET_China.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
+  private:
+    <<: *rp_domain
+    format: mrs
+    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs'
+  private_ip:
+    <<: *rp_ip
+    format: mrs
+    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs'
+
+  cn:
+    <<: *rp_domain
+    format: mrs
+    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs'
+  cn_ip:
+    <<: *rp_ip
+    format: mrs
+    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs'
 
 # 规则指向
 rules:
-  - GEOSITE,category-ads,广告拦截
-  - GEOSITE,category-ads-all,广告拦截
-  - DOMAIN,abyss.cyapi.cn,广告拦截
-  - DOMAIN,ad.cyapi.cn,广告拦截
-  - DOMAIN,gather.colorfulclouds.net,广告拦截
-  - RULE-SET,No-ads-all,广告拦截
-  - RULE-SET, LAN, DIRECT
-  - RULE-SET, Direct, DIRECT
+  - RULE-SET, adblock, 广告拦截
+
+  - RULE-SET,private,直连
+  - RULE-SET,private_ip,直连,no-resolve
+
+  - RULE-SET,cn,直连
+  - RULE-SET,cn_ip,直连
   - RULE-SET, Proxy, Final
   - RULE-SET, AI, ChatGPT
   - RULE-SET, SpeedtestIntl, Speedtest国际
   - RULE-SET, Game, 游戏选择
-  - RULE-SET, ESET_China, DIRECT
-  - GEOIP, CN, DIRECT
+  - GEOIP, CN, 直连
   - MATCH, Final
