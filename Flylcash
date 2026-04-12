@@ -185,7 +185,7 @@ proxy-groups:
 # - {name: US-LoadBalance, <<: *LoadBalance, filter: *FilterUS}
 
 # 全部节点延时优选
-  - {name: All-Auto, <<: *UrlTest, filter: *All}
+  - {name: All-Auto, <<: *UrlTest, filter: *FilterAll}
 
 # 订阅规则
 rule-providers:
