@@ -100,23 +100,21 @@ dns:
 NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
 
 # 锚点 - 节点订阅
-proxy-providers:
-  Hneko云:
+proxy-providers: 
+  机场名称1:
+    url: '机场1的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    url: "订阅链接1"
+    path: './proxy_providers/机场名称1.yaml'
     override:
-      additional-prefix: '备用-'
-      skip-cert-verify: true
-      udp: true
-  良心云:
+      additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
+  机场名称2:
+    url: '机场2的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    url: "订阅链接2"
+    path: './proxy_providers/机场名称2.yaml'
     override:
-      additional-prefix: '良心云-'
-      skip-cert-verify: true
-      udp: true 
+      additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
 # 锚点 - 节点筛选组
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
