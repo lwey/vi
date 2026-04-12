@@ -210,11 +210,6 @@ rule-providers:
     path: './rules/AI.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
-  TikTok:
-    <<: *RuleProviders
-    path: './rules/TikTok.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
-
   SpeedtestIntl:
     <<: *RuleProviders
     path: './rules/SpeedtestInternational.yaml'
@@ -224,11 +219,6 @@ rule-providers:
     <<: *RuleProviders
     path: './rules/Game.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Game.yaml'
-
-  Netflix:
-    <<: *RuleProviders
-    path: './rules/Netflix.yaml'
-    url: 'https://rule.kelee.one/Clash/Netflix.yaml'
 
   ESET_China:
     <<: *RuleProviders
@@ -241,10 +231,8 @@ rules:
   - RULE-SET, Direct, DIRECT
   - RULE-SET, Proxy, Final
   - RULE-SET, AI, ChatGPT
-  - RULE-SET, TikTok, TikTok
   - RULE-SET, SpeedtestIntl, Speedtest国际
   - RULE-SET, Game, 游戏选择
-  - RULE-SET, Netflix, Netflix
   - RULE-SET, ESET_China, DIRECT
   - GEOIP, CN, DIRECT
   - MATCH, Final
