@@ -190,6 +190,12 @@ proxy-groups:
 
 # 订阅规则
 rule-providers:
+
+  No-ads-all:
+    <<: *RuleProviders
+    path: './rules/AWAvenue-Ads-Rule-Clash.yaml'
+    url: 'https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.yaml'
+
   LAN:
     <<: *RuleProviders
     path: './rules/Lan.yaml'
@@ -227,6 +233,12 @@ rule-providers:
 
 # 规则指向
 rules:
+  - GEOSITE,category-ads,广告拦截
+  - GEOSITE,category-ads-all,广告拦截
+  - DOMAIN,abyss.cyapi.cn,广告拦截
+  - DOMAIN,ad.cyapi.cn,广告拦截
+  - DOMAIN,gather.colorfulclouds.net,广告拦截
+  - RULE-SET,No-ads-all,广告拦截
   - RULE-SET, LAN, DIRECT
   - RULE-SET, Direct, DIRECT
   - RULE-SET, Proxy, Final
