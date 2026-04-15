@@ -116,9 +116,13 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
-    - "*"
     - +.lan
-    - "+.local"
+    - +.local
+    - time.*.com
+    - ntp.*.com
+    - localhost.ptlogin2.qq.com
+    - +.msftconnecttest.com
+    - +.msftncsi.com
   default-nameserver:
     - 223.5.5.5
     - 223.6.6.6
