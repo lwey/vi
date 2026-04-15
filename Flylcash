@@ -210,7 +210,7 @@ rule-providers:
   adblock:
     <<: *rp_domain
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockmihomolite.mrs'
+    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs'
 
 
   AI:
