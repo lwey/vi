@@ -148,13 +148,7 @@ RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical
 RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 3600, format: mrs}
 RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 3600, format: text}
 RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 3600, format: mrs}
-rule_providers_common:
-  rp_domain: &rp_domain { type: http, interval: 86400, behavior: domain }
-  rp_ip: &rp_ip { type: http, interval: 86400, behavior: ipcidr }
-  rp_classical:
-    &rp_classical { type: http, interval: 86400, behavior: classical }
-BehaviorDN: &BehaviorDN {type: http, behavior: domain, format: mrs, interval: 86400}
-BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86400}
+
 
 # 策略组
 proxy-groups: 
@@ -204,9 +198,9 @@ rule-providers:
     format: mrs
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs'
 
-  Tracking:       {<<: *BehaviorDN, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
-  Advertising:    {<<: *BehaviorDN, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs} 
-  AdvertisingIP:  {<<: *BehaviorIP, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs}
+  Tracking:       {<<: *RuleSet_domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
+  Advertising:    {<<: *RuleSet_domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs} 
+  AdvertisingIP:  {<<: *RuleSet_ipcidr_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs}
 
   AI:
     <<: *RuleProviders
