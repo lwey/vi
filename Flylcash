@@ -153,6 +153,8 @@ rule_providers_common:
   rp_ip: &rp_ip { type: http, interval: 86400, behavior: ipcidr }
   rp_classical:
     &rp_classical { type: http, interval: 86400, behavior: classical }
+BehaviorDN: &BehaviorDN {type: http, behavior: domain, format: mrs, interval: 86400}
+BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86400}
 
 # 策略组
 proxy-groups: 
@@ -202,6 +204,9 @@ rule-providers:
     format: mrs
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs'
 
+  Tracking:       {<<: *BehaviorDN, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
+  Advertising:    {<<: *BehaviorDN, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs} 
+  AdvertisingIP:  {<<: *BehaviorIP, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs}
 
   AI:
     <<: *RuleProviders
@@ -217,10 +222,12 @@ rule-providers:
 # 规则指向
 rules:
   - RULE-SET, adblock, 广告拦截
-
+  - RULE-SET,Tracking,REJECT
+  - RULE-SET,Advertising,REJECT
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
   # 阻断 YouTube UDP 流量
   - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
-
+  - RULE-SET,AdvertisingIP,REJECT,no-resolve
   - GEOIP,lan,直连,no-resolve
   - GEOSITE,github,Final
   - GEOSITE,twitter,Final
