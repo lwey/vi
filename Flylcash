@@ -8,7 +8,7 @@ proxy-providers:
   Hneko云:
     <<: *PProviders
     proxy: "DIRECT"
-    url: ""
+    url: "订阅链接"
     override:
       additional-prefix: '备用-'
       skip-cert-verify: true
@@ -16,7 +16,7 @@ proxy-providers:
   良心云:
     <<: *PProviders
     proxy: "DIRECT"
-    url: ""
+    url: "订阅链接"
     override:
       additional-prefix: '良心云-'
       skip-cert-verify: true
