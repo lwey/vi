@@ -8,7 +8,7 @@ proxy-providers:
   Hneko云:
     <<: *PProviders
     proxy: "DIRECT"
-    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=d23a2bdaad82857b7286e66ced2f3411"
+    url: ""
     override:
       additional-prefix: '备用-'
       skip-cert-verify: true
@@ -16,7 +16,7 @@ proxy-providers:
   良心云:
     <<: *PProviders
     proxy: "DIRECT"
-    url: "https://liangxin.xyz/api/v1/liangxin?OwO=247d7fd0b23994a6576a3fda411aaeb7"
+    url: ""
     override:
       additional-prefix: '良心云-'
       skip-cert-verify: true
