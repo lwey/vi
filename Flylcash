@@ -3,20 +3,20 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 
 # 锚点 - 节点订阅
 proxy-providers: 
-  机场名称1:
+  Hneko云:
     url: '机场1的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    path: './proxy_providers/机场名称1.yaml'
+    path: './proxy_providers/Hneko云.yaml'
     override:
-      additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
-  机场名称2:
+      additional-prefix: "Hneko云" # 为订阅节点添加机场名称前缀
+  良心云:
     url: '机场2的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    path: './proxy_providers/机场名称2.yaml'
+    path: './proxy_providers/良心云.yaml'
     override:
-      additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
+      additional-prefix: "良心云" # 为订阅节点添加机场名称前缀
 
 proxies:
   - { name: '🇨🇳 直连（IPv4优先）', type: direct, ip-version: ipv4-prefer }
