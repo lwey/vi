@@ -226,10 +226,10 @@ rules:
   - RULE-SET, adblock, 广告拦截
   - RULE-SET,Tracking,广告拦截
   - RULE-SET,Advertising,广告拦截
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),广告拦截  # 阻止海外 QUIC
   # 阻断 YouTube UDP 流量
   - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
-  - RULE-SET,AdvertisingIP,REJECT,no-resolve
+  - RULE-SET,AdvertisingIP,广告拦截,no-resolve
   - GEOIP,lan,直连,no-resolve
   - GEOSITE,github,Final
   - GEOSITE,twitter,Final
