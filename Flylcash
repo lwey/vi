@@ -4,21 +4,23 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   Hneko云:
+    url: '机场1的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    url: "订阅链接"
+    path: './proxy_providers/Hneko云.yaml'
     override:
-      additional-prefix: '备用-'
+      additional-prefix: "备用-" # 为订阅节点添加机场名称前缀
       skip-cert-verify: true
-      udp: true
+      udp: true 
   良心云:
+    url: '机场2的订阅URL'
     <<: *NodeParam
     proxy: "DIRECT"
-    url: "订阅链接"
+    path: './proxy_providers/良心云.yaml'
     override:
-      additional-prefix: '良心云-'
+      additional-prefix: "良心云-" # 为订阅节点添加机场名称前缀
       skip-cert-verify: true
-      udp: true  
+      udp: true 
 
 proxies:
   - { name: '🇨🇳 直连（IPv4优先）', type: direct, ip-version: ipv4-prefer }
