@@ -208,7 +208,7 @@ rule-providers:
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
   youtube:
-    <<: *rp_domain
+    <<: *RuleSet_domain_mrs
     format: mrs
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs'
 
