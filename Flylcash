@@ -126,6 +126,15 @@ dns:
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
+  fallback:          # 国外 DNS 服务器
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
 
 # 锚点 - 节点筛选组
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
