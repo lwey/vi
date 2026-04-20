@@ -4,8 +4,6 @@ PProviders: &PProviders {type: http, interval: 3600, health-check: {enable: true
 # 锚点 - 节点订阅
 proxy-providers: 
   Hneko云:
-    url: '机场1的订阅URL'
-  Hneko云:
     <<: *PProviders
     proxy: "DIRECT"
     url: "订阅链接"
