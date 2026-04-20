@@ -203,6 +203,12 @@ rule-providers:
   Advertising:    {<<: *RuleSet_domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs} 
   AdvertisingIP:  {<<: *RuleSet_ipcidr_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs}
 
+
+  秋风广告规则:
+    <<: *RuleProviders
+    path: ./rule_providers/AWAvenue-Ads-Rule-Clash.yaml
+    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
+
   AI:
     <<: *RuleProviders
     path: './rules/AI.yaml'
@@ -216,6 +222,7 @@ rule-providers:
 
 # 规则指向
 rules:
+  - RULE-SET, 秋风广告规则, 广告拦截
   - RULE-SET, adblock, 广告拦截
   - RULE-SET,Tracking,REJECT
   - RULE-SET,Advertising,REJECT
