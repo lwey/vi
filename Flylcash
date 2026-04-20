@@ -1,22 +1,26 @@
 # 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
-NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
+PProviders: &PProviders {type: http, interval: 3600, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 6}}
 
 # 锚点 - 节点订阅
 proxy-providers: 
   Hneko云:
     url: '机场1的订阅URL'
-    <<: *NodeParam
+  Hneko云:
+    <<: *PProviders
     proxy: "DIRECT"
-    path: './proxy_providers/Hneko云.yaml'
+    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=d23a2bdaad82857b7286e66ced2f3411"
     override:
-      additional-prefix: "Hneko云" # 为订阅节点添加机场名称前缀
+      additional-prefix: '备用-'
+      skip-cert-verify: true
+      udp: true
   良心云:
-    url: '机场2的订阅URL'
-    <<: *NodeParam
+    <<: *PProviders
     proxy: "DIRECT"
-    path: './proxy_providers/良心云.yaml'
+    url: "https://liangxin.xyz/api/v1/liangxin?OwO=247d7fd0b23994a6576a3fda411aaeb7"
     override:
-      additional-prefix: "良心云" # 为订阅节点添加机场名称前缀
+      additional-prefix: '良心云-'
+      skip-cert-verify: true
+      udp: true  
 
 proxies:
   - { name: '🇨🇳 直连（IPv4优先）', type: direct, ip-version: ipv4-prefer }
