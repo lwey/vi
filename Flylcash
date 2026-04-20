@@ -224,8 +224,8 @@ rule-providers:
 rules:
   - RULE-SET, 秋风广告规则, 广告拦截
   - RULE-SET, adblock, 广告拦截
-  - RULE-SET,Tracking,REJECT
-  - RULE-SET,Advertising,REJECT
+  - RULE-SET,Tracking,广告拦截
+  - RULE-SET,Advertising,广告拦截
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
   # 阻断 YouTube UDP 流量
   - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
