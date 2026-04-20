@@ -115,6 +115,7 @@ dns:
     - "+.lan"
     - "+.local"
     - "+.market.xiaomi.com"
+    - geosite:cn 
   default-nameserver:
     - 223.5.5.5
     - 223.6.6.6
