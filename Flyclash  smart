@@ -175,12 +175,12 @@ proxy-groups:
   - {name: America, type: select, proxies: [US-Smart,], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
 
 # 负载均衡代理组
- - {name: HK-Smart, <<: *BaseSmart, filter: *FilterHK, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png}
- - {name: TW-Smart, <<: *BaseSmart, filter: *FilterTW, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png}
- - {name: JP-Smart, <<: *BaseSmart, filter: *FilterJP, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png}
- - {name: SG-Smart, <<: *BaseSmart, filter: *FilterSG, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png}
- - {name: KR-Smart, <<: *BaseSmart, filter: *FilterKR, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png}
- - {name: US-Smart, <<: *BaseSmart, filter: *FilterUS, include-all: true, policy-priority: '良心云-:2;备用-:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png}
+ - {name: HK-Smart, <<: *BaseSmart, filter: *FilterHK, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
+ - {name: TW-Smart, <<: *BaseSmart, filter: *FilterTW, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
+ - {name: JP-Smart, <<: *BaseSmart, filter: *FilterJP, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
+ - {name: SG-Smart, <<: *BaseSmart, filter: *FilterSG, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
+ - {name: KR-Smart, <<: *BaseSmart, filter: *FilterKR, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
+ - {name: US-Smart, <<: *BaseSmart, filter: *FilterUS, include-all: true, policy-priority: '良心云-:2;备用-:0.5'}
 
 
 # 规则指向
