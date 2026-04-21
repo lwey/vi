@@ -200,7 +200,7 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - RULE-SET, 秋风广告规则, 广告拦截
+  - RULE-SET, AD, 广告拦截
   - RULE-SET, adblock, 广告拦截
   - RULE-SET,Tracking,广告拦截
   - RULE-SET,Advertising,广告拦截
@@ -226,21 +226,11 @@ rules:
 # 订阅规则
 rule-providers:
 
-  adblock:
-    <<: *RuleSet_domain_mrs
-    format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs'
-
-  Tracking:       {<<: *RuleSet_domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
-  Advertising:    {<<: *RuleSet_domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs} 
-  AdvertisingIP:  {<<: *RuleSet_ipcidr_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs}
-
-
-  秋风广告规则:
-    <<: *RuleProviders
-    path: './rules/AWAvenue-Ads-Rule-Clash.yaml'
-    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
-
+  adblock:       {<<: *RuleSet_domain_mrs, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs"}
+  Tracking:       {<<: *RuleSet_domain_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs"}
+  Advertising:    {<<: *RuleSet_domain_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs"} 
+  AdvertisingIP:  {<<: *RuleSet_ipcidr_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs"}
+  AD: {<<: *RuleProviders, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"}
   fakeipfilter_domain: {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
   private_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   ai: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
