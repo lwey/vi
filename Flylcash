@@ -81,7 +81,7 @@ sniffer:
     - +.v2ex.com
 
   skip-domain:
-    - Mijia Cloud
+    - "Mijia Cloud"
     - "*.push.apple.com"
     # 向日葵服务
     - "*.oray.com"
@@ -109,23 +109,25 @@ listeners:
 
 dns:
   enable: true
+  cache-algorithm: arc
   prefer-h3: true
   listen: 0.0.0.0:1053
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
-  fake-ip-filter:
-    - "*"
-    - "+.lan"
-    - "+.local"
-    - "+.market.xiaomi.com"
-    - geosite:cn 
+  fake-ip-filter-mode: blacklist
   default-nameserver:
-    - 223.5.5.5
-    - 223.6.6.6
-  nameserver:
-    - https://doh.pub/dns-query
+    - https://223.5.5.5/dns-query
+  proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  nameserver:
+    - https://8.8.8.8/dns-query#RULES&ecs=223.5.5.0/24
+  fake-ip-filter:
+    - "rule-set:fakeipfilter_domain"
   
 
 # 锚点 - 节点筛选组
@@ -196,6 +198,34 @@ proxy-groups:
 # - {name: US-LoadBalance, <<: *LoadBalance, filter: *FilterUS}
 
 
+# 规则指向
+rules:
+  - RULE-SET, 秋风广告规则, 广告拦截
+  - RULE-SET, adblock, 广告拦截
+  - RULE-SET,Tracking,广告拦截
+  - RULE-SET,Advertising,广告拦截
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),广告拦截  # 阻止海外 QUIC
+  # 阻断 YouTube UDP 流量
+  - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
+  - RULE-SET,AdvertisingIP,广告拦截,no-resolve
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,private_domain,直连
+  - RULE-SET,ai,ChatGPT
+  - RULE-SET,github_domain,Final
+  - RULE-SET,youtube_domain,Final
+  - RULE-SET,google_domain,Google
+  - RULE-SET,microsoft_domain,Final
+  - RULE-SET,apple_domain,直连
+  - RULE-SET,tiktok_domain,Final
+  - RULE-SET,telegram_domain,Final
+  - RULE-SET,apple_ip,直连
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final
+  - RULE-SET,geolocation-!cn,Final
+  - RULE-SET,cn_domain,直连
+  - RULE-SET,cn_ip,直连
+  - MATCH, Final
+
 # 订阅规则
 rule-providers:
 
@@ -214,38 +244,21 @@ rule-providers:
     path: './rules/AWAvenue-Ads-Rule-Clash.yaml'
     url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
 
-  AI:
-    <<: *RuleProviders
-    path: './rules/AI.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
-
-  youtube:
-    <<: *RuleSet_domain_mrs
-    format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs'
-
-
-# 规则指向
-rules:
-  - RULE-SET, 秋风广告规则, 广告拦截
-  - RULE-SET, adblock, 广告拦截
-  - RULE-SET,Tracking,广告拦截
-  - RULE-SET,Advertising,广告拦截
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),广告拦截  # 阻止海外 QUIC
-  # 阻断 YouTube UDP 流量
-  - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
-  - RULE-SET,AdvertisingIP,广告拦截,no-resolve
-  - GEOIP,lan,直连,no-resolve
-  - GEOSITE,github,Final
-  - GEOSITE,twitter,Final
-  - GEOSITE,youtube,Final
-  - GEOSITE,google,Google
-  - GEOSITE,telegram,Final
-  - GEOSITE,CN,直连
-  - GEOSITE,geolocation-!cn,Final
-  - RULE-SET, AI, ChatGPT
-  - GEOIP,google,Google
-  - GEOIP,telegram,Final
-  - GEOIP,twitter,Final
-  - GEOIP, CN, 直连
-  - MATCH, Final
+  fakeipfilter_domain: {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
+  private_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  ai: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
+  youtube_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  google_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  github_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  telegram_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  microsoft_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  apple_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  tiktok_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  geolocation-!cn: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
+  cn_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  
+  private_ip: {<<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  telegram_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  apple_ip: {<<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
