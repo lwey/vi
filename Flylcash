@@ -152,10 +152,10 @@ FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.g
 LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
-RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical, interval: 3600, format: text}
-RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 3600, format: mrs}
-RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 3600, format: text}
-RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 3600, format: mrs}
+RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
+RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
+RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 3600, format: text, proxy: DIRECT}
+RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIRECT}
 
 
 # 策略组
