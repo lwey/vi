@@ -204,9 +204,6 @@ rules:
   - RULE-SET, adblock, 广告拦截
   - RULE-SET,Tracking,广告拦截
   - RULE-SET,Advertising,广告拦截
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),广告拦截  # 阻止海外 QUIC
-  # 阻断 YouTube UDP 流量
-  - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,youtube)),广告拦截
   - RULE-SET,AdvertisingIP,广告拦截,no-resolve
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
