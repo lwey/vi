@@ -209,6 +209,7 @@ rules:
   - RULE-SET,private_domain,直连
   - RULE-SET,ai,ChatGPT
   - RULE-SET,github_domain,Final
+  - RULE-SET,youtube_domain,Final
   - RULE-SET,google_domain,Google
   - RULE-SET,microsoft_domain,Final
   - RULE-SET,apple_domain,直连
