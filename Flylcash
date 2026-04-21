@@ -170,7 +170,7 @@ proxy-groups:
   - {name: ChatGPT, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
   - {name: Google, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Google.png}
   - {name: 直连, type: select, proxies: ['🇨🇳 直连（IPv4优先）', '🇨🇳 直连（IPv6优先）', '🇨🇳 直连（双栈）'], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China_Map.png}
-  - {name: 广告拦截, type: select, include-all-providers: true, proxies: [PASS, REJECT, REJECT-DROP], icon: https://v6.gh-proxy.com/https://github.com/musiyun124/mihomo/raw/refs/heads/main/icon2/GGLJ.png}
+  - {name: 广告拦截, type: select, proxies: [PASS, REJECT, REJECT-DROP], icon: https://v6.gh-proxy.com/https://github.com/musiyun124/mihomo/raw/refs/heads/main/icon2/GGLJ.png}
   - {name: HongKong, type: select, proxies: [HK-Auto, HK-FallBack], include-all-providers: true, filter: *FilterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: TaiWan, type: select, proxies: [TW-Auto, TW-FallBack], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
   - {name: Japan, type: select, proxies: [JP-Auto, JP-FallBack], include-all-providers: true, filter: *FilterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
