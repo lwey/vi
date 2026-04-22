@@ -202,8 +202,6 @@ proxy-groups:
 rules:
   - RULE-SET, AD, 广告拦截
   - RULE-SET, adblock, 广告拦截
-  - RULE-SET,Tracking,广告拦截
-  - RULE-SET,Advertising,广告拦截
   - RULE-SET,AdvertisingIP,广告拦截,no-resolve
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
@@ -227,8 +225,6 @@ rules:
 rule-providers:
 
   adblock:       {<<: *RuleSet_domain_mrs, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs"}
-  Tracking:       {<<: *RuleSet_domain_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs"}
-  Advertising:    {<<: *RuleSet_domain_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/domain/Advertising.mrs"} 
   AdvertisingIP:  {<<: *RuleSet_ipcidr_mrs, url: "https://github.com/666OS/rules/raw/release/mihomo/ip/Advertising.mrs"}
   AD: {<<: *RuleProviders, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"}
   fakeipfilter_domain: {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
