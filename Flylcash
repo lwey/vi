@@ -8,6 +8,7 @@ proxy-providers:
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
+    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
     override:
       additional-prefix: "备用-" # 为订阅节点添加机场名称前缀
       skip-cert-verify: true
@@ -17,6 +18,7 @@ proxy-providers:
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
+    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
     override:
       additional-prefix: "良心云-" # 为订阅节点添加机场名称前缀
       skip-cert-verify: true
@@ -216,8 +218,8 @@ rules:
   - RULE-SET,apple_ip,直连
   - RULE-SET,google_ip,Google
   - RULE-SET,telegram_ip,Final
-  - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn_domain,直连
+  - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn_ip,直连
   - MATCH, Final
 
