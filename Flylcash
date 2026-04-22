@@ -4,7 +4,7 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   Hneko云:
-    url: ''
+    url: ""
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
@@ -14,7 +14,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
   良心云:
-    url: ''
+    url: ""
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
