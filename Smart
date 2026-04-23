@@ -184,12 +184,12 @@ proxy-groups:
 
 
 # 延时优选代理组
-  - {name: HK-Auto, <<: *BaseSmart, filter: *FilterHK, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png}
-  - {name: TW-Auto, <<: *BaseSmart, filter: *FilterTW, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png}
-  - {name: JP-Auto, <<: *BaseSmart, filter: *FilterJP, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png}
-  - {name: SG-Auto, <<: *BaseSmart, filter: *FilterSG, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png}
-  - {name: KR-Auto, <<: *BaseSmart, filter: *FilterKR, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png}
-  - {name: US-Auto, <<: *BaseSmart, filter: *FilterUS, include-all: true, policy-priority: '优:2;备:1', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png}
+  - {name: HK-Auto, <<: *BaseSmart, filter: *FilterHK, include-all: true, policy-priority: '优:2;备:1'}
+  - {name: TW-Auto, <<: *BaseSmart, filter: *FilterTW, include-all: true, policy-priority: '优:2;备:1'}
+  - {name: JP-Auto, <<: *BaseSmart, filter: *FilterJP, include-all: true, policy-priority: '优:2;备:1'}
+  - {name: SG-Auto, <<: *BaseSmart, filter: *FilterSG, include-all: true, policy-priority: '优:2;备:1'}
+  - {name: KR-Auto, <<: *BaseSmart, filter: *FilterKR, include-all: true, policy-priority: '优:2;备:1'}
+  - {name: US-Auto, <<: *BaseSmart, filter: *FilterUS, include-all: true, policy-priority: '优:2;备:1'}
 
 
 
