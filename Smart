@@ -172,8 +172,8 @@ ip: &ip {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIREC
 # 策略组
 proxy-groups: 
   - {name: Final, <<: *Select, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
-  - {name: ChatGPT, type: *Select, icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
-  - {name: Google, type: *Select, icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Google.png}
+  - {name: ChatGPT, <<: *Select, icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
+  - {name: Google, <<: *Select, icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Google.png}
   - {name: 广告拦截, type: select, proxies: [REJECT-DROP, REJECT, PASS], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: HongKong, type: select, proxies: [HK-Auto,], include-all-providers: true, filter: *FilterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: TaiWan, type: select, proxies: [TW-Auto,], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
