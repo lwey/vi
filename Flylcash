@@ -209,7 +209,8 @@ proxy-groups:
 # 规则指向
 rules:
   - RULE-SET, qiufeng, 广告拦截
-  - RULE-SET, anti-AD, 广告拦截
+  - RULE-SET, BanAD, 广告拦截
+  - RULE-SET, BanProgramAD, 广告拦截
   - RULE-SET,private_ip,DIRECT,no-resolve
   - RULE-SET,private_domain,DIRECT
   - RULE-SET,ai,ChatGPT
@@ -231,7 +232,6 @@ rules:
 # 订阅规则
 rule-providers:
   qiufeng: { <<: *class, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"}
-  anti-AD: { <<: *domain, url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/refs/heads/master/anti-ad-clash.yaml"}
   BanAD: { <<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanAD.yaml"}
   BanProgramAD: { <<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanProgramAD.yaml"}
   fakeipfilter_domain: {<<: *domain, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
