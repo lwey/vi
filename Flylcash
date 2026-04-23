@@ -36,9 +36,14 @@ tproxy-port: 7894
 unified-delay: true
 geodata-mode: false
 geodata-loader: standard
+
 geo-auto-update: true
 geo-update-interval: 24
 tcp-concurrent: true
+# TCP Keep Alive 设置，减少设备耗电问题
+keep-alive-interval: 30
+keep-alive-idle: 15
+
 find-process-mode: strict
 global-client-fingerprint: chrome
 
@@ -55,8 +60,8 @@ external-controller: 0.0.0.0:9090
 geox-url:
   geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
   geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
-  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
-  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
+  mmdb: 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-Country.mmdb'
+  asn: 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb'
 
 profile:
   store-selected: true
@@ -96,6 +101,8 @@ tun:
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
+  auto-redirect: true # 自动重定向流量到 TUN 设备
+  auto-detect-interface: true # 自动检测网络接口
 
 # P2P下载端口
 listeners:
@@ -114,7 +121,7 @@ dns:
   listen: 0.0.0.0:1053
   ipv6: true
   enhanced-mode: fake-ip
-  fake-ip-range: 28.0.0.1/8
+  fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   default-nameserver:
     - https://223.5.5.5/dns-query
