@@ -101,8 +101,7 @@ tun:
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
-  auto-redirect: true # 自动重定向流量到 TUN 设备
-  auto-detect-interface: true # 自动检测网络接口
+
 
 # P2P下载端口
 listeners:
