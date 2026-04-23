@@ -1,5 +1,5 @@
 # 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
-NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
+NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 6}}
 
 # 锚点 - 节点订阅
 proxy-providers: 
@@ -165,15 +165,15 @@ RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval:
 
 # 策略组
 proxy-groups: 
-  - {name: Final, <<: *Select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
+  - {name: Final, <<: *Select, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
   - {name: ChatGPT, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
   - {name: Google, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Google.png}
-  - {name: 广告拦截, type: select, proxies: [PASS, REJECT, REJECT-DROP], icon: https://v6.gh-proxy.com/https://github.com/musiyun124/mihomo/raw/refs/heads/main/icon2/GGLJ.png}
+  - {name: 广告拦截, type: select, proxies: [REJECT-DROP, REJECT, PASS], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: HongKong, type: select, proxies: [HK-Auto, HK-FallBack], include-all-providers: true, filter: *FilterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: TaiWan, type: select, proxies: [TW-Auto, TW-FallBack], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
   - {name: Japan, type: select, proxies: [JP-Auto, JP-FallBack], include-all-providers: true, filter: *FilterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
   - {name: Singapore, type: select, proxies: [SG-Auto, SG-FallBack], include-all-providers: true, filter: *FilterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-# - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
   - {name: America, type: select, proxies: [US-Auto, US-FallBack], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
 
 
@@ -220,15 +220,13 @@ rules:
   - RULE-SET,google_ip,Google
   - RULE-SET,telegram_ip,Final
   - RULE-SET,cn_domain,DIRECT
-  - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn_ip,DIRECT
   - MATCH, Final
 
 # 订阅规则
 rule-providers:
-
-  qiufeng:       {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml"}
-  anti-AD:  {<<: *RuleSet_ipcidr_mrs, url: "https://anti-ad.net/clash.yaml"}
+  qiufeng: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml"}
+  anti-AD: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/refs/heads/master/anti-ad-clash.yaml"}
   fakeipfilter_domain: {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
   private_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   ai: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
