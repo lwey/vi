@@ -1,49 +1,38 @@
-# ====================================================
-#  Mihomo (Clash Meta) 配置文件
-#  特点：双核心去广告 + 精准分流 + 策略组图标
-#  更新：订阅每日更新，规则每日更新
-# ====================================================
+# 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
+NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
 
-#---------------------------------------------------#
-## 锚点 - 全局参数定义
-#---------------------------------------------------#
+# 锚点 - 节点订阅
+proxy-providers: 
+  Hneko云:
+    url: ""
+    <<: *NodeParam
+    proxy: "DIRECT"
+    path: './proxy_providers/Hneko云.yaml'
+    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
+    override:
+      additional-prefix: "备用-" # 为订阅节点添加机场名称前缀
+      skip-cert-verify: true
+      udp: true 
+  良心云:
+    url: ""
+    <<: *NodeParam
+    proxy: "DIRECT"
+    path: './proxy_providers/良心云.yaml'
+    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
+    override:
+      additional-prefix: "良心云-" # 为订阅节点添加机场名称前缀
+      skip-cert-verify: true
+      udp: true 
 
-# 节点订阅参数 [每日更新，每6秒健康检查]
-NodeParam: &NodeParam
-  type: http
-  interval: 86400
-  health-check:
-    enable: true
-    url: 'http://www.gstatic.com/generate_204'
-    interval: 6
+proxies:
 
-# 地区筛选正则
-FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 
-# 代理组类型参数
-Select: &Select {type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America]}
-UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'http://www.gstatic.com/generate_204', timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
-FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.gstatic.com/generate_204', timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
-
-# 规则集参数 [每日更新]
-RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 86400, format: mrs, proxy: DIRECT}
-RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 86400, format: mrs, proxy: DIRECT}
-
-#---------------------------------------------------#
-## 端口与基本设置
-#---------------------------------------------------#
 port: 7890
 socks-port: 7891
 mixed-port: 7892
-allow-lan: true
-mode: rule
-log-level: info
-ipv6: true
-udp: true
+redir-port: 7893
+tproxy-port: 7894
+
 unified-delay: true
 geodata-mode: false
 geodata-loader: standard
@@ -53,19 +42,27 @@ tcp-concurrent: true
 find-process-mode: strict
 global-client-fingerprint: chrome
 
-# API 控制 (务必修改 secret)
-external-controller: 0.0.0.0:9090
-secret: "ChangeThisSecretPlease123"
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
 
-# 地理数据库
+external-controller: 0.0.0.0:9090
+# external-ui: ui
+# external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+
 geox-url:
   geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
   geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
   mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
+  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
 
 profile:
   store-selected: true
   store-fake-ip: true
+  restore-dns: true          # 退出自动恢复 DNS
+  auto-direct-on-exit: true  # 退出软件自动恢复直连
 
 sniffer:
   enable: true
@@ -73,24 +70,46 @@ sniffer:
   parse-pure-ip: true
   override-destination: true
   sniff:
-    HTTP: {ports: [80, 8080-8880], override-destination: true}
-    TLS: {ports: [443, 8443]}
-    QUIC: {ports: [443, 8443]}
-  skip-domain: ["Mijia Cloud", "*.push.apple.com", "*.oray.com", "*.sunlogin.net"]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+
+  skip-domain:
+    - "Mijia Cloud"
+    - "*.push.apple.com"
+    # 向日葵服务
+    - "*.oray.com"
+    - "*.sunlogin.net"
 
 tun:
   enable: true
   stack: mixed
-  dns-hijack: [any:53, "tcp://any:53"]
+  dns-hijack:
+    - any:53
+    - "tcp://any:53"
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
 
-#---------------------------------------------------#
-## DNS 配置
-#---------------------------------------------------#
+# P2P下载端口
+listeners:
+- name: socks5-in-1
+  type: socks
+  port: 10808
+  listen: 0.0.0.0
+  udp: true
+  users: []
+  proxy: DIRECT
+
 dns:
   enable: true
+  cache-algorithm: arc
   prefer-h3: true
   listen: 0.0.0.0:1053
   ipv6: true
@@ -101,271 +120,130 @@ dns:
     - https://223.5.5.5/dns-query
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   direct-nameserver:
-    - https://dns.alidns.com/dns-query
+    - https://dns.alidns.com/dns-query   # 直连解析使用国内 DNS
     - https://doh.pub/dns-query
   nameserver:
     - https://8.8.8.8/dns-query#ecs=223.5.5.0/24
     - https://1.1.1.1/dns-query#ecs=223.5.5.0/24
-  fallback:
+  fallback:                              # 后备 DNS
     - tls://8.8.4.4
+    - https://doh.pub/dns-query
   fake-ip-filter:
     - "rule-set:fakeipfilter_domain"
 
-#---------------------------------------------------#
-## 节点订阅
-#---------------------------------------------------#
-proxy-providers:
-  Hneko云:
-    url: '机场1的订阅URL'   # ⚠️ 请替换为你的订阅链接
-    <<: *NodeParam
-    proxy: DIRECT
-    path: './proxy_providers/Hneko云.yaml'
-    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|备用|客服|网址"
-    override:
-      additional-prefix: "Hneko-"
-      skip-cert-verify: true
-      udp: true
-      
-  良心云:
-    url: 'https://liangxin.xyz/api/v1/liangxin?OwO=5ea97947e4ed644de14065f8e72a5655'   # ⚠️ 请替换为你的订阅链接
-    <<: *NodeParam
-    proxy: DIRECT
-    path: './proxy_providers/良心云.yaml'
-    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|备用|客服|网址"
-    override:
-      additional-prefix: "良心云-"
-      skip-cert-verify: true
-      udp: true
+  
 
-# 本地静态代理
-proxies:
+# 锚点 - 节点筛选组
+FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|GBR|United Kingdom)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|FRA|France)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|DEU|Germany)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-#---------------------------------------------------#
-## 代理组 (带图标)
-#---------------------------------------------------#
-proxy-groups:
-  # --- 顶级策略组 ---
-  - name: Final
-    <<: *Select
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png"
+# 策略组参数锚点
+Select: &Select {type: select, proxies: [HongKong, TaiWan, Japan, Singapore, Korea, America]}
+# 锚点 - 时延优选参数 [每 6 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
+RuleSet_classical_text: &RuleSet_classical_text {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
+RuleSet_domain_mrs: &RuleSet_domain_mrs {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
+RuleSet_domain_text: &RuleSet_domain_text {type: http, behavior: domain, interval: 3600, format: text, proxy: DIRECT}
+RuleSet_ipcidr_mrs: &RuleSet_ipcidr_mrs {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIRECT}
 
-  - name: ChatGPT
-    type: select
-    proxies: [HongKong, TaiWan, Japan, Singapore, America]
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png"
 
-  - name: Google
-    type: select
-    proxies: [HongKong, TaiWan, Japan, Singapore, America]
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png"
+# 策略组
+proxy-groups: 
+  - {name: Final, <<: *Select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
+  - {name: ChatGPT, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png}
+  - {name: Google, type: select, proxies: [HongKong, TaiWan, Japan, Singapore, America], icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Google.png}
+  - {name: 广告拦截, type: select, proxies: [PASS, REJECT, REJECT-DROP], icon: https://v6.gh-proxy.com/https://github.com/musiyun124/mihomo/raw/refs/heads/main/icon2/GGLJ.png}
+  - {name: HongKong, type: select, proxies: [HK-Auto, HK-FallBack], include-all-providers: true, filter: *FilterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: TaiWan, type: select, proxies: [TW-Auto, TW-FallBack], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: Japan, type: select, proxies: [JP-Auto, JP-FallBack], include-all-providers: true, filter: *FilterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: Singapore, type: select, proxies: [SG-Auto, SG-FallBack], include-all-providers: true, filter: *FilterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+# - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack, KR-LoadBalance], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: America, type: select, proxies: [US-Auto, US-FallBack], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
 
-  - name: 广告拦截
-    type: select
-    proxies: [REJECT, REJECT-DROP, PASS]
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Adblock.png"
 
-  # --- 地区手动选择组 ---
-  - name: HongKong
-    type: select
-    proxies: [HK-Auto, HK-FallBack]
-    include-all-providers: true
-    filter: *FilterHK
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
+# 延时优选代理组
+  - {name: HK-Auto, <<: *UrlTest, filter: *FilterHK}
+  - {name: TW-Auto, <<: *UrlTest, filter: *FilterTW}
+  - {name: JP-Auto, <<: *UrlTest, filter: *FilterJP}
+  - {name: SG-Auto, <<: *UrlTest, filter: *FilterSG}
+  - {name: KR-Auto, <<: *UrlTest, filter: *FilterKR}
+  - {name: US-Auto, <<: *UrlTest, filter: *FilterUS}
 
-  - name: TaiWan
-    type: select
-    proxies: [TW-Auto, TW-FallBack]
-    include-all-providers: true
-    filter: *FilterTW
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
+# 故障转移代理组
+  - {name: HK-FallBack, <<: *FallBack, filter: *FilterHK}
+  - {name: TW-FallBack, <<: *FallBack, filter: *FilterTW}
+  - {name: JP-FallBack, <<: *FallBack, filter: *FilterJP}
+  - {name: SG-FallBack, <<: *FallBack, filter: *FilterSG}
+  - {name: KR-FallBack, <<: *FallBack, filter: *FilterKR}
+  - {name: US-FallBack, <<: *FallBack, filter: *FilterUS}
 
-  - name: Japan
-    type: select
-    proxies: [JP-Auto, JP-FallBack]
-    include-all-providers: true
-    filter: *FilterJP
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
+# 负载均衡代理组
+# - {name: HK-LoadBalance, <<: *LoadBalance, filter: *FilterHK}
+# - {name: TW-LoadBalance, <<: *LoadBalance, filter: *FilterTW}
+# - {name: JP-LoadBalance, <<: *LoadBalance, filter: *FilterJP}
+# - {name: SG-LoadBalance, <<: *LoadBalance, filter: *FilterSG}
+# - {name: KR-LoadBalance, <<: *LoadBalance, filter: *FilterKR}
+# - {name: US-LoadBalance, <<: *LoadBalance, filter: *FilterUS}
 
-  - name: Singapore
-    type: select
-    proxies: [SG-Auto, SG-FallBack]
-    include-all-providers: true
-    filter: *FilterSG
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
 
-  - name: America
-    type: select
-    proxies: [US-Auto, US-FallBack]
-    include-all-providers: true
-    filter: *FilterUS
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
-
-  # --- 自动测速组 (隐藏，无图标) ---
-  - name: HK-Auto
-    <<: *UrlTest
-    filter: *FilterHK
-
-  - name: TW-Auto
-    <<: *UrlTest
-    filter: *FilterTW
-
-  - name: JP-Auto
-    <<: *UrlTest
-    filter: *FilterJP
-
-  - name: SG-Auto
-    <<: *UrlTest
-    filter: *FilterSG
-
-  - name: US-Auto
-    <<: *UrlTest
-    filter: *FilterUS
-
-  # --- 故障转移组 (隐藏，无图标) ---
-  - name: HK-FallBack
-    <<: *FallBack
-    filter: *FilterHK
-
-  - name: TW-FallBack
-    <<: *FallBack
-    filter: *FilterTW
-
-  - name: JP-FallBack
-    <<: *FallBack
-    filter: *FilterJP
-
-  - name: SG-FallBack
-    <<: *FallBack
-    filter: *FilterSG
-
-  - name: US-FallBack
-    <<: *FallBack
-    filter: *FilterUS
-
-#---------------------------------------------------#
-## 分流规则
-#---------------------------------------------------#
+# 规则指向
 rules:
-  # 1. 去广告 (核心)
-  - RULE-SET, QiuFeng, 广告拦截
-  - RULE-SET, AdBlock_Reject, 广告拦截
-
-  # 2. 本地/私有网络直连
-  - RULE-SET, private_ip, DIRECT, no-resolve
-  - RULE-SET, private_domain, DIRECT
-
-  # 3. 国内域名直连
-  - RULE-SET, cn_domain, DIRECT
-  - RULE-SET, geolocation-cn, DIRECT
-
-  # 4. 特定服务
-  - RULE-SET, ai, ChatGPT
-  - RULE-SET, youtube_domain, Final
-  - RULE-SET, google_domain, Google
-  - RULE-SET, github_domain, Final
-  - RULE-SET, microsoft_domain, Final
-  - RULE-SET, apple_domain, DIRECT
-  - RULE-SET, telegram_domain, Final
-
-  # 5. 非中国域名代理
-  - RULE-SET, geolocation-!cn, Final
-
-  # 6. IP规则
-  - RULE-SET, apple_ip, DIRECT
-  - RULE-SET, google_ip, Google
-  - RULE-SET, telegram_ip, Final
-  - RULE-SET, cn_ip, DIRECT
-
-  # 7. 兜底
+  - RULE-SET, qiufeng, 广告拦截
+  - RULE-SET, anti-AD, 广告拦截
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,private_domain,DIRECT
+  - RULE-SET,ai,ChatGPT
+  - RULE-SET,github_domain,Final
+  - RULE-SET,youtube_domain,Final
+  - RULE-SET,google_domain,Google
+  - RULE-SET,microsoft_domain,Final
+  - RULE-SET,apple_domain,DIRECT
+  - RULE-SET,tiktok_domain,Final
+  - RULE-SET,telegram_domain,Final
+  - RULE-SET,apple_ip,DIRECT
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final
+  - RULE-SET,cn_domain,DIRECT
+  - RULE-SET,geolocation-!cn,Final
+  - RULE-SET,cn_ip,DIRECT
   - MATCH, Final
 
-#---------------------------------------------------#
-## 规则集订阅
-#---------------------------------------------------#
+# 订阅规则
 rule-providers:
-  # ===== 双核心去广告规则 =====
-  QiuFeng:
-    type: http
-    behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml"
-    interval: 86400
-    proxy: DIRECT
 
-  AdBlock_Reject:
-    type: http
-    behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/REIJI007/AdBlock_Rule_For_Clash/main/release/adblock_reject.yaml"
-    interval: 3600
-    proxy: DIRECT
-
-  # ===== 基础分流规则 =====
-  fakeipfilter_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"
-
-  private_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs"
-
-  private_ip:
-    <<: *RuleSet_ipcidr_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs"
-
-  geolocation-cn:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-cn.mrs"
-
-  cn_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs"
-
-  geolocation-!cn:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs"
-
-  ai:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs"
-
-  youtube_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs"
-
-  google_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs"
-
-  github_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs"
-
-  microsoft_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft.mrs"
-
-  apple_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple.mrs"
-
-  telegram_domain:
-    <<: *RuleSet_domain_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs"
-
-  cn_ip:
-    <<: *RuleSet_ipcidr_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs"
-
-  google_ip:
-    <<: *RuleSet_ipcidr_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs"
-
-  telegram_ip:
-    <<: *RuleSet_ipcidr_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs"
-
-  apple_ip:
-    <<: *RuleSet_ipcidr_mrs
-    url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo-lite/geoip/apple.mrs"
+  qiufeng:       {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml"}
+  anti-AD:  {<<: *RuleSet_ipcidr_mrs, url: "https://anti-ad.net/clash.yaml"}
+  fakeipfilter_domain: {<<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
+  private_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  ai: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
+  youtube_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  google_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  github_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  telegram_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  microsoft_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  apple_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  tiktok_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  geolocation-!cn: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
+  cn_domain: { <<: *RuleSet_domain_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  
+  private_ip: {<<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  telegram_ip: { <<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  apple_ip: {<<: *RuleSet_ipcidr_mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
