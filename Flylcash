@@ -34,8 +34,9 @@ redir-port: 7893
 tproxy-port: 7894
 
 unified-delay: true
-geodata-mode: false
-geodata-loader: standard
+
+geodata-mode: true
+geodata-loader: memconservative
 geo-auto-update: true
 geo-update-interval: 24
 tcp-concurrent: true
@@ -53,10 +54,10 @@ external-controller: 0.0.0.0:9090
 # external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
 
 geox-url:
-  geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
-  geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
-  mmdb: 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-Country.mmdb'
-  asn: 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb'
+  geoip: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat'
+  geosite: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
+  mmdb: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb'
+  asn: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb'
 
 profile:
   store-selected: true
@@ -116,14 +117,17 @@ dns:
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
   default-nameserver:
     - https://223.5.5.5/dns-query
     - https://223.6.6.6/dns-query
   nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
-  fake-ip-filter:
-    - "rule-set:fakeipfilter_domain"
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+
 
   
 
@@ -165,7 +169,8 @@ proxy-groups:
   - {name: Singapore, type: select, proxies: [SG-Auto, SG-FallBack], include-all-providers: true, filter: *FilterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
   - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack,], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
   - {name: America, type: select, proxies: [US-Auto, US-FallBack], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-
+# 全部节点
+  - {name: AllServer, type: select, proxies: [All-Auto], include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
 
 # 延时优选代理组
   - {name: HK-Auto, <<: *UrlTest, filter: *FilterHK}
@@ -191,46 +196,44 @@ proxy-groups:
 # - {name: KR-LoadBalance, <<: *LoadBalance, filter: *FilterKR}
 # - {name: US-LoadBalance, <<: *LoadBalance, filter: *FilterUS}
 
+# 全部节点延时优选
+  - {name: All-Auto, <<: *UrlTest, filter: *FilterAll}
 
 # 规则指向
 rules:
   - RULE-SET, qiufeng, 广告拦截
+  - DOMAIN,abyss.cyapi.cn,广告拦截
+  - DOMAIN,ad.cyapi.cn,广告拦截
+  - DOMAIN,gather.colorfulclouds.net,广告拦截
   - RULE-SET,private_ip,DIRECT,no-resolve
-  - RULE-SET,private_domain,DIRECT
-  - RULE-SET,ai,ChatGPT
-  - RULE-SET,github_domain,Final
-  - RULE-SET,youtube_domain,Final
-  - RULE-SET,google_domain,Google
-  - RULE-SET,microsoft_domain,Final
-  - RULE-SET,apple_domain,DIRECT
-  - RULE-SET,tiktok_domain,Final
-  - RULE-SET,telegram_domain,Final
-  - RULE-SET,apple_ip,DIRECT
+  - RULE-SET,private,DIRECT
+  - RULE-SET,ChatGPT,ChatGPT
+  - RULE-SET,github,Final
+  - RULE-SET,youtube,Final
+  - RULE-SET,google,Google
+  - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final
+  - RULE-SET,telegram_ip,Final,no-resolve
   - RULE-SET,geolocation-!cn,Final
-  - RULE-SET,cn_domain,DIRECT
+  - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT
+  - GEOIP,cn,DIRECT
   - MATCH, Final
 
 # 订阅规则
 rule-providers:
   qiufeng: { <<: *domain, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"}
-  fakeipfilter_domain: {<<: *domain, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
-  private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-  ai: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
-  youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
-  google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
-  telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-  microsoft_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
-  apple_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
-  tiktok_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  ChatGPT: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
+  youtube: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  github: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
-  cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   
   private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
   cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
   google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
   telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
-  apple_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
