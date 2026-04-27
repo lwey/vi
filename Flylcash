@@ -27,14 +27,10 @@ proxy-providers:
 proxies:
 
 
-port: 7890
-socks-port: 7891
+
 mixed-port: 7892
-redir-port: 7893
-tproxy-port: 7894
 
 unified-delay: true
-
 geodata-mode: true
 geodata-loader: memconservative
 geo-auto-update: true
@@ -92,22 +88,12 @@ tun:
   enable: true
   stack: mixed
   dns-hijack:
-    - any:53
+    - "any:53"
     - "tcp://any:53"
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
 
-
-# P2P下载端口
-listeners:
-- name: socks5-in-1
-  type: socks
-  port: 10808
-  listen: 0.0.0.0
-  udp: true
-  users: []
-  proxy: DIRECT
 
 dns:
   enable: true
@@ -126,9 +112,19 @@ dns:
     - 223.5.5.5
     - 223.6.6.6
   nameserver:
-    - https://223.5.5.5/dns-query
-    - https://223.6.6.6/dns-query
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+    - https://cloudflare-dns.com/dns-query
 
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+  # 广告 DNS 阻断 + AI 域名强制走境外 DNS
+  nameserver-policy:
+    "geosite:category-ads-all": "rcode://success"
 
   
 
@@ -151,7 +147,7 @@ UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url
 # 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
 FallBack: &FallBack {type: fallback, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 class: &class {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
 domain: &domain {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
@@ -203,19 +199,19 @@ proxy-groups:
 # 规则指向
 rules:
   - RULE-SET, qiufeng, 广告拦截
-  - RULE-SET,private_ip,DIRECT,no-resolve
+#  - RULE-SET,private_ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
   - RULE-SET,ChatGPT,ChatGPT
   - RULE-SET,github,Final
   - RULE-SET,youtube,Final
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
-  - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final,no-resolve
+#  - RULE-SET,google_ip,Google
+#  - RULE-SET,telegram_ip,Final,no-resolve
   - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn,DIRECT
-  - RULE-SET,cn_ip,DIRECT
-  - GEOIP,cn,DIRECT
+#  - RULE-SET,cn_ip,DIRECT
+#  - GEOIP,cn,DIRECT
   - MATCH, Final
 
 # 订阅规则
