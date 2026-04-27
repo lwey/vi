@@ -168,7 +168,7 @@ proxy-groups:
   - {name: TaiWan, type: select, proxies: [TW-Auto, TW-FallBack], include-all-providers: true, filter: *FilterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
   - {name: Japan, type: select, proxies: [JP-Auto, JP-FallBack], include-all-providers: true, filter: *FilterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
   - {name: Singapore, type: select, proxies: [SG-Auto, SG-FallBack], include-all-providers: true, filter: *FilterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack,], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+#  - {name: Korea, type: select, proxies: [KR-Auto, KR-FallBack,], include-all-providers: true, filter: *FilterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
   - {name: America, type: select, proxies: [US-Auto, US-FallBack], include-all-providers: true, filter: *FilterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
 # 全部节点
   - {name: AllServer, type: select, proxies: [All-Auto], include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
