@@ -137,7 +137,7 @@ FallBack: &FallBack {type: fallback, interval: 300, lazy: true, url: 'https://cp
 # 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
 LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
-class: &class {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
+class: &class {type: http, behavior: classical, interval: 3600, format: list, proxy: DIRECT}
 domain: &domain {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
 ip: &ip {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIRECT}
 
@@ -203,7 +203,7 @@ rules:
 # 订阅规则
 rule-providers:
   qiufeng: { <<: *domain, url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"}
-  BanProgramAD: { <<: *domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/BanProgramAD.list"}
+  BanProgramAD: { <<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/BanProgramAD.list"}
   private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
 
   google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
