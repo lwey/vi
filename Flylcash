@@ -188,12 +188,11 @@ rules:
   - RULE-SET, qiufeng, 广告拦截
   - RULE-SET,private_ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
-  - RULE-SET,github,Final
-  - RULE-SET,youtube,Final
+
   - RULE-SET,google,Google
-  - RULE-SET,telegram,Final
+
   - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final,no-resolve
+
   - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT
