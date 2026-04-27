@@ -114,15 +114,6 @@ dns:
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-  fallback:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
-    - https://cloudflare-dns.com/dns-query
-
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-
   
 
 # 锚点 - 节点筛选组
@@ -196,19 +187,19 @@ proxy-groups:
 # 规则指向
 rules:
   - RULE-SET, qiufeng, 广告拦截
-#  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,private_ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
   - RULE-SET,ChatGPT,ChatGPT
   - RULE-SET,github,Final
   - RULE-SET,youtube,Final
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
-#  - RULE-SET,google_ip,Google
-#  - RULE-SET,telegram_ip,Final,no-resolve
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final,no-resolve
   - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn,DIRECT
-#  - RULE-SET,cn_ip,DIRECT
-#  - GEOIP,cn,DIRECT
+  - RULE-SET,cn_ip,DIRECT
+  - GEOIP,cn,DIRECT
   - MATCH, Final
 
 # 订阅规则
