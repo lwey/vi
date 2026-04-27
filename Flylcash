@@ -122,9 +122,6 @@ dns:
   fallback-filter:
     geoip: true
     geoip-code: CN
-  # 广告 DNS 阻断 + AI 域名强制走境外 DNS
-  nameserver-policy:
-    "geosite:category-ads-all": "rcode://success"
 
   
 
