@@ -193,8 +193,6 @@ rules:
   - RULE-SET,google,Google
 
   - RULE-SET,google_ip,Google
-
-  - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT
   - GEOIP,cn,DIRECT
@@ -209,7 +207,6 @@ rule-providers:
   google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
 
 
-  geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   
   private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
