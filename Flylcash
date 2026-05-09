@@ -3,6 +3,16 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 
 # 锚点 - 节点订阅
 proxy-providers: 
+  良心云:
+    url: "机场订阅"
+    <<: *NodeParam
+    proxy: "DIRECT"
+    path: './proxy_providers/良心云.yaml'
+    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
+    override:
+      additional-prefix: "良心-" # 为订阅节点添加机场名称前缀
+      skip-cert-verify: true
+      udp: true 
   Hneko云:
     url: "机场订阅"
     <<: *NodeParam
@@ -11,16 +21,6 @@ proxy-providers:
     exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
     override:
       additional-prefix: "备用-" # 为订阅节点添加机场名称前缀
-      skip-cert-verify: true
-      udp: true 
-  良心云:
-    url: "机场订阅"
-    <<: *NodeParam
-    proxy: "DIRECT"
-    path: './proxy_providers/良心云.yaml'
-    exclude-filter: "群|邀请|返利|官网|过期|流量|剩余|官网|备用" # 提前过滤垃圾节点
-    override:
-      additional-prefix: "良心云-" # 为订阅节点添加机场名称前缀
       skip-cert-verify: true
       udp: true 
 
