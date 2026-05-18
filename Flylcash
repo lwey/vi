@@ -1,4 +1,4 @@
-（# 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
+# 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
 NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}}
 
 # 锚点 - 节点订阅
