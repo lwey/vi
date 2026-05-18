@@ -188,7 +188,7 @@ rules:
   - RULE-SET,private,DIRECT
 
   - RULE-SET,google,Google
-
+  - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT
@@ -201,6 +201,8 @@ rule-providers:
 
   google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
 
+  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+
 
   cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   
@@ -208,3 +210,4 @@ rule-providers:
   cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
   google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
 
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
