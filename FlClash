@@ -4,7 +4,7 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   良心云:
-    url: "https://liangxin.xyz/api/v1/liangxin?OwO=a7270689944386586784901abce2beff1c3b9fb"
+    url: "机场订阅"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
@@ -14,7 +14,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
   Hneko云:
-    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=3d44d35764824f97eac47d248aaabac3ff7267"
+    url: "机场订阅"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
@@ -24,13 +24,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
 
-proxies: []
-  # - name: "手动节点示例"
-  #   type: ss
-  #   server: example.com
-  #   port: 443
-  #   cipher: aes-256-gcm
-  #   password: "your-password"
+proxies:
 
 
 
@@ -73,21 +67,22 @@ sniffer:
   parse-pure-ip: true
   override-destination: true
   sniff:
-    TLS:
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
   force-domain:
-    - +.netlify.app
-    - +.vercel.app
-    - +.workers.dev
+    - +.v2ex.com
+
   skip-domain:
-    - +.mijia.cloud
-    - +.oray.com
-    - +.oray.net
-    - +.apple.com
+    - "Mijia Cloud"
+    - "*.push.apple.com"
+    # 向日葵服务
+    - "*.oray.com"
+    - "*.sunlogin.net"
 
 tun:
   enable: true
@@ -102,69 +97,23 @@ tun:
 
 dns:
   enable: true
-  listen: 127.0.0.1:1053
+  cache-algorithm: arc
+  prefer-h3: true
+  listen: 0.0.0.0:1053
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - +.lan
-    - +.local
-    - +.localhost
-    - +.direct
-    - +.msftconnecttest.com
-    - +.msftncsi.com
-    - +.baidu.com
-    - +.bilibili.com
-    - +.bing.com
-    - +.chiphell.com
-    - +.oray.com
-    - +.sunlogin.com
-    - +.todesk.com
-    - +.rustdesk.com
-    - +.teamviewer.com
-    - +.anydesk.com
-    - +.tailscale.com
-    - +.zerotier.com
-    - +.nvidia.com
-    - +.ntp.org
-    - +.pool.ntp.org
-    - +.time.apple.com
-    - +.time.google.com
-    - +.time.nist.gov
-    - time.windows.com
-    - ip.cip.cc
-    - captive.apple.com
-    - connectivitycheck.gstatic.com
-    - id6.me
-    - localhost.ptlogin2.qq.com
-    - +.cmpassport.com
-    - +.mcdn.bilivideo.cn
-    - +.battlenet.com.cn
-    - +.wotgame.cn
-    - +.wggames.cn
-    - +.wowsgame.cn
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.market.xiaomi.com"
   default-nameserver:
     - tls://223.5.5.5
     - tls://223.6.6.6
-  proxy-server-nameserver:
-    - https://doh.pub/dns-query
-    - tls://223.5.5.5
-  direct-nameserver:
-    - https://dns.alidns.com/dns-query
-  nameserver-policy:
-    geosite:cn,geolocation-cn,bilibili,biliintl:
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-      - tls://223.5.5.5
-      - tls://223.6.6.6
-    aistudio.google.com:
-      - https://dns.cloudflare.com/dns-query
-      - https://dns.google/dns-query
   nameserver:
-    - https://dns.cloudflare.com/dns-query
-    - https://dns.google/dns-query
-  respect-rules: true
-  direct-nameserver-follow-policy: true
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
   
 
 # 锚点 - 节点筛选组
@@ -189,11 +138,7 @@ FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'https://cp.c
 LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://cp.cloudflare.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 class: &class {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
-
 domain: &domain {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
-
-domain_text: &domain_text {type: http, behavior: domain, interval: 3600, format: text, proxy: DIRECT}
-
 ip: &ip {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIRECT}
 
 
@@ -239,115 +184,35 @@ proxy-groups:
 
 # 规则指向
 rules:
-  #--- 局域网 / 私有网络 ---
-  - DST-PORT,7680,REJECT
-  - GEOSITE,private,DIRECT
   - GEOIP,private,DIRECT,no-resolve
+  - GEOSITE,private,DIRECT
   - DOMAIN,localhost,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
 
-  # --- 进程名直连（仅 Windows 平台 TUN 模式生效）---
-  - PROCESS-NAME,WinStore.App.exe,DIRECT
-  - PROCESS-NAME,WinStore.Mobile.exe,DIRECT
-  - PROCESS-NAME,Weixin.exe,DIRECT
-  - PROCESS-NAME,WeChat.exe,DIRECT
-  - PROCESS-NAME,WeChatAppEx.exe,DIRECT
-  - PROCESS-NAME,QQ.exe,DIRECT
-  - PROCESS-NAME,SunloginClient.exe,DIRECT
-  - PROCESS-NAME,ToDesk.exe,DIRECT
-  - PROCESS-NAME,ToDesk_Service.exe,DIRECT
-  - PROCESS-NAME,rustdesk.exe,DIRECT
-  - PROCESS-NAME,TeamViewer.exe,DIRECT
-  - PROCESS-NAME,AnyDesk.exe,DIRECT
-  - PROCESS-NAME,tailscale.exe,DIRECT
-  - PROCESS-NAME,tailscaled.exe,DIRECT
-  - PROCESS-NAME,frpc.exe,DIRECT
-  - PROCESS-NAME,Navicat.exe,DIRECT
-  - PROCESS-NAME,cloudflared.exe,DIRECT
 
-  # --- 前置拦截（确保规则集和 DNS 下载可用）---
-  - DOMAIN-SUFFIX,jsdelivr.net,Final
-  - DOMAIN,dns.google,Google
-  - DOMAIN,dns.google.com,Google
+  - RULE-SET,google,Google
+  - RULE-SET,telegram,Final
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final
 
-
-
-  # --- Google 基础服务（在 AI 之后，避免遮蔽特定 API 子域名）---
-  - DOMAIN-SUFFIX,gstatic.com,Google
-  - DOMAIN-SUFFIX,googleapis.com,Google
-
-  # --- DeepSeek（国内直连）---
-  - DOMAIN-SUFFIX,deepseek.com,DIRECT
-
-
-  # --- 游戏平台：国服直连，海外走代理 ---
-  # category-games-cn 含 mihoyo-cn / tencent-games / kurogames / bilibili-game 等
-  # category-games-!cn 含 Steam / Epic / Blizzard / Nintendo / PlayStation / Xbox 等
-  - GEOSITE,category-games-cn,DIRECT
-  - GEOSITE,category-games-!cn,Final
-
-
-  # --- Fedora 镜像直连（Metalink 根据来源 IP 自动分配国内镜像）---
-  - DOMAIN-SUFFIX,fedoraproject.org,DIRECT
-  # AlmaLinux 镜像列表被 GFW 阻断，走代理
-  - DOMAIN-SUFFIX,almalinux.org,Final
-  - DOMAIN-SUFFIX,linux-mirrors.fnal.gov,Final
-  - GEOSITE,category-dev,Final
-
-  # --- 苹果 ---
-  - DOMAIN-SUFFIX,icloud.com,DIRECT
-  - DOMAIN-SUFFIX,apple.com.cn,DIRECT
-  - DOMAIN-SUFFIX,icloud.com.cn,DIRECT
-  - DOMAIN-SUFFIX,mzstatic.com,DIRECT
-
-
-  # --- 国内直连 ---
-  - DOMAIN-SUFFIX,baidu.com,DIRECT
-  - DOMAIN-SUFFIX,bdstatic.com,DIRECT
-  - DOMAIN-SUFFIX,bilibili.com,DIRECT
-  - DOMAIN-SUFFIX,alicdn.com,DIRECT
-  - DOMAIN-SUFFIX,alipay.com,DIRECT
-  - DOMAIN-SUFFIX,taobao.com,DIRECT
-  - DOMAIN-SUFFIX,aliyuncs.com,DIRECT
-  - DOMAIN-SUFFIX,qcloud.com,DIRECT
-  - DOMAIN-SUFFIX,myqcloud.com,DIRECT
-  - DOMAIN-SUFFIX,feishu.cn,DIRECT
-  - DOMAIN-SUFFIX,dingtalk.com,DIRECT
-  - DOMAIN-SUFFIX,163.com,DIRECT
-  - DOMAIN-SUFFIX,126.com,DIRECT
-  - DOMAIN-SUFFIX,126.net,DIRECT
-  - DOMAIN-SUFFIX,chiphell.com,DIRECT
-  - DOMAIN-SUFFIX,xindazhilian.com,DIRECT
-
-  # --- 端口直连 ---
-  - DST-PORT,123,DIRECT
-  - DST-PORT,3478,DIRECT
-  - DST-PORT,3479,DIRECT
-  - DST-PORT,33068,DIRECT
-  - DST-PORT,6540,DIRECT
-  - DST-PORT,26880,DIRECT
-
-  # --- Google .cn 防误伤 ---
-  - DOMAIN-SUFFIX,services.googleapis.cn,Google
-  - DOMAIN-SUFFIX,googleapis.cn,Google
-
-  # --- 基础分流 ---
-  - RULE-SET,gfw,Final
-  - RULE-SET,cn_sites,DIRECT
   - GEOSITE,cn,DIRECT
-  - RULE-SET,proxy_sites,Final
   - GEOIP,CN,DIRECT,no-resolve
 
-  # --- 最终匹配 ---
-  - MATCH,Final
+  - MATCH, Final
 
 # 订阅规则
 rule-providers:
+  private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
 
-  proxy_sites: { <<: *domain, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs"}
+  google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+
+  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+
+
+  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   
+  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
 
-
-  cn_sites: { <<: *domain, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs"}
-  
-  gfw: {<<: *domain, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/gfw.mrs"}
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
