@@ -35,10 +35,7 @@ geodata-mode: true
 geodata-loader: memconservative
 geo-auto-update: true
 geo-update-interval: 24
-
 tcp-concurrent: true
-
-
 find-process-mode: strict
 global-client-fingerprint: chrome
 
@@ -47,7 +44,6 @@ mode: rule
 log-level: info
 ipv6: true
 udp: true
-
 
 external-controller: 0.0.0.0:9090
 # external-ui: ui
@@ -189,17 +185,19 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,private,DIRECT
 
-  - RULE-SET,google,Google
-  - RULE-SET,telegram,Final
-  - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final
-  - RULE-SET,geolocation-!cn,Final
-  - RULE-SET,cn,DIRECT
-  - RULE-SET,cn_ip,DIRECT,no-resolve
+  - GEOIP,lan,DIRECT,no-resolve
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOSITE,private,DIRECT
 
+
+
+  - GEOIP,google,Google
+  - GEOIP,telegram,Final
+
+  - GEOIP,CN,DIRECT,no-resolve
+  - GEOSITE,CN,DIRECT
+  - GEOSITE,geolocation-!cn,Final
   - MATCH, Final
 
 # 订阅规则
