@@ -37,8 +37,7 @@ geo-auto-update: true
 geo-update-interval: 24
 
 tcp-concurrent: true
-keep-alive-idle: 600
-keep-alive-interval: 15
+
 
 find-process-mode: strict
 global-client-fingerprint: chrome
@@ -190,14 +189,9 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - GEOIP,lan,DIRECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
-  
-  - DOMAIN,localhost,DIRECT
-  - DOMAIN-SUFFIX,local,DIRECT
 
-  
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
