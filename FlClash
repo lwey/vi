@@ -4,7 +4,7 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   良心云:
-    url: "订阅链接"
+    url: "https://liangxin.xyz/api/v1/liangxin?OwO=5985f608dc253c4485aed6d6d844458f"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
@@ -14,7 +14,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
   Hneko云:
-    url: "订阅链接"
+    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=d152e727a13994bf5ae8368bcd7593ad"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
@@ -28,7 +28,7 @@ proxies:
 
 
 
-mixed-port: 7890
+mixed-port: 7892
 
 unified-delay: true
 geodata-mode: true
@@ -48,10 +48,7 @@ mode: rule
 log-level: info
 ipv6: true
 udp: true
-lan-allowed-ips:
-  - 0.0.0.0/0
-  - ::/0
-  - 127.0.0.1/8
+
 
 external-controller: 0.0.0.0:9090
 # external-ui: ui
@@ -112,20 +109,16 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-  #  - "*"
-  #  - "+.lan"
-  #  - "+.local"
-  #  - "+.market.xiaomi.com"
-    - rule-set:fakeipfilter
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.market.xiaomi.com"
   default-nameserver:
     - tls://223.5.5.5
     - tls://223.6.6.6
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-  proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
   
 
 # 锚点 - 节点筛选组
@@ -197,13 +190,14 @@ proxy-groups:
 
 # 规则指向
 rules:
-  # 【DNS 服务器】确保 DNS 请求正确路由
-  - IP-CIDR,223.5.5.5/32,DIRECT,no-resolve       # 阿里 DNS
-  - IP-CIDR,223.6.6.6/32,DIRECT,no-resolve       # 阿里 DNS 备用
-  
+  - GEOIP,lan,DIRECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
+  
+  - DOMAIN,localhost,DIRECT
+  - DOMAIN-SUFFIX,local,DIRECT
 
+  
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
@@ -211,27 +205,23 @@ rules:
 
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT,no-resolve
-  
-  - RULE-SET,geol,Final
+  - RULE-SET,geolocation-!cn,Final
   - MATCH, Final
 
 # 订阅规则
 rule-providers:
-  fakeipfilter: { <<: *domain_text, url: "https://raw.githubusercontent.com/juewuy/ShellCrash/refs/heads/dev/public/fake_ip_filter.list"}
 
   private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
 
   google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-
   telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-  
-  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
  
-  geol: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"} 
   
  # 通用IP 规则
   private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
   cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
-  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
 
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
   telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
