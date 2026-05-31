@@ -4,7 +4,7 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   良心云:
-    url: "机场订阅"
+    url: "订阅链接"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
@@ -14,7 +14,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
   Hneko云:
-    url: "机场订阅"
+    url: "订阅链接"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
@@ -29,32 +29,39 @@ proxies:
 
 
 mixed-port: 7890
+
 unified-delay: true
+geodata-mode: true
 geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+
+tcp-concurrent: true
+keep-alive-idle: 600
+keep-alive-interval: 15
+
+find-process-mode: strict
+global-client-fingerprint: chrome
+
 allow-lan: true
 mode: rule
 log-level: info
 ipv6: true
 udp: true
+lan-allowed-ips:
+  - 0.0.0.0/0
+  - ::/0
+  - 127.0.0.1/8
 
-tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 # external-ui: ui
 # external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
 
-
-geodata-mode: true
-geo-auto-update: true
-geo-update-interval: 24
 geox-url:
   geoip: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat'
   geosite: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
   mmdb: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb'
   asn: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb'
-
-find-process-mode: strict
-global-client-fingerprint: chrome
-
 
 profile:
   store-selected: true
@@ -66,6 +73,7 @@ sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
+  override-destination: true
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -76,9 +84,10 @@ sniffer:
       ports: [443, 8443]
   force-domain:
     - +.v2ex.com
+
   skip-domain:
     - "Mijia Cloud"
-    - "+.push.apple.com"
+    - "*.push.apple.com"
     # 向日葵服务
     - "*.oray.com"
     - "*.sunlogin.net"
@@ -99,20 +108,24 @@ dns:
   cache-algorithm: arc
   prefer-h3: true
   listen: 0.0.0.0:1053
-  ipv6: true
+  ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - "*"
-    - "+.lan"
-    - "+.local"
-    - "+.market.xiaomi.com"
+  #  - "*"
+  #  - "+.lan"
+  #  - "+.local"
+  #  - "+.market.xiaomi.com"
+    - rule-set:fakeipfilter
   default-nameserver:
     - tls://223.5.5.5
     - tls://223.6.6.6
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
+  proxy-server-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
   
 
 # 锚点 - 节点筛选组
@@ -138,6 +151,7 @@ LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'ht
 # 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
 class: &class {type: http, behavior: classical, interval: 3600, format: text, proxy: DIRECT}
 domain: &domain {type: http, behavior: domain, interval: 3600, format: mrs, proxy: DIRECT}
+domain_text: &domain_text {type: http, behavior: domain, interval: 3600, format: text, proxy: DIRECT}
 ip: &ip {type: http, behavior: ipcidr, interval: 3600, format: mrs, proxy: DIRECT}
 
 
@@ -183,15 +197,41 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - GEOIP,lan,DIRECT,no-resolve
-  - GEOSITE,google,Google
-  - GEOSITE,telegram,Final
-  - GEOSITE,CN,DIRECT
-  - GEOSITE,geolocation-!cn,Final
+  # 【DNS 服务器】确保 DNS 请求正确路由
+  - IP-CIDR,223.5.5.5/32,DIRECT,no-resolve       # 阿里 DNS
+  - IP-CIDR,223.6.6.6/32,DIRECT,no-resolve       # 阿里 DNS 备用
+  
+  - RULE-SET,private,DIRECT,no-resolve
+  - RULE-SET,private,DIRECT
 
-  - GEOIP,google,Google
-  - GEOIP,telegram,Final
-  - GEOIP,CN,DIRECT
+  - RULE-SET,google,Google
+  - RULE-SET,telegram,Final
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final
+
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,cn_ip,DIRECT,no-resolve
+  
+  - RULE-SET,geol,Final
   - MATCH, Final
 
+# 订阅规则
+rule-providers:
+  fakeipfilter: { <<: *domain_text, url: "https://raw.githubusercontent.com/juewuy/ShellCrash/refs/heads/dev/public/fake_ip_filter.list"}
+
+  private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+
+  google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+
+  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  
+  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
  
+  geol: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"} 
+  
+ # 通用IP 规则
+  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
