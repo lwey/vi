@@ -183,7 +183,7 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - GEOIP,lan,直连,no-resolve
+  - GEOIP,lan,DIRECT,no-resolve
   - GEOSITE,google,Google
   - GEOSITE,telegram,Final
   - GEOSITE,CN,DIRECT
