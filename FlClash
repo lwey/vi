@@ -190,7 +190,7 @@ rules:
   - GEOSITE,geolocation-!cn,Final
 
   - GEOIP,google,Google
-  - GEOIP,telegram,Telegram
+  - GEOIP,telegram,Final
   - GEOIP,CN,DIRECT
   - MATCH, Final
 
