@@ -193,7 +193,9 @@ rules:
 
 
   - GEOIP,google,Google
+  - GEOSITE,google,Google
   - GEOIP,telegram,Final
+  - GEOSITE,telegram,Final
 
   - GEOIP,CN,DIRECT,no-resolve
   - GEOSITE,CN,DIRECT
