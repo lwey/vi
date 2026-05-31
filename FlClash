@@ -197,24 +197,6 @@ rules:
   - RULE-SET,google_ip,Google
   - RULE-SET,telegram_ip,Final
 
-  # --- 国内直连 ---
-  - DOMAIN-SUFFIX,10jqka.com,DIRECT
-  - DOMAIN-SUFFIX,baidu.com,DIRECT
-  - DOMAIN-SUFFIX,bdstatic.com,DIRECT
-  - DOMAIN-SUFFIX,bilibili.com,DIRECT
-  - DOMAIN-SUFFIX,alicdn.com,DIRECT
-  - DOMAIN-SUFFIX,alipay.com,DIRECT
-  - DOMAIN-SUFFIX,taobao.com,DIRECT
-  - DOMAIN-SUFFIX,aliyuncs.com,DIRECT
-  - DOMAIN-SUFFIX,qcloud.com,DIRECT
-  - DOMAIN-SUFFIX,myqcloud.com,DIRECT
-  - DOMAIN-SUFFIX,feishu.cn,DIRECT
-  - DOMAIN-SUFFIX,dingtalk.com,DIRECT
-  - DOMAIN-SUFFIX,163.com,DIRECT
-  - DOMAIN-SUFFIX,126.com,DIRECT
-  - DOMAIN-SUFFIX,126.net,DIRECT
-  - DOMAIN-SUFFIX,chiphell.com,DIRECT
-  - DOMAIN-SUFFIX,xindazhilian.com,DIRECT
 
 
   # --- 端口直连 ---
@@ -225,9 +207,6 @@ rules:
   - DST-PORT,6540,DIRECT
   - DST-PORT,26880,DIRECT
 
-  # --- Google .cn 防误伤 ---
-  - DOMAIN-SUFFIX,services.googleapis.cn,Google
-  - DOMAIN-SUFFIX,googleapis.cn,Google
 
   - GEOSITE,cn,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
