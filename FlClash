@@ -4,7 +4,7 @@ NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, 
 # 锚点 - 节点订阅
 proxy-providers: 
   良心云:
-    url: "https://liangxin.xyz/api/v1/liangxin?OwO=5985f608dc253c4485aed6d6d844458f"
+    url: "订阅链接"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/良心云.yaml'
@@ -14,7 +14,7 @@ proxy-providers:
       skip-cert-verify: true
       udp: true 
   Hneko云:
-    url: "https://study.small1999.sbs/study/xuexi/v999/hneko?token=d152e727a13994bf5ae8368bcd7593ad"
+    url: "订阅链接"
     <<: *NodeParam
     proxy: "DIRECT"
     path: './proxy_providers/Hneko云.yaml'
