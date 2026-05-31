@@ -196,10 +196,10 @@ rules:
   - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
   - RULE-SET,telegram_ip,Final
-
+  - RULE-SET,geolocation-!cn,Final
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn_ip,DIRECT,no-resolve
-  - RULE-SET,geolocation-!cn,Final
+
   - MATCH, Final
 
 # 订阅规则
