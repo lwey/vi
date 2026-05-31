@@ -28,32 +28,33 @@ proxies:
 
 
 
-mixed-port: 7892
-
+mixed-port: 7890
 unified-delay: true
-geodata-mode: true
 geodata-loader: memconservative
-geo-auto-update: true
-geo-update-interval: 24
-tcp-concurrent: true
-find-process-mode: strict
-global-client-fingerprint: chrome
-
 allow-lan: true
 mode: rule
 log-level: info
 ipv6: true
 udp: true
 
+tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 # external-ui: ui
 # external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
 
+
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
 geox-url:
   geoip: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat'
   geosite: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
   mmdb: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb'
   asn: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb'
+
+find-process-mode: strict
+global-client-fingerprint: chrome
+
 
 profile:
   store-selected: true
@@ -65,7 +66,6 @@ sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: true
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -76,10 +76,9 @@ sniffer:
       ports: [443, 8443]
   force-domain:
     - +.v2ex.com
-
   skip-domain:
     - "Mijia Cloud"
-    - "*.push.apple.com"
+    - "+.push.apple.com"
     # 向日葵服务
     - "*.oray.com"
     - "*.sunlogin.net"
@@ -100,7 +99,7 @@ dns:
   cache-algorithm: arc
   prefer-h3: true
   listen: 0.0.0.0:1053
-  ipv6: false
+  ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
@@ -184,36 +183,15 @@ proxy-groups:
 
 # 规则指向
 rules:
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOSITE,private,DIRECT
-  - DOMAIN,localhost,DIRECT
-  - DOMAIN-SUFFIX,local,DIRECT
+  - GEOIP,lan,直连,no-resolve
+  - GEOSITE,google,Google
+  - GEOSITE,telegram,Final
+  - GEOSITE,CN,DIRECT
+  - GEOSITE,geolocation-!cn,Final
 
-
-  - RULE-SET,google,Google
-  - RULE-SET,telegram,Final
-  - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final
-
-
-  - GEOSITE,cn,DIRECT
-  - GEOIP,CN,DIRECT,no-resolve
-
+  - GEOIP,google,Google
+  - GEOIP,telegram,Telegram
+  - GEOIP,CN,DIRECT
   - MATCH, Final
 
-# 订阅规则
-rule-providers:
-  private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-
-  google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-
-  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-
-
-  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
-  
-  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
-  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
-  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
-
-  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+ 
