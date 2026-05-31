@@ -186,7 +186,12 @@ proxy-groups:
 # 规则指向
 rules:
 
-  - GEOIP,lan,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,ip6-localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,ip6-loopback,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,local,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,localhost,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,lan,DIRECT,no-resolve
+
   - GEOIP,private,DIRECT,no-resolve
   - GEOSITE,private,DIRECT
 
