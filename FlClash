@@ -189,23 +189,11 @@ rules:
   - DOMAIN,localhost,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
 
-  - GEOSITE,category-games-cn,DIRECT
-  - GEOSITE,category-games-!cn,Final
 
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
   - RULE-SET,google_ip,Google
   - RULE-SET,telegram_ip,Final
-
-
-
-  # --- 端口直连 ---
-  - DST-PORT,123,DIRECT
-  - DST-PORT,3478,DIRECT
-  - DST-PORT,3479,DIRECT
-  - DST-PORT,33068,DIRECT
-  - DST-PORT,6540,DIRECT
-  - DST-PORT,26880,DIRECT
 
 
   - GEOSITE,cn,DIRECT
