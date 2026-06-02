@@ -204,9 +204,9 @@ rules:
   - RULE-SET,cn,DIRECT
   - RULE-SET,geolocation-!cn,DIRECT
 
-  - RULE-SET,google_ip,Google
-  - RULE-SET,telegram_ip,Final
-  - RULE-SET,cn_ip,DIRECT
+  - RULE-SET,google_ip,Google,no-resolve
+  - RULE-SET,telegram_ip,Final,no-resolve
+  - RULE-SET,cn_ip,DIRECT,no-resolve
   - MATCH,Final
 
 # 订阅规则
