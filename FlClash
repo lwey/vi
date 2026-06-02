@@ -42,7 +42,7 @@ global-client-fingerprint: chrome
 allow-lan: true
 mode: rule
 log-level: error
-ipv6: true
+ipv6: false
 
 external-controller: 0.0.0.0:9090
 # external-ui: ui
