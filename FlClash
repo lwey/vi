@@ -202,7 +202,7 @@ rules:
   - RULE-SET,google,Google
   - RULE-SET,telegram,Final
   - RULE-SET,cn,DIRECT
-  - RULE-SET,geolocation-!cn,DIRECT
+  - RULE-SET,geolocation,Final
 
   - RULE-SET,google_ip,Google,no-resolve
   - RULE-SET,telegram_ip,Final,no-resolve
@@ -223,7 +223,7 @@ rule-providers:
   telegram:
     <<: *domain
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
-  geolocation-!cn:
+  geolocation:
     <<: *domain
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
 
