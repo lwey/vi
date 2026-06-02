@@ -41,9 +41,8 @@ global-client-fingerprint: chrome
 
 allow-lan: true
 mode: rule
-log-level: info
+log-level: error
 ipv6: true
-udp: true
 
 external-controller: 0.0.0.0:9090
 # external-ui: ui
@@ -54,6 +53,9 @@ geox-url:
   geosite: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
   mmdb: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb'
   asn: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb'
+
+keep-alive-idle: 300
+keep-alive-interval: 75
 
 profile:
   store-selected: true
@@ -108,13 +110,15 @@ dns:
     - "+.lan"
     - "+.local"
     - "+.market.xiaomi.com"
+
   default-nameserver:
     - tls://223.5.5.5
     - tls://223.6.6.6
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-  
+
+ 
 
 # 锚点 - 节点筛选组
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
@@ -186,41 +190,52 @@ proxy-groups:
 # 规则指向
 rules:
 
-  - DOMAIN-SUFFIX,ip6-localhost,DIRECT,no-resolve
-  - DOMAIN-SUFFIX,ip6-loopback,DIRECT,no-resolve
-  - DOMAIN-SUFFIX,local,DIRECT,no-resolve
-  - DOMAIN-SUFFIX,localhost,DIRECT,no-resolve
-  - DOMAIN-SUFFIX,lan,DIRECT,no-resolve
-
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOSITE,private,DIRECT
+  - DOMAIN,a.nel.cloudflare.com,DIRECT  #Cloudflare人机验证直连(以下四条)
+  - DOMAIN,challenges.cloudflare.com,DIRECT
+  - DOMAIN,stun.cloudflare.com,DIRECT
+  - DOMAIN,static.cloudflareinsights.com,DIRECT
 
 
+  - RULE-SET,private,DIRECT
+  - RULE-SET,private_ip,DIRECT,no-resolve
 
-  - GEOIP,google,Google
-  - GEOSITE,google,Google
-  - GEOIP,telegram,Final
-  - GEOSITE,telegram,Final
+  - RULE-SET,google,Google
+  - RULE-SET,telegram,Final
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,geolocation-!cn,DIRECT
 
-  - GEOIP,CN,DIRECT,no-resolve
-  - GEOSITE,CN,DIRECT
-  - GEOSITE,geolocation-!cn,Final
-  - MATCH, Final
+  - RULE-SET,google_ip,Google
+  - RULE-SET,telegram_ip,Final
+  - RULE-SET,cn_ip,DIRECT
+  - MATCH,Final
 
 # 订阅规则
 rule-providers:
+  private:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+  cn:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  google:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  telegram:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  geolocation-!cn:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
 
-  private: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-  cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
-
-  google: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  telegram: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-  geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
- 
-  
- # 通用IP 规则
-  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
-  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
-
-  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
-  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  private_ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+  cn_ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
+  google_ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
+  telegram_ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
